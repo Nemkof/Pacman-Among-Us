@@ -74,7 +74,12 @@ OBJECTS       = release/tinystr.o \
 		release/player.o \
 		release/moc_menuwindow.o
 
-DIST          = images/Tiny_Chao_Garden_SonicAdv_3_Tile_Sheet.png \
+DIST          = images/Blinky.png \
+		images/Clyde.png \
+		images/Inky.png \
+		images/Pinky.png \
+		images/Player.png \
+		images/Tiny_Chao_Garden_SonicAdv_3_Tile_Sheet.png \
 		images/apple.png \
 		images/entity.png \
 		images/forText.ttf \
@@ -438,6 +443,7 @@ release/enemy.o: ../../enemy.cpp ../../enemy.h \
 		../../../SFML-2.6.1/include/SFML/Audio/SoundFileFactory.inl \
 		../../../SFML-2.6.1/include/SFML/Audio/SoundFileReader.hpp \
 		../../../SFML-2.6.1/include/SFML/Audio/SoundFileWriter.hpp \
+		../../level.h \
 		../../../SFML-2.6.1/include/SFML/Graphics.hpp \
 		../../../SFML-2.6.1/include/SFML/Window.hpp \
 		../../../SFML-2.6.1/include/SFML/Window/Clipboard.hpp \
@@ -487,7 +493,9 @@ release/enemy.o: ../../enemy.cpp ../../enemy.h \
 		../../../SFML-2.6.1/include/SFML/Graphics/Glsl.inl \
 		../../../SFML-2.6.1/include/SFML/Graphics/Sprite.hpp \
 		../../../SFML-2.6.1/include/SFML/Graphics/Text.hpp \
-		../../../SFML-2.6.1/include/SFML/Graphics/VertexBuffer.hpp
+		../../../SFML-2.6.1/include/SFML/Graphics/VertexBuffer.hpp \
+		../../TinyXML/tinyxml.h \
+		../../TinyXML/tinystr.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\enemy.o ..\..\enemy.cpp
 
 release/entity.o: ../../entity.cpp ../../entity.h \
@@ -534,6 +542,7 @@ release/entity.o: ../../entity.cpp ../../entity.h \
 		../../../SFML-2.6.1/include/SFML/Audio/SoundFileFactory.inl \
 		../../../SFML-2.6.1/include/SFML/Audio/SoundFileReader.hpp \
 		../../../SFML-2.6.1/include/SFML/Audio/SoundFileWriter.hpp \
+		../../level.h \
 		../../../SFML-2.6.1/include/SFML/Graphics.hpp \
 		../../../SFML-2.6.1/include/SFML/Window.hpp \
 		../../../SFML-2.6.1/include/SFML/Window/Clipboard.hpp \
@@ -583,10 +592,13 @@ release/entity.o: ../../entity.cpp ../../entity.h \
 		../../../SFML-2.6.1/include/SFML/Graphics/Glsl.inl \
 		../../../SFML-2.6.1/include/SFML/Graphics/Sprite.hpp \
 		../../../SFML-2.6.1/include/SFML/Graphics/Text.hpp \
-		../../../SFML-2.6.1/include/SFML/Graphics/VertexBuffer.hpp
+		../../../SFML-2.6.1/include/SFML/Graphics/VertexBuffer.hpp \
+		../../TinyXML/tinyxml.h \
+		../../TinyXML/tinystr.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\entity.o ..\..\entity.cpp
 
 release/food.o: ../../food.cpp ../../food.h \
+		../../level.h \
 		../../../SFML-2.6.1/include/SFML/Graphics.hpp \
 		../../../SFML-2.6.1/include/SFML/Window.hpp \
 		../../../SFML-2.6.1/include/SFML/System.hpp \
@@ -663,7 +675,6 @@ release/food.o: ../../food.cpp ../../food.h \
 		../../../SFML-2.6.1/include/SFML/Graphics/Sprite.hpp \
 		../../../SFML-2.6.1/include/SFML/Graphics/Text.hpp \
 		../../../SFML-2.6.1/include/SFML/Graphics/VertexBuffer.hpp \
-		../../level.h \
 		../../TinyXML/tinyxml.h \
 		../../TinyXML/tinystr.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\food.o ..\..\food.cpp
@@ -1237,10 +1248,10 @@ release/menuwindow.o: ../../menuwindow.cpp ../../menuwindow.h \
 		../../../SFML-2.6.1/include/SFML/Audio/SoundFileFactory.inl \
 		../../../SFML-2.6.1/include/SFML/Audio/SoundFileReader.hpp \
 		../../../SFML-2.6.1/include/SFML/Audio/SoundFileWriter.hpp \
-		../../food.h \
 		../../level.h \
 		../../TinyXML/tinyxml.h \
-		../../TinyXML/tinystr.h
+		../../TinyXML/tinystr.h \
+		../../food.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\menuwindow.o ..\..\menuwindow.cpp
 
 release/player.o: ../../player.cpp ../../player.h \
@@ -1289,6 +1300,7 @@ release/player.o: ../../player.cpp ../../player.h \
 		../../../SFML-2.6.1/include/SFML/Audio/SoundFileFactory.inl \
 		../../../SFML-2.6.1/include/SFML/Audio/SoundFileReader.hpp \
 		../../../SFML-2.6.1/include/SFML/Audio/SoundFileWriter.hpp \
+		../../level.h \
 		../../../SFML-2.6.1/include/SFML/Graphics.hpp \
 		../../../SFML-2.6.1/include/SFML/Window.hpp \
 		../../../SFML-2.6.1/include/SFML/Window/Clipboard.hpp \
@@ -1339,10 +1351,9 @@ release/player.o: ../../player.cpp ../../player.h \
 		../../../SFML-2.6.1/include/SFML/Graphics/Sprite.hpp \
 		../../../SFML-2.6.1/include/SFML/Graphics/Text.hpp \
 		../../../SFML-2.6.1/include/SFML/Graphics/VertexBuffer.hpp \
-		../../food.h \
-		../../level.h \
 		../../TinyXML/tinyxml.h \
-		../../TinyXML/tinystr.h
+		../../TinyXML/tinystr.h \
+		../../food.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\player.o ..\..\player.cpp
 
 release/moc_menuwindow.o: release/moc_menuwindow.cpp 

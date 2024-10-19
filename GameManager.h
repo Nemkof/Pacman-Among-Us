@@ -8,7 +8,6 @@ using namespace std;
 
 int game()
 {
-
     //////////////////////////////СОЗДАЁМ ОКНО//////////////////////////////
     RenderWindow window(VideoMode(2000, 1750), "Among Us: Final");  // Создаём окно
 
@@ -22,6 +21,16 @@ int game()
     lvl.LoadFromFile("../../map.tmx");  // Загружаем нашу карту
     std::vector<Object> obj = lvl.GetAllObjects(); // Получаем вектор объектов карты
 
+    // test Получаем все необходимые объекты карты
+    std::vector<Object> appleObjects(lvl.GetObjects("food")); // Получаем вектор из всех тайлов-яблочек
+    std::vector<Object> rotates(lvl.GetObjects("rotate")); // Получаем вектор из всех тайлов-яблочек
+    std::vector<Object> solids(lvl.GetObjects("solid")); // Получаем вектор из всех тайлов-яблочек
+    Object playerObject = lvl.GetObject("player"); // Получаем вектор из всех тайлов-яблочек
+    Object blinkyObject = lvl.GetObject("Blinky"); // Получаем вектор из всех тайлов-яблочек
+    Object pinkyObject = lvl.GetObject("Pinky"); // Получаем вектор из всех тайлов-яблочек
+    Object inkyObject = lvl.GetObject("Inky"); // Получаем вектор из всех тайлов-яблочек
+    Object clydeObject = lvl.GetObject("Clyde");
+    //
 
     //////////////////////////////ПИХАЕМ ЕДУ В КАРТУ//////////////////////////////
     Texture appleTexture;
@@ -29,7 +38,6 @@ int game()
     Sprite appleSprite;
     appleSprite.setTexture(appleTexture);  // Загружаем текстуру в спрайт
 
-    std::vector<Object> appleObjects(lvl.GetObjects("food")); // Получаем вектор из всех тайлов-яблочек
     std::vector<Food> apples; // Создаём массив яблочек
     for(size_t i = 0; i < appleObjects.size(); i++) // Проходимся по всем тайлам-яблочкам
     {
@@ -54,15 +62,13 @@ int game()
 
 
     //////////////////////////////СОЗДАЁМ ВРАГОВ//////////////////////////////
-    vector<Object> rotates = lvl.GetObjects("rotate");
-
     vector<Enemy*> entities;//создаю список, сюда буду кидать объекты
-    vector<Object> enemies = lvl.GetObjects("enemy");
+
     //for (size_t i = 0; i < enemies.size(); i++)// проходимся по элементам этого вектора(а именно по врагам)
-    Blinky blinky(rotates, entityImage, obj, enemies[0].rect.left, enemies[0].rect.top, widthEntity, heightEntity);
-    Pinky pinky(rotates, entityImage, obj, enemies[1].rect.left, enemies[1].rect.top, widthEntity, heightEntity);
-    Inky inky(rotates, entityImage, obj, enemies[2].rect.left, enemies[2].rect.top, widthEntity, heightEntity);
-    Clyde clyde(rotates, entityImage, obj, enemies[3].rect.left, enemies[3].rect.top, widthEntity, heightEntity);
+    Blinky blinky("Blinky", rotates, solids, blinkyObject.rect.left, blinkyObject.rect.top, widthEntity, heightEntity);
+    Pinky pinky("Pinky", rotates, solids, pinkyObject.rect.left, pinkyObject.rect.top, widthEntity, heightEntity);
+    Inky inky("Inky", rotates, solids, inkyObject.rect.left, inkyObject.rect.top, widthEntity, heightEntity);
+    Clyde clyde("Clyde", rotates, solids, clydeObject.rect.left, clydeObject.rect.top, widthEntity, heightEntity);
 
     entities.push_back(&blinky);//и закидываем в список всех наших врагов с карты
     entities.push_back(&pinky);//и закидываем в список всех наших врагов с карты
@@ -70,8 +76,7 @@ int game()
     entities.push_back(&clyde);//и закидываем в список всех наших врагов с карты
 
     //////////////////////////////СОЗДАЁМ ИГРОКА//////////////////////////////
-    Object playerObject = lvl.GetObject("player");
-    Player player(entityImage, obj, playerObject.rect.left, playerObject.rect.top, widthEntity, heightEntity, &apples);
+    Player player("Player", obj, playerObject.rect.left, playerObject.rect.top, widthEntity, heightEntity, &apples);
 
     //////////////////////////////РАБОТАЕМ С ТЕКСТОМ//////////////////////////////
     Font font;  // Создаём объект типа шрифт

@@ -1,15 +1,13 @@
 #include "entity.h"
 
-
-Entity::Entity(Image &image, float X, float Y, int W, int H){
-    x = X; y = Y; w = W; h = H;
-    startX = X; startY = Y;
+Entity::Entity(std::string Name, float X, float Y, int W, int H)
+    :x(X), y(Y), w(W), h(H), startX(X), startY(Y), name(Name)
+{
     speed = 0; dx = 0; dy = 0;
-    texture.loadFromImage(image);
+    texture.loadFromFile("../../images/" + Name + ".png");
     sprite.setTexture(texture);
     sprite.setOrigin(w / 2, h / 2);
 }
-
 
 /// Обновляем спрайты игрока
 void Entity::updateSprites(float Dx, float time)

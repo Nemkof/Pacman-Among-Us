@@ -5248,10 +5248,10 @@
  </objectgroup>
  <objectgroup id="6" name="players">
   <object id="550" name="player" x="768" y="864" width="32" height="32"/>
-  <object id="795" name="enemy" x="896" y="704" width="32" height="32"/>
-  <object id="800" name="enemy" x="768" y="576" width="32" height="32"/>
-  <object id="801" name="enemy" x="800" y="704" width="32" height="32"/>
-  <object id="802" name="enemy" x="704" y="704" width="32" height="32"/>
+  <object id="795" name="Clyde" x="864" y="736" width="32" height="32"/>
+  <object id="800" name="Blinky" x="704" y="544" width="32" height="32"/>
+  <object id="801" name="Inky" x="768" y="736" width="32" height="32"/>
+  <object id="802" name="Pinky" x="672" y="736" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="7" name="rotates" visible="0">
   <object id="803" name="rotate" x="352" y="256" width="96" height="96"/>

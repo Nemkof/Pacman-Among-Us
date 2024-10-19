@@ -1,8 +1,10 @@
 #include "enemy.h"
 #include <limits>
-Enemy::Enemy(std::vector<Object>& _rotates, Image &image, std::vector<Object>& _obj, float X, float Y, int W, int H) : Entity(image, X, Y, W, H )
+Enemy::Enemy(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids,
+             float X, float Y, int W, int H)
+    : Entity(Name, X, Y, W, H )
 {
-    obj = _obj;
+    solids = _solids;
     sprite.setTextureRect(IntRect(0, 0, w, h));
     sprite.setColor(Color::White);
     sprite.setPosition(x, y);
@@ -19,7 +21,7 @@ void Enemy::selectDirection(float targetX, float targetY){
 
     float minDist = std::numeric_limits<float>::max();
 
-    if(!isBorder(x - 5, y) && (state != Direction::right))
+    if(!isSolid(x - 5, y) && (state != Direction::right))
     {
         double dist = calculateDist(targetX, targetY, x - 5, y);
         if (dist < minDist){
@@ -27,7 +29,7 @@ void Enemy::selectDirection(float targetX, float targetY){
             minDist = dist;
         }
     }
-    if(!isBorder(x + 5, y) && (state != Direction::left))
+    if(!isSolid(x + 5, y) && (state != Direction::left))
     {
         double dist = calculateDist(targetX, targetY, x + 5, y);
         if (dist < minDist){
@@ -35,7 +37,7 @@ void Enemy::selectDirection(float targetX, float targetY){
             minDist = dist;
         }
     }
-    if(!isBorder(x, y - 5) && (state != Direction::down))
+    if(!isSolid(x, y - 5) && (state != Direction::down))
     {
         double dist = calculateDist(targetX, targetY, x, y - 5);
         if (dist < minDist){
@@ -43,7 +45,7 @@ void Enemy::selectDirection(float targetX, float targetY){
             minDist = dist;
         }
     }
-    if(!isBorder(x, y + 5) && (state != Direction::up))
+    if(!isSolid(x, y + 5) && (state != Direction::up))
     {
         double dist = calculateDist(targetX, targetY, x, y + 5);
         if (dist < minDist){
@@ -56,59 +58,12 @@ void Enemy::selectDirection(float targetX, float targetY){
 
 }
 
-/*
-/// Логика движения за игроком
-void Enemy::selectDirection(Direction& state, float targetX, float targetY){
-    Direction nextDir = stay;
-
-    float minDist = std::numeric_limits<float>::max();
-
-    if(!isBorder(x - 5, y) && (lastDir != Direction::right))
+bool Enemy::isSolid(float _x, float _y){
+    for (size_t i = 0; i < solids.size(); i++)
     {
-        double dist = calculateDist(targetX, targetY, x - 5, y);
-        if (dist < minDist){
-            nextDir = Direction::left;
-            minDist = dist;
-        }
-    }
-    if(!isBorder(x + 5, y) && (lastDir != Direction::left))
-    {
-        double dist = calculateDist(targetX, targetY, x + 5, y);
-        if (dist < minDist){
-            nextDir = Direction::right;
-            minDist = dist;
-        }
-    }
-    if(!isBorder(x, y - 5) && (lastDir != Direction::down))
-    {
-        double dist = calculateDist(targetX, targetY, x, y - 5);
-        if (dist < minDist){
-            nextDir = Direction::up;
-            minDist = dist;
-        }
-    }
-    if(!isBorder(x, y + 5) && (lastDir != Direction::up))
-    {
-        double dist = calculateDist(targetX, targetY, x, y + 5);
-        if (dist < minDist){
-            nextDir = Direction::down;
-        }
-    }
-    if(nextDir != stay) {
-        lastDir = nextDir;
-    }
-
-}
-*/
-bool Enemy::isBorder(float _x, float _y){
-    for (size_t i = 0; i < obj.size(); i++)
-    {
-        if (FloatRect(_x, _y, w, h).intersects(obj[i].rect)) // Если пересекаемся с каким-то тайликом
+        if (FloatRect(_x, _y, w, h).intersects(solids[i].rect)) // Если пересекаемся с каким-то тайликом
         {
-            if (obj[i].name == "solid") // И этот тайлик помечен знаком "Стена"
-            {
-                return true; // То мы не можем идти в эту сторону
-            }
+            return true; // То мы не можем идти в эту сторону
         }
     }
     return false; // Если мы не столкнулись со стеной, то можно идти в эту сторону
@@ -120,18 +75,15 @@ float Enemy::calculateDist(float x1, float y1, float x2, float y2){
 
 /// Проверяем столкновения
 void Enemy::checkCollisionWithMap(float Dx, float Dy){
-    for (size_t i = 0; i < obj.size(); i++) // Проходимся по всем элементам карты
+    for (size_t i = 0; i < solids.size(); i++) // Проходимся по всем элементам карты
     {
-        if (getRect().intersects(obj[i].rect)) // Если мы пересекаемся с каким-то тайликом
+        if (getRect().intersects(solids[i].rect)) // Если мы пересекаемся с каким-то тайликом
         {
-
-            if (obj[i].name == "solid") // И этот тайлик помечен знаком "Стена"
-            {   // То мы должны остановить нашего игрока перед стеной
-                if (Dy>0)	{ y = obj[i].rect.top - h;  dy = 0; state = down;}
-                if (Dy<0)	{ y = obj[i].rect.top + obj[i].rect.height;   dy = 0; state = up;}
-                if (Dx>0)	{ x = obj[i].rect.left - w; dx = 0; state = right;}
-                if (Dx<0)	{ x = obj[i].rect.left + obj[i].rect.width; dx = 0; state = left;}
-            }
+           // То мы должны остановить нашего игрока перед стеной
+            if (Dy>0)	{ y = solids[i].rect.top - h;  dy = 0; state = down;}
+            if (Dy<0)	{ y = solids[i].rect.top + solids[i].rect.height;   dy = 0; state = up;}
+            if (Dx>0)	{ x = solids[i].rect.left - w; dx = 0; state = right;}
+            if (Dx<0)	{ x = solids[i].rect.left + solids[i].rect.width; dx = 0; state = left;}
         }
     }
 }

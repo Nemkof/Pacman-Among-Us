@@ -5,9 +5,10 @@ class Enemy: public Entity{
 private:
     Direction lastDir;
     std::vector<Object> rotates;
+    std::vector<Object> solids; // Вектор объектов карты
     //enum { Chase, Scatter, Frightened } status;
 public:
-    Enemy(std::vector<Object>& _rotates, Image &image, std::vector<Object>& _obj, float X, float Y, int W, int H);
+    Enemy(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, float X, float Y, int W, int H);
 
     /// Проверяем нажатия клавиш
     void selectDirection(float targetX, float targetY);
@@ -22,15 +23,15 @@ public:
 
     void update(float time, float targetX, float targetY);
 
-    bool isBorder(float _x, float _y);
+    bool isSolid(float _x, float _y);
 };
 
 
 // Красный
 class Blinky: public Enemy{
 public:
-    Blinky(std::vector<Object>& _rotates, Image &image, std::vector<Object>& _obj, float X, float Y, int W, int H)
-        : Enemy(_rotates, image, _obj, X, Y, W, H )
+    Blinky(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, float X, float Y, int W, int H)
+        : Enemy(Name, _rotates, _solids, X, Y, W, H )
     {
         //sprite.setColor(Color::Black);
         dx = speed;
@@ -40,8 +41,8 @@ public:
 // Розовый
 class Pinky: public Enemy{
 public:
-    Pinky(std::vector<Object>& _rotates, Image &image, std::vector<Object>& _obj, float X, float Y, int W, int H)
-        : Enemy(_rotates, image, _obj, X, Y, W, H )
+    Pinky(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, float X, float Y, int W, int H)
+        : Enemy(Name, _rotates, _solids, X, Y, W, H )
     {
 
     }
@@ -51,8 +52,8 @@ public:
 // Голубой
 class Inky: public Enemy{
 public:
-    Inky(std::vector<Object>& _rotates, Image &image, std::vector<Object>& _obj, float X, float Y, int W, int H) :
-        Enemy(_rotates, image, _obj, X, Y, W, H )
+    Inky(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, float X, float Y, int W, int H) :
+        Enemy(Name, _rotates, _solids, X, Y, W, H )
     {
         //sprite.setColor(Color::Blue);
     }
@@ -61,8 +62,8 @@ public:
 // Оранжевый
 class Clyde: public Enemy{
 public:
-    Clyde(std::vector<Object>& _rotates, Image &image, std::vector<Object>& _obj, float X, float Y, int W, int H)
-        : Enemy(_rotates, image, _obj, X, Y, W, H )
+    Clyde(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, float X, float Y, int W, int H)
+        : Enemy(Name, _rotates, _solids, X, Y, W, H )
     {
         //sprite.setColor(Color::Transparent);
     }

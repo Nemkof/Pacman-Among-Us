@@ -42,6 +42,11 @@ FORMS += \
     menuwindow.ui
 
 DISTFILES += \
+    images/Blinky.png \
+    images/Clyde.png \
+    images/Inky.png \
+    images/Pinky.png \
+    images/Player.png \
     images/Tiny_Chao_Garden_SonicAdv_3_Tile_Sheet.png \
     images/apple.png \
     images/entity.png \
