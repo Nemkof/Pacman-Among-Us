@@ -5246,12 +5246,12 @@
   <object id="769" name="food" x="1280" y="288" width="32" height="32"/>
   <object id="770" name="food" x="1344" y="288" width="32" height="32"/>
  </objectgroup>
- <objectgroup id="6" name="players" visible="0">
+ <objectgroup id="6" name="players">
   <object id="550" name="player" x="768" y="864" width="32" height="32"/>
-  <object id="795" name="enemy" x="1024" y="576" width="32" height="32"/>
-  <object id="800" name="enemy" x="704" y="448" width="32" height="32"/>
-  <object id="801" name="enemy" x="544" y="576" width="32" height="32"/>
-  <object id="802" name="enemy" x="864" y="448" width="32" height="32"/>
+  <object id="795" name="enemy" x="896" y="704" width="32" height="32"/>
+  <object id="800" name="enemy" x="768" y="576" width="32" height="32"/>
+  <object id="801" name="enemy" x="800" y="704" width="32" height="32"/>
+  <object id="802" name="enemy" x="704" y="704" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="7" name="rotates" visible="0">
   <object id="803" name="rotate" x="352" y="256" width="96" height="96"/>
@@ -5289,7 +5289,7 @@
   <object id="838" name="rotate" x="992" y="256" width="96" height="96"/>
   <object id="839" name="rotate" x="1312" y="1280" width="96" height="96"/>
  </objectgroup>
- <objectgroup id="3" name="collision" offsetx="747" offsety="-57">
+ <objectgroup id="3" name="collision" visible="0" offsetx="747" offsety="-57">
   <object id="86" name="solid" x="32" y="32" width="64" height="512"/>
   <object id="87" name="solid" x="96" y="480" width="256" height="64"/>
   <object id="88" name="solid" x="320" y="544" width="32" height="160"/>

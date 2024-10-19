@@ -7,4 +7,6 @@ debug/entity.o
 debug/food.o
 debug/lives.o
 debug/main.o
+debug/menuwindow.o
 debug/player.o
+debug/moc_menuwindow.o

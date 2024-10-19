@@ -13,16 +13,16 @@ Player::Player(Image &image, std::vector<Object>& _obj, float X, float Y, int W,
 
 
 void Player::control(){
-    if (Keyboard::isKeyPressed(Keyboard::Left)) {
+    if (Keyboard::isKeyPressed(Keyboard::Left) && state != right) {
         state = left;
     }
-    if (Keyboard::isKeyPressed(Keyboard::Right)) {
+    if (Keyboard::isKeyPressed(Keyboard::Right) && state != left) {
         state = right;
     }
-    if ((Keyboard::isKeyPressed(Keyboard::Up)) ) {
+    if (Keyboard::isKeyPressed(Keyboard::Up) && state != down) {
         state = up;
     }
-    if (Keyboard::isKeyPressed(Keyboard::Down)) {
+    if (Keyboard::isKeyPressed(Keyboard::Down) && state != up) {
         state = down;
     }
 }

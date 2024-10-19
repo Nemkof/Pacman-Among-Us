@@ -8,17 +8,12 @@ Food::Food(Sprite _sprite, int _x, int _y): sprite(_sprite), x(_x), y(_y){
 }
 
 
-void Food::Dead(){
-    status = true;
-}
+void Food::Dead(){status = true;}
 
 
-bool Food::isDead()
-{
-    return status;
-}
+bool Food::isDead(){return status;}
 
 
-Sprite Food::getSprite(){
-    return sprite;
-}
+Sprite Food::getSprite(){return sprite;}
+
+

@@ -25,6 +25,8 @@ public:
     bool isBorder(float _x, float _y);
 };
 
+
+// Красный
 class Blinky: public Enemy{
 public:
     Blinky(std::vector<Object>& _rotates, Image &image, std::vector<Object>& _obj, float X, float Y, int W, int H)
@@ -35,6 +37,7 @@ public:
     }
 };
 
+// Розовый
 class Pinky: public Enemy{
 public:
     Pinky(std::vector<Object>& _rotates, Image &image, std::vector<Object>& _obj, float X, float Y, int W, int H)
@@ -44,6 +47,8 @@ public:
     }
 };
 
+
+// Голубой
 class Inky: public Enemy{
 public:
     Inky(std::vector<Object>& _rotates, Image &image, std::vector<Object>& _obj, float X, float Y, int W, int H) :
@@ -53,6 +58,7 @@ public:
     }
 };
 
+// Оранжевый
 class Clyde: public Enemy{
 public:
     Clyde(std::vector<Object>& _rotates, Image &image, std::vector<Object>& _obj, float X, float Y, int W, int H)

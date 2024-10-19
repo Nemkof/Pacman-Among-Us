@@ -1,6 +1,6 @@
 #ifndef FOOD_H
 #define FOOD_H
-#include <SFML/Graphics.hpp>
+#include "level.h"
 using namespace sf;
 class Food
 {
@@ -15,4 +15,6 @@ public:
     bool isDead();
     Sprite getSprite();
 };
+
+void initApples(Level& lvl, std::vector<Food>& apples);
 #endif // FOOD_H

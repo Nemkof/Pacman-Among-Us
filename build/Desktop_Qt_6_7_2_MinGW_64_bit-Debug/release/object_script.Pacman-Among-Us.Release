@@ -7,4 +7,6 @@ release/entity.o
 release/food.o
 release/lives.o
 release/main.o
+release/menuwindow.o
 release/player.o
+release/moc_menuwindow.o
