@@ -1,7 +1,7 @@
 #include "player.h"
 
-Player::Player(std::string Name, std::vector<Object>& _obj, float X, float Y, int W, int H, std::vector<Food> *_apples)
-    :Entity(Name, X, Y, W, H)
+Player::Player(std::string Name, std::vector<Object>& _obj, Object object, int W, int H, std::vector<Food> *_apples)
+    :Entity(Name, object, W, H)
 {
     score = 0;
     speed = 0.2;

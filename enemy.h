@@ -8,7 +8,7 @@ private:
     std::vector<Object> solids; // Вектор объектов карты
     //enum { Chase, Scatter, Frightened } status;
 public:
-    Enemy(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, float X, float Y, int W, int H);
+    Enemy(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object, int W, int H);
 
     /// Проверяем нажатия клавиш
     void selectDirection(float targetX, float targetY);
@@ -24,49 +24,57 @@ public:
     void update(float time, float targetX, float targetY);
 
     bool isSolid(float _x, float _y);
+
+    virtual float getTargetX(float x) = 0;
+    virtual float getTargetY(float y) = 0;
 };
 
 
 // Красный
 class Blinky: public Enemy{
 public:
-    Blinky(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, float X, float Y, int W, int H)
-        : Enemy(Name, _rotates, _solids, X, Y, W, H )
+    Blinky(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object, int W, int H)
+        : Enemy(Name, _rotates, _solids, object, W, H )
     {
-        //sprite.setColor(Color::Black);
-        dx = speed;
+
     }
+    float getTargetX(float x) override {return x;}
+    float getTargetY(float y) override {return y;}
 };
 
 // Розовый
 class Pinky: public Enemy{
 public:
-    Pinky(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, float X, float Y, int W, int H)
-        : Enemy(Name, _rotates, _solids, X, Y, W, H )
+    Pinky(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object, int W, int H)
+        : Enemy(Name, _rotates, _solids, object, W, H )
     {
 
     }
+    float getTargetX(float x) override {return x + 200;}
+    float getTargetY(float y) override {return y;}
 };
 
 
 // Голубой
 class Inky: public Enemy{
 public:
-    Inky(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, float X, float Y, int W, int H) :
-        Enemy(Name, _rotates, _solids, X, Y, W, H )
+    Inky(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object, int W, int H) :
+        Enemy(Name, _rotates, _solids, object, W, H )
     {
-        //sprite.setColor(Color::Blue);
     }
+    float getTargetX(float x) override {return x - 200;}
+    float getTargetY(float y) override {return y;}
 };
 
 // Оранжевый
 class Clyde: public Enemy{
 public:
-    Clyde(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, float X, float Y, int W, int H)
-        : Enemy(Name, _rotates, _solids, X, Y, W, H )
+    Clyde(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object, int W, int H)
+        : Enemy(Name, _rotates, _solids, object, W, H )
     {
-        //sprite.setColor(Color::Transparent);
     }
+    float getTargetX(float x) override {return x;}
+    float getTargetY(float y) override {return y + 200;}
 };
 
 #endif // ENEMY_H

@@ -1,12 +1,14 @@
 #include "entity.h"
 
-Entity::Entity(std::string Name, float X, float Y, int W, int H)
-    :x(X), y(Y), w(W), h(H), startX(X), startY(Y), name(Name)
+Entity::Entity(std::string Name, Object object, int W, int H)
+    :x(object.rect.left), y(object.rect.top), w(W), h(H), name(Name)
 {
+    startX = x; startY = y;
     speed = 0; dx = 0; dy = 0;
     texture.loadFromFile("../../images/" + Name + ".png");
     sprite.setTexture(texture);
-    sprite.setOrigin(w / 2, h / 2);
+    sprite.setOrigin(w / 2, h / 2);    // Создаём имя главного героя
+    name = Name;
 }
 
 /// Обновляем спрайты игрока

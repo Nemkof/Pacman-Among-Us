@@ -18,8 +18,7 @@ public:
     Texture texture;
     Sprite sprite;
     std::string name;
-
-    Entity(std::string Name, float X, float Y, int W, int H);
+    Entity(std::string Name, Object object, int W, int H);
 
     FloatRect getRect();
     Sprite getSprite();

@@ -1,15 +1,15 @@
 #include "enemy.h"
 #include <limits>
 Enemy::Enemy(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids,
-             float X, float Y, int W, int H)
-    : Entity(Name, X, Y, W, H )
+             Object object, int W, int H)
+    : Entity(Name, object, W, H )
 {
     solids = _solids;
     sprite.setTextureRect(IntRect(0, 0, w, h));
     sprite.setColor(Color::White);
     sprite.setPosition(x, y);
     speed = 0.1;
-    dx = 0;
+    dx = speed;
     dy = 0;
     state = right;
     rotates = _rotates;
@@ -101,8 +101,10 @@ void Enemy::updatePosition(float time){
     sprite.setPosition(x + w / 2, y + h / 2);
 }
 
-void Enemy::update(float time, float targetX, float targetY)
+void Enemy::update(float time, float playerX, float playerY)
 {
+    float targetX = getTargetX(playerX);
+    float targetY = getTargetY(playerY);
     // Вспомогательная переменная для определения направления игрока
     // Если после проверки на коллизию мы остановились, то нужно искать новый путь к игроку
     for (size_t i = 0; i < rotates.size(); i++) // Проходимся по всем элементам карты

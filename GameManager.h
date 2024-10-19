@@ -21,7 +21,7 @@ int game()
     lvl.LoadFromFile("../../map.tmx");  // Загружаем нашу карту
     std::vector<Object> obj = lvl.GetAllObjects(); // Получаем вектор объектов карты
 
-    // test Получаем все необходимые объекты карты
+    // Получаем все необходимые объекты карты
     std::vector<Object> appleObjects(lvl.GetObjects("food")); // Получаем вектор из всех тайлов-яблочек
     std::vector<Object> rotates(lvl.GetObjects("rotate")); // Получаем вектор из всех тайлов-яблочек
     std::vector<Object> solids(lvl.GetObjects("solid")); // Получаем вектор из всех тайлов-яблочек
@@ -47,10 +47,7 @@ int game()
     }
 
     //////////////////////////////ДЕЛАЕМ ТЕКСТУРУ ИГРОКОВ//////////////////////////////
-    String pathToEntityImage = "../../images/Blinky.png"; // 72x90
     int widthEntity = 72, heightEntity = 90;
-    Image entityImage;
-    entityImage.loadFromFile(pathToEntityImage);
 
     //////////////////////////////ДЕЛАЕМ ТЕКСТУРУ LIVES//////////////////////////////
     String pathToLivesImage = "../../images/lives.png"; // 72x90
@@ -65,10 +62,10 @@ int game()
     vector<Enemy*> entities;//создаю список, сюда буду кидать объекты
 
     //for (size_t i = 0; i < enemies.size(); i++)// проходимся по элементам этого вектора(а именно по врагам)
-    Blinky blinky("Blinky", rotates, solids, blinkyObject.rect.left, blinkyObject.rect.top, widthEntity, heightEntity);
-    Pinky pinky("Pinky", rotates, solids, pinkyObject.rect.left, pinkyObject.rect.top, widthEntity, heightEntity);
-    Inky inky("Inky", rotates, solids, inkyObject.rect.left, inkyObject.rect.top, widthEntity, heightEntity);
-    Clyde clyde("Clyde", rotates, solids, clydeObject.rect.left, clydeObject.rect.top, widthEntity, heightEntity);
+    Blinky blinky("Blinky", rotates, solids, blinkyObject, widthEntity, heightEntity);
+    Pinky pinky("Pinky", rotates, solids, pinkyObject, widthEntity, heightEntity);
+    Inky inky("Inky", rotates, solids, inkyObject, widthEntity, heightEntity);
+    Clyde clyde("Clyde", rotates, solids, clydeObject, widthEntity, heightEntity);
 
     entities.push_back(&blinky);//и закидываем в список всех наших врагов с карты
     entities.push_back(&pinky);//и закидываем в список всех наших врагов с карты
@@ -76,22 +73,15 @@ int game()
     entities.push_back(&clyde);//и закидываем в список всех наших врагов с карты
 
     //////////////////////////////СОЗДАЁМ ИГРОКА//////////////////////////////
-    Player player("Player", obj, playerObject.rect.left, playerObject.rect.top, widthEntity, heightEntity, &apples);
+    Player player("Player", obj, playerObject, widthEntity, heightEntity, &apples);
 
     //////////////////////////////РАБОТАЕМ С ТЕКСТОМ//////////////////////////////
     Font font;  // Создаём объект типа шрифт
     font.loadFromFile("../../images/forText.ttf"); // Загружаем шрифт в объект
-
     // Создаём текст с количеством очков
     Text textScore("", font, 55);
     textScore.setStyle(sf::Text::Bold);
     textScore.setFillColor(Color::White);
-
-    // Создаём имя главного героя
-    Text playerName("", font, 20);
-    playerName.setStyle(sf::Text::Bold);
-    playerName.setFillColor(Color::Red);
-
 
     // Создаём часики для работы со временем
     Clock clock;
@@ -101,7 +91,6 @@ int game()
         float time = clock.getElapsedTime().asMicroseconds(); // Берём у часиков время
         clock.restart(); // Запускаем часики
         time = time / 800; // Уменьшаем время, чтобы не так быстро всё летало
-
 
         //////////////////////////////ДАРИМ ИГРЕ ЖИЗНЬ//////////////////////////////
         Event event;
@@ -118,7 +107,8 @@ int game()
         //////////////////////////////РИСУЕМ ЛЮКИ//////////////////////////////
         window.draw(hatchRightSprite);
         window.draw(hatchLeftSprite);
-*/
+        */
+
         //////////////////////////////ДАРИМ ИГРОКУ ЖИЗНЬ//////////////////////////////
         player.update(time, entities);
         window.draw(player.sprite); // Рисуем игрока
@@ -127,17 +117,11 @@ int game()
         window.draw(lives.getSprite());
 
         //////////////////////////////ДАРИМ ВРАГАМ ЖИЗНЬ//////////////////////////////
-
-
-        entities[0]->update(time, player.x - 200, player.y);
-        entities[1]->update(time, player.x + 200, player.y);
-        entities[2]->update(time, player.x, player.y - 200);
-        entities[3]->update(time, player.x, player.y + 200);
-        window.draw(entities[0]->sprite);
-        window.draw(entities[1]->sprite);
-        window.draw(entities[2]->sprite);
-        window.draw(entities[3]->sprite);
-
+        for(size_t i = 0; i < entities.size(); i++)
+        {
+            entities[i]->update(time, player.x, player.y);
+            window.draw(entities[i]->sprite);
+        }
 
         //////////////////////////////РАБОТАЕМ С ЕДОЙ//////////////////////////////
         for (auto it : apples) // Проходимся по всем яблочкам
@@ -149,19 +133,10 @@ int game()
 
         //////////////////////////////РАБОТАЕМ С ТЕКСТОМ//////////////////////////////
         textScore.setPosition(1300, 0); // Устанавливаем счёт очков в угол
-        textScore.setString("score: " + std::to_string(player.getScore())); // Получаем нужную надпись
-        //textScore.setString("score: " + (entities[0]->getDirection())); // Получаем нужную надпись
+        // textScore.setString("score: " + std::to_string(player.getScore())); // Получаем нужную надпись
+        textScore.setString("score: " + inkyObject.name); // Получаем нужную надпись
+
         window.draw(textScore); // Рисуем счёт очков
-
-        playerName.setPosition(player.getX(), player.getY() - player.h / 5); // Устанавливаем имя игрока над ним
-        playerName.setString("Impostor"); // Устанавливаем нужную надпись
-        window.draw(playerName);  // Рисуем имя игрока
-
-
-        // test
-
-        //
-
 
         /// Если три раза попались врагу, то игра окончена
         if(!player.isLive()){
