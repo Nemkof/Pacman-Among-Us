@@ -9,7 +9,7 @@ private:
     std::vector<Food>* apples;
     int score;
 public:
-    Player(std::string Name, std::vector<Object>& _obj, Object object, int W, int H, std::vector<Food> *_apples);
+    Player(std::vector<Object>& _obj, Object object, std::vector<Food> *_apples);
 
     void control();
 

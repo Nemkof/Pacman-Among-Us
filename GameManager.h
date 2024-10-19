@@ -62,10 +62,10 @@ int game()
     vector<Enemy*> entities;//создаю список, сюда буду кидать объекты
 
     //for (size_t i = 0; i < enemies.size(); i++)// проходимся по элементам этого вектора(а именно по врагам)
-    Blinky blinky("Blinky", rotates, solids, blinkyObject, widthEntity, heightEntity);
-    Pinky pinky("Pinky", rotates, solids, pinkyObject, widthEntity, heightEntity);
-    Inky inky("Inky", rotates, solids, inkyObject, widthEntity, heightEntity);
-    Clyde clyde("Clyde", rotates, solids, clydeObject, widthEntity, heightEntity);
+    Blinky blinky(rotates, solids, blinkyObject);
+    Pinky pinky(rotates, solids, pinkyObject);
+    Inky inky(rotates, solids, inkyObject);
+    Clyde clyde(rotates, solids, clydeObject);
 
     entities.push_back(&blinky);//и закидываем в список всех наших врагов с карты
     entities.push_back(&pinky);//и закидываем в список всех наших врагов с карты
@@ -73,7 +73,7 @@ int game()
     entities.push_back(&clyde);//и закидываем в список всех наших врагов с карты
 
     //////////////////////////////СОЗДАЁМ ИГРОКА//////////////////////////////
-    Player player("Player", obj, playerObject, widthEntity, heightEntity, &apples);
+    Player player(obj, playerObject, &apples);
 
     //////////////////////////////РАБОТАЕМ С ТЕКСТОМ//////////////////////////////
     Font font;  // Создаём объект типа шрифт
@@ -108,6 +108,13 @@ int game()
         window.draw(hatchRightSprite);
         window.draw(hatchLeftSprite);
         */
+        //////////////////////////////РАБОТАЕМ С ЕДОЙ//////////////////////////////
+        for (auto it : apples) // Проходимся по всем яблочкам
+        {
+            if(!it.isDead()) // Если яблочко не съели
+                window.draw(it.getSprite()); // То нужно его нарисовать
+        }
+
 
         //////////////////////////////ДАРИМ ИГРОКУ ЖИЗНЬ//////////////////////////////
         player.update(time, entities);
@@ -122,14 +129,6 @@ int game()
             entities[i]->update(time, player.x, player.y);
             window.draw(entities[i]->sprite);
         }
-
-        //////////////////////////////РАБОТАЕМ С ЕДОЙ//////////////////////////////
-        for (auto it : apples) // Проходимся по всем яблочкам
-        {
-            if(!it.isDead()) // Если яблочко не съели
-                window.draw(it.getSprite()); // То нужно его нарисовать
-        }
-
 
         //////////////////////////////РАБОТАЕМ С ТЕКСТОМ//////////////////////////////
         textScore.setPosition(1300, 0); // Устанавливаем счёт очков в угол

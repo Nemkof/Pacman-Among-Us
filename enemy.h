@@ -8,7 +8,7 @@ private:
     std::vector<Object> solids; // Вектор объектов карты
     //enum { Chase, Scatter, Frightened } status;
 public:
-    Enemy(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object, int W, int H);
+    Enemy(std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object);
 
     /// Проверяем нажатия клавиш
     void selectDirection(float targetX, float targetY);
@@ -33,8 +33,8 @@ public:
 // Красный
 class Blinky: public Enemy{
 public:
-    Blinky(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object, int W, int H)
-        : Enemy(Name, _rotates, _solids, object, W, H )
+    Blinky(std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object)
+        : Enemy(_rotates, _solids, object)
     {
 
     }
@@ -45,8 +45,8 @@ public:
 // Розовый
 class Pinky: public Enemy{
 public:
-    Pinky(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object, int W, int H)
-        : Enemy(Name, _rotates, _solids, object, W, H )
+    Pinky(std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object)
+        : Enemy(_rotates, _solids, object)
     {
 
     }
@@ -58,8 +58,8 @@ public:
 // Голубой
 class Inky: public Enemy{
 public:
-    Inky(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object, int W, int H) :
-        Enemy(Name, _rotates, _solids, object, W, H )
+    Inky(std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object) :
+        Enemy(_rotates, _solids, object)
     {
     }
     float getTargetX(float x) override {return x - 200;}
@@ -69,8 +69,8 @@ public:
 // Оранжевый
 class Clyde: public Enemy{
 public:
-    Clyde(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object, int W, int H)
-        : Enemy(Name, _rotates, _solids, object, W, H )
+    Clyde(std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object)
+        : Enemy(_rotates, _solids, object)
     {
     }
     float getTargetX(float x) override {return x;}

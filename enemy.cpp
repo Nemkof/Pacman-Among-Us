@@ -1,8 +1,7 @@
 #include "enemy.h"
 #include <limits>
-Enemy::Enemy(std::string Name, std::vector<Object>& _rotates, std::vector<Object>& _solids,
-             Object object, int W, int H)
-    : Entity(Name, object, W, H )
+Enemy::Enemy(std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object)
+    : Entity(object)
 {
     solids = _solids;
     sprite.setTextureRect(IntRect(0, 0, w, h));
