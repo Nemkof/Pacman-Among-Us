@@ -39,7 +39,11 @@ void Entity::updateSprites(float Dx, float time)
 
 
 FloatRect Entity::getRect(){  // функция получения прямоугольника. координаты объекта, размер (ширина, высота).
-    return FloatRect(x, y, w, h); // нужна для проверки столкновений
+    return FloatRect(x, y, w, h);
+}
+
+FloatRect Entity::getRectForRotates(){  // функция получения прямоугольника. координаты объекта, размер (ширина, высота).
+    return FloatRect(x, y, w / 2, h / 2); // нужна для проверки столкновений
 }
 
 

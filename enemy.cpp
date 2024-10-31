@@ -54,7 +54,6 @@ void Enemy::selectDirection(float targetX, float targetY){
     if(nextDir != stay) {
         state = nextDir;
     }
-
 }
 
 bool Enemy::isSolid(float _x, float _y){
@@ -88,10 +87,10 @@ void Enemy::checkCollisionWithMap(float Dx, float Dy){
 }
 
 void Enemy::updatePosition(float time){
-    if(state == right) {dx = speed; state = right;}
-    else if(state == left) {dx = -speed; state = left;}
-    else if(state == down) {dy = speed; state = down;}
-    else if(state == up) {dy = -speed; state = up;}
+    if(state == right) {dx = speed; dy = 0; state = right;}
+    else if(state == left) {dx = -speed; dy = 0; state = left;}
+    else if(state == down) {dy = speed; dx = 0; state = down;}
+    else if(state == up) {dy = -speed; dx = 0; state = up;}
 
     x += dx*time;
     checkCollisionWithMap(dx, 0);
@@ -102,18 +101,30 @@ void Enemy::updatePosition(float time){
 
 void Enemy::update(float time, float playerX, float playerY)
 {
+    timeRotates += time;
+
     float targetX = getTargetX(playerX);
     float targetY = getTargetY(playerY);
-    // Вспомогательная переменная для определения направления игрока
-    // Если после проверки на коллизию мы остановились, то нужно искать новый путь к игроку
-    for (size_t i = 0; i < rotates.size(); i++) // Проходимся по всем элементам карты
+
+    // Проходимся по всем элементам карты
+    for (size_t i = 0; i < rotates.size(); i++)
     {
-        if (getRect().intersects(rotates[i].rect)) // Если мы пересекаемся с каким-то тайликом
+        // Если мы находимся на перекрестке
+        if (getRectForRotates().intersects(rotates[i].rect)
+            && timeRotates > 1000)
         {
             selectDirection(targetX, targetY);
+            timeRotates = 0;
         }
     }
-    if(dx == 0 && dy == 0) selectDirection(targetX, targetY);
+
+    //Если мы остановились, значит столкнулись со стеной. Нужно повернуть
+    if(dx == 0 && dy == 0
+        && timeRotates > 1000)
+    {
+        selectDirection(targetX, targetY);
+        timeRotates = 0;;
+    }
 
     updatePosition(time);
 

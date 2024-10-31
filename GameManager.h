@@ -14,7 +14,7 @@ int game()
     Music music;//создаем объект музыки
     music.openFromFile("../../sounds/music.ogg");//загружаем файл
     music.setVolume(5);
-    music.play();//воспроизводим музыку
+    //music.play();//воспроизводим музыку
 
     //////////////////////////////ЗАГРУЖАЕМ КАРТУ//////////////////////////////
     Level lvl; // Создаём объект типа "Карта"
@@ -132,8 +132,7 @@ int game()
 
         //////////////////////////////РАБОТАЕМ С ТЕКСТОМ//////////////////////////////
         textScore.setPosition(1300, 0); // Устанавливаем счёт очков в угол
-        // textScore.setString("score: " + std::to_string(player.getScore())); // Получаем нужную надпись
-        textScore.setString("score: " + inkyObject.name); // Получаем нужную надпись
+        textScore.setString("score: " + std::to_string(player.getScore())); // Получаем нужную надпись
 
         window.draw(textScore); // Рисуем счёт очков
 

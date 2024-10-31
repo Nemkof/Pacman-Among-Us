@@ -7,6 +7,7 @@ private:
     std::vector<Object> rotates;
     std::vector<Object> solids; // Вектор объектов карты
     //enum { Chase, Scatter, Frightened } status;
+    float timeRotates;
 public:
     Enemy(std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object);
 
