@@ -141,4 +141,10 @@ void Enemy::update(float time, float playerX, float playerY)
 
     sprite.setPosition(x + w / 2, y + h / 2);
     updateSprites(dx, time);
+
+    vov();
+}
+
+void Enemy::vov(){
+    sprite.setColor(Color(rand(),rand(),rand()));
 }

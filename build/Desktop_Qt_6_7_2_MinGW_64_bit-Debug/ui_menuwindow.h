@@ -11,9 +11,11 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 
@@ -23,11 +25,15 @@ class Ui_MenuWindow
 {
 public:
     QWidget *centralwidget;
-    QWidget *gridLayoutWidget;
-    QGridLayout *gridLayout;
     QPushButton *ExitButton;
     QPushButton *PlayButton;
     QPushButton *SettingsButton;
+    QWidget *SettingsWidget;
+    QWidget *horizontalLayoutWidget;
+    QHBoxLayout *horizontalLayout;
+    QLabel *label;
+    QSlider *horizontalSlider;
+    QPushButton *HowToPlay;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MenuWindow)
@@ -37,27 +43,38 @@ public:
         MenuWindow->resize(800, 600);
         centralwidget = new QWidget(MenuWindow);
         centralwidget->setObjectName("centralwidget");
-        gridLayoutWidget = new QWidget(centralwidget);
-        gridLayoutWidget->setObjectName("gridLayoutWidget");
-        gridLayoutWidget->setGeometry(QRect(410, 240, 281, 171));
-        gridLayout = new QGridLayout(gridLayoutWidget);
-        gridLayout->setObjectName("gridLayout");
-        gridLayout->setContentsMargins(0, 0, 0, 0);
-        ExitButton = new QPushButton(gridLayoutWidget);
+        ExitButton = new QPushButton(centralwidget);
         ExitButton->setObjectName("ExitButton");
-
-        gridLayout->addWidget(ExitButton, 2, 0, 1, 1);
-
-        PlayButton = new QPushButton(gridLayoutWidget);
+        ExitButton->setGeometry(QRect(630, 440, 101, 41));
+        PlayButton = new QPushButton(centralwidget);
         PlayButton->setObjectName("PlayButton");
-
-        gridLayout->addWidget(PlayButton, 0, 0, 1, 1);
-
-        SettingsButton = new QPushButton(gridLayoutWidget);
+        PlayButton->setGeometry(QRect(620, 250, 111, 71));
+        SettingsButton = new QPushButton(centralwidget);
         SettingsButton->setObjectName("SettingsButton");
+        SettingsButton->setGeometry(QRect(570, 390, 203, 41));
+        SettingsWidget = new QWidget(centralwidget);
+        SettingsWidget->setObjectName("SettingsWidget");
+        SettingsWidget->setGeometry(QRect(230, 200, 331, 301));
+        horizontalLayoutWidget = new QWidget(SettingsWidget);
+        horizontalLayoutWidget->setObjectName("horizontalLayoutWidget");
+        horizontalLayoutWidget->setGeometry(QRect(9, 20, 291, 41));
+        horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
+        horizontalLayout->setObjectName("horizontalLayout");
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        label = new QLabel(horizontalLayoutWidget);
+        label->setObjectName("label");
 
-        gridLayout->addWidget(SettingsButton, 1, 0, 1, 1);
+        horizontalLayout->addWidget(label);
 
+        horizontalSlider = new QSlider(horizontalLayoutWidget);
+        horizontalSlider->setObjectName("horizontalSlider");
+        horizontalSlider->setOrientation(Qt::Orientation::Horizontal);
+
+        horizontalLayout->addWidget(horizontalSlider);
+
+        HowToPlay = new QPushButton(centralwidget);
+        HowToPlay->setObjectName("HowToPlay");
+        HowToPlay->setGeometry(QRect(610, 330, 131, 51));
         MenuWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MenuWindow);
         statusbar->setObjectName("statusbar");
@@ -74,6 +91,8 @@ public:
         ExitButton->setText(QCoreApplication::translate("MenuWindow", "Exit", nullptr));
         PlayButton->setText(QCoreApplication::translate("MenuWindow", "StartGame", nullptr));
         SettingsButton->setText(QCoreApplication::translate("MenuWindow", "Settings", nullptr));
+        label->setText(QCoreApplication::translate("MenuWindow", "Volume", nullptr));
+        HowToPlay->setText(QCoreApplication::translate("MenuWindow", "PushButton", nullptr));
     } // retranslateUi
 
 };

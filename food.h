@@ -3,26 +3,6 @@
 #include "level.h"
 using namespace sf;
 
-// class Food{
-// private:
-//     Sprite sprite;
-//     int x, y;
-//     enum class{
-//         Eaten,     // Съеден
-//         notEaten,  // Не съеден
-//         Hidden     // Скрыт от игрока (для бананов)
-//     }state;
-
-//     float score = 5;
-// public:
-//     Food(Sprite _sprite, int _x, int _y);
-//     bool isDead();
-//     Sprite getSprite();
-
-//     void Dead();
-// };
-
-
 class Apple{
 private:
     Sprite sprite;
@@ -55,18 +35,16 @@ private:
         Eaten,     // Съеден
         notEaten,  // Не съеден
         Hidden     // Скрыт от игрока (для бананов)
-    }status;
+    }condition;
 
     float score = 50;
 public:
     Banana(const Sprite& _sprite, const float& _x, const float& _y, const Vector2u& size);
 
-    String getStatus();
+    String getCondition();
     Sprite getSprite();
 
-    void Dead();
-
-    void setStatus(String _status);
+    void setCondition(String _condition);
 };
 
 void initApples(Level& lvl, std::vector<Apple>& apples);

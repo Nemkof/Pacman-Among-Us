@@ -27,12 +27,12 @@ INCLUDEPATH += C:\myQT\projects\SFML-2.6.1\include
 DEPENDPATH += C:\myQT\projects\SFML-2.6.1\include
 
 HEADERS += \
-    GameManager.h \
     TinyXML/tinystr.h \
     TinyXML/tinyxml.h \
     enemy.h \
     entity.h \
     food.h \
+    gamemanager.h \
     level.h \
     lives.h \
     menuwindow.h \

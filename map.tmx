@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#4d538c" nextlayerid="8" nextobjectid="908">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#4d538c" nextlayerid="8" nextobjectid="923">
  <tileset firstgid="1" name="Tiny_Chao_Garden_SonicAdv_3_Tile_Sheet" tilewidth="32" tileheight="32" tilecount="7200" columns="144">
   <grid orientation="orthogonal" width="16" height="16"/>
   <image source="images/Tiny_Chao_Garden_SonicAdv_3_Tile_Sheet.png" width="4617" height="1616"/>
@@ -5012,7 +5012,7 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="5" name="food">
+ <objectgroup id="5" name="food" visible="0">
   <object id="157" name="apple" x="384" y="576" width="32" height="32"/>
   <object id="158" name="apple" x="384" y="640" width="32" height="32"/>
   <object id="159" name="apple" x="384" y="512" width="32" height="32"/>
@@ -5034,13 +5034,6 @@
   <object id="181" name="apple" x="192" y="288" width="32" height="32"/>
   <object id="182" name="apple" x="256" y="288" width="32" height="32"/>
   <object id="183" name="apple" x="320" y="288" width="32" height="32"/>
-  <object id="184" name="apple" x="448" y="96" width="32" height="32"/>
-  <object id="185" name="apple" x="512" y="96" width="32" height="32"/>
-  <object id="186" name="apple" x="576" y="96" width="32" height="32"/>
-  <object id="187" name="apple" x="640" y="96" width="32" height="32"/>
-  <object id="188" name="apple" x="704" y="96" width="32" height="32"/>
-  <object id="189" name="apple" x="704" y="160" width="32" height="32"/>
-  <object id="190" name="apple" x="704" y="224" width="32" height="32"/>
   <object id="191" name="apple" x="448" y="288" width="32" height="32"/>
   <object id="192" name="apple" x="512" y="288" width="32" height="32"/>
   <object id="193" name="apple" x="576" y="288" width="32" height="32"/>
@@ -5159,15 +5152,6 @@
   <object id="514" name="apple" x="1376" y="1312" width="32" height="32"/>
   <object id="515" name="apple" x="1312" y="1312" width="32" height="32"/>
   <object id="516" name="apple" x="1248" y="1312" width="32" height="32"/>
-  <object id="517" name="apple" x="1280" y="1024" width="32" height="32"/>
-  <object id="518" name="apple" x="1344" y="1024" width="32" height="32"/>
-  <object id="519" name="apple" x="1408" y="1024" width="32" height="32"/>
-  <object id="520" name="apple" x="1440" y="1056" width="32" height="32"/>
-  <object id="521" name="apple" x="1440" y="1120" width="32" height="32"/>
-  <object id="522" name="apple" x="1440" y="1184" width="32" height="32"/>
-  <object id="523" name="apple" x="1376" y="1184" width="32" height="32"/>
-  <object id="524" name="apple" x="1344" y="1216" width="32" height="32"/>
-  <object id="525" name="apple" x="1344" y="1280" width="32" height="32"/>
   <object id="526" name="apple" x="1184" y="928" width="32" height="32"/>
   <object id="527" name="apple" x="1184" y="864" width="32" height="32"/>
   <object id="528" name="apple" x="1184" y="800" width="32" height="32"/>
@@ -5277,7 +5261,7 @@
   <object id="904" name="rotate" x="126.667" y="1345.33" width="8" height="8"/>
   <object id="905" name="rotate" x="1464" y="1344" width="8" height="8"/>
  </objectgroup>
- <objectgroup id="3" name="collision" visible="0">
+ <objectgroup id="3" name="collision">
   <object id="86" name="solid" x="32" y="32" width="64" height="512"/>
   <object id="87" name="solid" x="96" y="480" width="256" height="64"/>
   <object id="88" name="solid" x="320" y="544" width="32" height="160"/>
@@ -5285,7 +5269,6 @@
   <object id="90" name="solid" x="32" y="704" width="32" height="128"/>
   <object id="91" name="solid" x="64" y="800" width="288" height="32"/>
   <object id="92" name="solid" x="192" y="160" width="160" height="96"/>
-  <object id="93" name="solid" x="448" y="160" width="224" height="96"/>
   <object id="94" name="solid" x="192" y="352" width="160" height="32"/>
   <object id="95" name="solid" x="448" y="352" width="64" height="352"/>
   <object id="96" name="solid" x="512" y="512" width="160" height="32"/>
@@ -5304,7 +5287,6 @@
   <object id="113" name="solid" x="928" y="1088" width="224" height="64"/>
   <object id="114" name="solid" x="1088" y="800" width="64" height="192"/>
   <object id="115" name="solid" x="1248" y="1088" width="64" height="192"/>
-  <object id="116" name="solid" x="1312" y="1088" width="96" height="64"/>
   <object id="117" name="solid" x="1408" y="1248" width="96" height="32"/>
   <object id="118" name="solid" x="928" y="1376" width="480" height="64"/>
   <object id="119" name="solid" x="1088" y="1248" width="64" height="128"/>
@@ -5343,5 +5325,14 @@
   <object id="898" name="solid" x="448" y="1376" width="64" height="32"/>
   <object id="901" name="solid" x="192" y="1376" width="480" height="64"/>
   <object id="903" name="solid" x="96" y="1248" width="96" height="32"/>
+  <object id="908" name="solid" x="448" y="64" width="32" height="192"/>
+  <object id="910" name="solid" x="480" y="224" width="128" height="32"/>
+  <object id="911" name="solid" x="736" y="224" width="32" height="32"/>
+  <object id="914" name="solid" x="576" y="128" width="32" height="96"/>
+  <object id="916" name="solid" x="1312" y="1248" width="96" height="32"/>
+  <object id="917" name="solid" x="1312" y="1088" width="80.6667" height="160"/>
+  <object id="918" x="1472" y="992" width="24.6667" height="12"/>
+  <object id="920" name="fakesolid1" x="608" y="224" width="128" height="32"/>
+  <object id="922" name="fakesolid2" x="1280" y="992" width="32" height="96"/>
  </objectgroup>
 </map>

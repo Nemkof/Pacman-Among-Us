@@ -13,6 +13,9 @@ MenuWindow::MenuWindow(QWidget *parent)
     QPalette palette;
     palette.setBrush(QPalette::Window, bkgnd);
     this->setPalette(palette);
+    setWindowIcon(QIcon("../../images/menu/icon.jpeg"));
+
+
 }
 
 MenuWindow::~MenuWindow()
@@ -31,5 +34,11 @@ void MenuWindow::on_PlayButton_clicked()
 void MenuWindow::on_ExitButton_clicked()
 {
     this->close();
+}
+
+
+void MenuWindow::on_SettingsButton_clicked()
+{
+
 }
 

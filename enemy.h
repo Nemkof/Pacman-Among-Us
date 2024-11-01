@@ -6,7 +6,7 @@ private:
     Direction lastDir;
     std::vector<Object> rotates;
     std::vector<Object> solids; // Вектор объектов карты
-    //enum { Chase, Scatter, Frightened } status;
+    enum { Chase, Scatter, Frightened } condition;
     float timeRotates;
 
     float lastRotateX = 0.0;
@@ -31,6 +31,8 @@ public:
 
     virtual float getTargetX(float x) = 0;
     virtual float getTargetY(float y) = 0;
+
+    void vov();
 };
 
 
@@ -54,7 +56,7 @@ public:
     {
 
     }
-    float getTargetX(float x) override {return x + 200;}
+    float getTargetX(float x) override {return x + 400;}
     float getTargetY(float y) override {return y;}
 };
 
@@ -67,7 +69,7 @@ public:
     {
         state = left;
     }
-    float getTargetX(float x) override {return x - 200;}
+    float getTargetX(float x) override {return x - 400;}
     float getTargetY(float y) override {return y;}
 };
 
@@ -80,7 +82,7 @@ public:
         state = left;
     }
     float getTargetX(float x) override {return x;}
-    float getTargetY(float y) override {return y + 200;}
+    float getTargetY(float y) override {return y + 400;}
 };
 
 #endif // ENEMY_H

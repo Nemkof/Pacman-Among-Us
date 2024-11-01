@@ -54,20 +54,21 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy, const std::v
                 score += 5;   // Получаем за неё очки
                 checkScore(); // Проверяем, не пора ли рисовать банан
             }
-            else if(obj[i].name == "firstBanana" && firstBanana->getStatus() == "notEaten") // Если пришли к банану
+            else if(obj[i].name == "firstBanana" && firstBanana->getCondition() == "notEaten") // Если пришли к банану
             {
-                firstBanana->Dead(); // Мы кушаем банан, объявляем её съеденной
+                firstBanana->setCondition("Eaten"); // Мы кушаем банан, объявляем её съеденной
                 obj[i].name = "deadInsideBanana";
                 score += 50;   // Получаем за неё очки
             }
-            else if(obj[i].name == "secondBanana" && secondBanana->getStatus() == "notEaten") // Если пришли к банану
+            else if(obj[i].name == "secondBanana" && secondBanana->getCondition() == "notEaten") // Если пришли к банану
             {
-                secondBanana->Dead(); // Мы кушаем банан, объявляем её съеденной
+                secondBanana->setCondition("Eaten"); // Мы кушаем банан, объявляем её съеденной
                 obj[i].name = "deadInsideBanana";
                 score += 50;   // Получаем за неё очки
             }
         }
     }
+
     /// Проверяем столкновение с врагами
     for(auto enemy : entities){
         if(getRect().intersects(enemy->getRect()))
@@ -111,11 +112,11 @@ void Player::update(float time, const std::vector<Enemy*>& entities)
 int Player::getScore() {return score;}
 
 void Player::checkScore(){
-    if((score == applesNumber * 5 / 2) && firstBanana->getStatus() == "Hidden"){
-        firstBanana->setStatus("notEaten");
+    if((score == applesNumber * 5 / 2) && firstBanana->getCondition() == "Hidden"){
+        firstBanana->setCondition("notEaten");
     }
-    else if((score == applesNumber * 5) && secondBanana->getStatus() == "Hidden"){
-        secondBanana->setStatus("notEaten");
+    else if((score >= applesNumber * 5) && secondBanana->getCondition() == "Hidden"){
+        secondBanana->setCondition("notEaten");
     }
 }
 

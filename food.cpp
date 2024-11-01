@@ -1,9 +1,9 @@
 #include "food.h"
 
 Apple::Apple(const Sprite& _sprite, const float& _x, const float& _y,
-        const Vector2u& size): sprite(_sprite), x(_x), y(_y), w(size.x), h(size.y)
+        const Vector2u& size): sprite(_sprite), x(_x), y(_y), w(size.x / 3), h(size.y)
 {
-    sprite.setTextureRect(IntRect(0,0,w,h));
+    sprite.setTextureRect(IntRect(w * (rand() % 3),0,w,h));
     sprite.setPosition(x,y);
     status = false;
 }
@@ -20,22 +20,20 @@ Banana::Banana(const Sprite& _sprite, const float& _x, const float& _y, const Ve
 {
     sprite.setTextureRect(IntRect(0,0,w,h));
     sprite.setPosition(x,y);
-    status = state::Hidden;
+    condition = state::Hidden;
 }
 
-String Banana::getStatus(){
-    if( status == state::notEaten) return "notEaten";
-    else if(status == state::Eaten) return "Eaten";
+String Banana::getCondition(){
+    if(condition == state::notEaten) return "notEaten";
+    else if(condition == state::Eaten) return "Eaten";
     return "Hidden";
 }
 
-void Banana::setStatus(String _status){
-    if(_status == "notEaten") status = state::notEaten;
-    else if(_status == "Eaten") status = state::Eaten;
-    else if(_status == "Hidden") status = state::Hidden;
+void Banana::setCondition(String _status){
+    if(_status == "notEaten") condition = state::notEaten;
+    else if(_status == "Eaten") condition = state::Eaten;
+    else if(_status == "Hidden") condition = state::Hidden;
 }
 
 Sprite Banana::getSprite(){return sprite;}
-
-void Banana::Dead() {status = state::Eaten;}
 
