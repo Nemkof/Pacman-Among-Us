@@ -1,6 +1,6 @@
 #include "enemy.h"
 #include <limits>
-Enemy::Enemy(std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object)
+Enemy::Enemy(const std::vector<Object>& _rotates, const std::vector<Object>& _solids, const Object& object)
     : Entity(object)
 {
     solids = _solids;
@@ -12,6 +12,9 @@ Enemy::Enemy(std::vector<Object>& _rotates, std::vector<Object>& _solids, Object
     dy = 0;
     state = right;
     rotates = _rotates;
+
+    lastRotateX = 0.0;
+    lastRotateY = 0.0;
 }
 
 /// Логика движения за игроком
@@ -20,33 +23,33 @@ void Enemy::selectDirection(float targetX, float targetY){
 
     float minDist = std::numeric_limits<float>::max();
 
-    if(!isSolid(x - 5, y) && (state != Direction::right))
+    if(!isSolid(x - 32, y) && (state != Direction::right))
     {
-        double dist = calculateDist(targetX, targetY, x - 5, y);
+        double dist = calculateDist(targetX, targetY, x - 32, y);
         if (dist < minDist){
             nextDir = Direction::left;
             minDist = dist;
         }
     }
-    if(!isSolid(x + 5, y) && (state != Direction::left))
+    if(!isSolid(x + 32, y) && (state != Direction::left))
     {
-        double dist = calculateDist(targetX, targetY, x + 5, y);
+        double dist = calculateDist(targetX, targetY, x + 32, y);
         if (dist < minDist){
             nextDir = Direction::right;
             minDist = dist;
         }
     }
-    if(!isSolid(x, y - 5) && (state != Direction::down))
+    if(!isSolid(x, y - 32) && (state != Direction::down))
     {
-        double dist = calculateDist(targetX, targetY, x, y - 5);
+        double dist = calculateDist(targetX, targetY, x, y - 32);
         if (dist < minDist){
             nextDir = Direction::up;
             minDist = dist;
         }
     }
-    if(!isSolid(x, y + 5) && (state != Direction::up))
+    if(!isSolid(x, y + 32) && (state != Direction::up))
     {
-        double dist = calculateDist(targetX, targetY, x, y + 5);
+        double dist = calculateDist(targetX, targetY, x, y + 32);
         if (dist < minDist){
             nextDir = Direction::down;
         }
@@ -54,6 +57,13 @@ void Enemy::selectDirection(float targetX, float targetY){
     if(nextDir != stay) {
         state = nextDir;
     }
+    else{
+        if(state == right) {state = left;}
+        else if(state == left) {state = right;}
+        else if(state == down) {state = up;}
+        else if(state == up) {state = down;}
+    }
+
 }
 
 bool Enemy::isSolid(float _x, float _y){
@@ -101,8 +111,6 @@ void Enemy::updatePosition(float time){
 
 void Enemy::update(float time, float playerX, float playerY)
 {
-    timeRotates += time;
-
     float targetX = getTargetX(playerX);
     float targetY = getTargetY(playerY);
 
@@ -110,20 +118,23 @@ void Enemy::update(float time, float playerX, float playerY)
     for (size_t i = 0; i < rotates.size(); i++)
     {
         // Если мы находимся на перекрестке
-        if (getRectForRotates().intersects(rotates[i].rect)
-            && timeRotates > 1000)
+        if (getRectForRotates().intersects(rotates[i].rect))
         {
-            selectDirection(targetX, targetY);
-            timeRotates = 0;
+            if(calculateDist(lastRotateX, lastRotateY, rotates[i].rect.left, rotates[i].rect.top) > 96){
+                selectDirection(targetX, targetY);
+                lastRotateX = rotates[i].rect.left;
+                lastRotateY = rotates[i].rect.top;
+
+            }
         }
     }
 
     //Если мы остановились, значит столкнулись со стеной. Нужно повернуть
-    if(dx == 0 && dy == 0
-        && timeRotates > 1000)
+    if(dx == 0 && dy == 0)
     {
         selectDirection(targetX, targetY);
-        timeRotates = 0;;
+        lastRotateX = x;
+        lastRotateY = y;
     }
 
     updatePosition(time);

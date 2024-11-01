@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
@@ -22,9 +23,11 @@ class Ui_MenuWindow
 {
 public:
     QWidget *centralwidget;
+    QWidget *gridLayoutWidget;
+    QGridLayout *gridLayout;
+    QPushButton *ExitButton;
     QPushButton *PlayButton;
     QPushButton *SettingsButton;
-    QPushButton *ExitButton;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MenuWindow)
@@ -34,15 +37,27 @@ public:
         MenuWindow->resize(800, 600);
         centralwidget = new QWidget(MenuWindow);
         centralwidget->setObjectName("centralwidget");
-        PlayButton = new QPushButton(centralwidget);
-        PlayButton->setObjectName("PlayButton");
-        PlayButton->setGeometry(QRect(290, 390, 181, 61));
-        SettingsButton = new QPushButton(centralwidget);
-        SettingsButton->setObjectName("SettingsButton");
-        SettingsButton->setGeometry(QRect(550, 390, 241, 51));
-        ExitButton = new QPushButton(centralwidget);
+        gridLayoutWidget = new QWidget(centralwidget);
+        gridLayoutWidget->setObjectName("gridLayoutWidget");
+        gridLayoutWidget->setGeometry(QRect(410, 240, 281, 171));
+        gridLayout = new QGridLayout(gridLayoutWidget);
+        gridLayout->setObjectName("gridLayout");
+        gridLayout->setContentsMargins(0, 0, 0, 0);
+        ExitButton = new QPushButton(gridLayoutWidget);
         ExitButton->setObjectName("ExitButton");
-        ExitButton->setGeometry(QRect(290, 500, 201, 41));
+
+        gridLayout->addWidget(ExitButton, 2, 0, 1, 1);
+
+        PlayButton = new QPushButton(gridLayoutWidget);
+        PlayButton->setObjectName("PlayButton");
+
+        gridLayout->addWidget(PlayButton, 0, 0, 1, 1);
+
+        SettingsButton = new QPushButton(gridLayoutWidget);
+        SettingsButton->setObjectName("SettingsButton");
+
+        gridLayout->addWidget(SettingsButton, 1, 0, 1, 1);
+
         MenuWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MenuWindow);
         statusbar->setObjectName("statusbar");
@@ -56,9 +71,9 @@ public:
     void retranslateUi(QMainWindow *MenuWindow)
     {
         MenuWindow->setWindowTitle(QCoreApplication::translate("MenuWindow", "MainWindow", nullptr));
+        ExitButton->setText(QCoreApplication::translate("MenuWindow", "Exit", nullptr));
         PlayButton->setText(QCoreApplication::translate("MenuWindow", "StartGame", nullptr));
         SettingsButton->setText(QCoreApplication::translate("MenuWindow", "Settings", nullptr));
-        ExitButton->setText(QCoreApplication::translate("MenuWindow", "Exit", nullptr));
     } // retranslateUi
 
 };

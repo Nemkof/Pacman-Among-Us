@@ -1,16 +1,21 @@
 #include "player.h"
 
-Player::Player(std::vector<Object>& _obj, Object object, std::vector<Food> *_apples)
+Player::Player(const std::vector<Object>& _obj, const Object& object, std::vector<Apple>* _apples,
+        Banana* _firstBanana, Banana* _secondBanana)
     :Entity(object)
 {
     score = 0;
     speed = 0.2;
-    obj = _obj;
     state = stay;
-    apples = _apples;
-    sprite.setTextureRect(IntRect(0, 0, w, h));
-}
 
+    sprite.setTextureRect(IntRect(0, 0, w, h));
+
+    obj = _obj;
+    apples = _apples;
+    applesNumber = apples->size();
+    firstBanana = _firstBanana;
+    secondBanana = _secondBanana;
+}
 
 void Player::control(){
     if (Keyboard::isKeyPressed(Keyboard::Left) && state != right) {
@@ -28,7 +33,7 @@ void Player::control(){
 }
 
 
-void Player::checkCollisionWithMap (float time, float Dx, float Dy, std::vector<Enemy*> entities)
+void Player::checkCollisionWithMap (float time, float Dx, float Dy, const std::vector<Enemy*>& entities)
 {
     for (size_t i = 0; i < obj.size(); i++) // Проходимся по всем элементам карты
     {
@@ -42,13 +47,24 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy, std::vector<
                 if (Dx>0)	{ x = obj[i].rect.left - w; dx = 0;}
                 if (Dx<0)	{ x = obj[i].rect.left + obj[i].rect.width; dx = 0;}
             }
-            else if(obj[i].name == "food") // Если тайлик помечен знаком "Еда"
+            else if(obj[i].name == "apple") // Если пришли к яблоку
             {
-                if(!apples->at(i).isDead()) // И если эта еда ещё не съедена
-                {
-                    apples->at(i).Dead(); // Мы кушаем еду, объявляем её съеденной
-                    score += 5;   // И получаем за неё очки
-                }
+                apples->at(i).Dead(); // Мы кушаем банан, объявляем её съеденной
+                obj[i].name = "deadInsideApple"; // Помечаем его в массиве как съеденныей
+                score += 5;   // Получаем за неё очки
+                checkScore(); // Проверяем, не пора ли рисовать банан
+            }
+            else if(obj[i].name == "firstBanana" && firstBanana->getStatus() == "notEaten") // Если пришли к банану
+            {
+                firstBanana->Dead(); // Мы кушаем банан, объявляем её съеденной
+                obj[i].name = "deadInsideBanana";
+                score += 50;   // Получаем за неё очки
+            }
+            else if(obj[i].name == "secondBanana" && secondBanana->getStatus() == "notEaten") // Если пришли к банану
+            {
+                secondBanana->Dead(); // Мы кушаем банан, объявляем её съеденной
+                obj[i].name = "deadInsideBanana";
+                score += 50;   // Получаем за неё очки
             }
         }
     }
@@ -65,13 +81,13 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy, std::vector<
                 if (Dx>0)	{ x -= dx * time;  dx = 0;}
                 if (Dx<0)	{ x += dx * time;  dx = 0;}
                 sprite.setPosition(x + w / 2, y + h / 2);
+                state = stay;
             }
         }
     }
 }
 
-
-void Player::updatePosition(float time, std::vector<Enemy*> entities){
+void Player::updatePosition(float time, const std::vector<Enemy*>& entities){
     if(state == right) dx = speed;
     else if(state == left) dx = -speed;
     else if(state == down) dy = speed;
@@ -84,7 +100,7 @@ void Player::updatePosition(float time, std::vector<Enemy*> entities){
     sprite.setPosition(x + w / 2, y + h / 2);
 }
 
-void Player::update(float time, std::vector<Enemy*> entities)
+void Player::update(float time, const std::vector<Enemy*>& entities)
 {
     control();
     updatePosition(time, entities);
@@ -94,6 +110,16 @@ void Player::update(float time, std::vector<Enemy*> entities)
 
 int Player::getScore() {return score;}
 
+void Player::checkScore(){
+    if((score == applesNumber * 5 / 2) && firstBanana->getStatus() == "Hidden"){
+        firstBanana->setStatus("notEaten");
+    }
+    else if((score == applesNumber * 5) && secondBanana->getStatus() == "Hidden"){
+        secondBanana->setStatus("notEaten");
+    }
+}
+
 
 int Player::isLive() {return lives;} // Возвращает true, если еще есть жизни
+
 

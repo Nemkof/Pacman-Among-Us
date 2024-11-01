@@ -1,14 +1,14 @@
 #include "entity.h"
 
-Entity::Entity(Object object)
+Entity::Entity(const Object& object)
     :x(object.rect.left), y(object.rect.top)
 {
     startX = x; startY = y;
     speed = 0; dx = 0; dy = 0;
     name = object.name;
     texture.loadFromFile("../../images/" + name + ".png");
-    // w = texture.getSize().x / 12;
-    // h = texture.getSize().y;
+    w = texture.getSize().x / 13;
+    h = texture.getSize().y;
 
     sprite.setTexture(texture);
     sprite.setOrigin(w / 2, h / 2);    // Создаём имя главного героя

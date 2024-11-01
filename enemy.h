@@ -8,8 +8,11 @@ private:
     std::vector<Object> solids; // Вектор объектов карты
     //enum { Chase, Scatter, Frightened } status;
     float timeRotates;
+
+    float lastRotateX = 0.0;
+    float lastRotateY = 0.0;
 public:
-    Enemy(std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object);
+    Enemy(const std::vector<Object>& _rotates, const std::vector<Object>& _solids, const Object& object);
 
     /// Проверяем нажатия клавиш
     void selectDirection(float targetX, float targetY);
@@ -34,7 +37,7 @@ public:
 // Красный
 class Blinky: public Enemy{
 public:
-    Blinky(std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object)
+    Blinky(const std::vector<Object>& _rotates, const std::vector<Object>& _solids, const Object& object)
         : Enemy(_rotates, _solids, object)
     {
 
@@ -46,7 +49,7 @@ public:
 // Розовый
 class Pinky: public Enemy{
 public:
-    Pinky(std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object)
+    Pinky(const std::vector<Object>& _rotates, const std::vector<Object>& _solids, const Object& object)
         : Enemy(_rotates, _solids, object)
     {
 
@@ -59,9 +62,10 @@ public:
 // Голубой
 class Inky: public Enemy{
 public:
-    Inky(std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object) :
+    Inky(const std::vector<Object>& _rotates, const std::vector<Object>& _solids, const Object& object) :
         Enemy(_rotates, _solids, object)
     {
+        state = left;
     }
     float getTargetX(float x) override {return x - 200;}
     float getTargetY(float y) override {return y;}
@@ -70,9 +74,10 @@ public:
 // Оранжевый
 class Clyde: public Enemy{
 public:
-    Clyde(std::vector<Object>& _rotates, std::vector<Object>& _solids, Object object)
+    Clyde(const std::vector<Object>& _rotates, const std::vector<Object>& _solids, const Object& object)
         : Enemy(_rotates, _solids, object)
     {
+        state = left;
     }
     float getTargetX(float x) override {return x;}
     float getTargetY(float y) override {return y + 200;}

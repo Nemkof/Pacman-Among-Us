@@ -10,8 +10,8 @@ public:
     float dy = 0;
     float x, y;
     float speed = 0;
-    // Warning
-    float w = 72, h = 90; // Ширина и высота тайла
+    // Warning 72x90
+    float w, h; // Ширина и высота тайла
     float player_sprites = 0; // Переменная для переключения спрайтов игрока
     float startX;
     float startY;
@@ -19,7 +19,7 @@ public:
     Texture texture;
     Sprite sprite;
     std::string name;
-    Entity(Object object);
+    Entity(const Object& object);
 
     FloatRect getRect();
     FloatRect getRectForRotates();
@@ -28,7 +28,7 @@ public:
     float getY();
     std::string getDirection();
 
-    /// Обновляем спрайты игрока
+    // Обновляем спрайты игрока
     void updateSprites(float Dx, float time);
 };
 

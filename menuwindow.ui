@@ -14,44 +14,38 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="PlayButton">
+   <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>390</y>
-      <width>181</width>
-      <height>61</height>
+      <x>410</x>
+      <y>240</y>
+      <width>281</width>
+      <height>171</height>
      </rect>
     </property>
-    <property name="text">
-     <string>StartGame</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="SettingsButton">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>390</y>
-      <width>241</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Settings</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="ExitButton">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>500</y>
-      <width>201</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Exit</string>
-    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="2" column="0">
+      <widget class="QPushButton" name="ExitButton">
+       <property name="text">
+        <string>Exit</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="PlayButton">
+       <property name="text">
+        <string>StartGame</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="SettingsButton">
+       <property name="text">
+        <string>Settings</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

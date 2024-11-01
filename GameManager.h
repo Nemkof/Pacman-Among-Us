@@ -14,40 +14,51 @@ int game()
     Music music;//создаем объект музыки
     music.openFromFile("../../sounds/music.ogg");//загружаем файл
     music.setVolume(5);
-    //music.play();//воспроизводим музыку
+    music.play();//воспроизводим музыку
 
     //////////////////////////////ЗАГРУЖАЕМ КАРТУ//////////////////////////////
     Level lvl; // Создаём объект типа "Карта"
     lvl.LoadFromFile("../../map.tmx");  // Загружаем нашу карту
-    std::vector<Object> obj = lvl.GetAllObjects(); // Получаем вектор объектов карты
 
     // Получаем все необходимые объекты карты
-    std::vector<Object> appleObjects(lvl.GetObjects("food")); // Получаем вектор из всех тайлов-яблочек
-    std::vector<Object> rotates(lvl.GetObjects("rotate")); // Получаем вектор из всех тайлов-яблочек
-    std::vector<Object> solids(lvl.GetObjects("solid")); // Получаем вектор из всех тайлов-яблочек
-    Object playerObject = lvl.GetObject("player"); // Получаем вектор из всех тайлов-яблочек
-    Object blinkyObject = lvl.GetObject("Blinky"); // Получаем вектор из всех тайлов-яблочек
-    Object pinkyObject = lvl.GetObject("Pinky"); // Получаем вектор из всех тайлов-яблочек
-    Object inkyObject = lvl.GetObject("Inky"); // Получаем вектор из всех тайлов-яблочек
-    Object clydeObject = lvl.GetObject("Clyde");
-    //
+    std::vector<Object> obj = lvl.GetAllObjects(); // Получаем вектор всех объектов карты
+    std::vector<Object> rotates(lvl.GetObjects("rotate")); // Получаем вектор из всех тайлов-поворотов
+    std::vector<Object> solids(lvl.GetObjects("solid")); // Получаем вектор из всех тайлов-стен
+    std::vector<Object> appleObjects(lvl.GetObjects("apple")); // Получаем вектор из всех тайлов-яблочек
+    Object firstBananaObject(lvl.GetObject("firstBanana")); // Получаем первый банан
+    Object secondBananaObject(lvl.GetObject("secondBanana")); // Получаем второй банан
+    Object playerObject = lvl.GetObject("player"); // Получаем тайл игрока
+    Object blinkyObject = lvl.GetObject("Blinky"); // Получаем тайл блинки
+    Object pinkyObject = lvl.GetObject("Pinky"); // Получаем тайл пинки
+    Object inkyObject = lvl.GetObject("Inky"); // Получаем тайл инки
+    Object clydeObject = lvl.GetObject("Clyde"); // Получаем тайл клайда
 
-    //////////////////////////////ПИХАЕМ ЕДУ В КАРТУ//////////////////////////////
+    //////////////////////////////ПИХАЕМ ЯБЛОКИ В КАРТУ//////////////////////////////
     Texture appleTexture;
     appleTexture.loadFromFile("../../images/apple.png");  // Загружаем текстуру яблочка
     Sprite appleSprite;
     appleSprite.setTexture(appleTexture);  // Загружаем текстуру в спрайт
 
-    std::vector<Food> apples; // Создаём массив яблочек
+    std::vector<Apple> apples; // Создаём массив яблочек
     for(size_t i = 0; i < appleObjects.size(); i++) // Проходимся по всем тайлам-яблочкам
     {
         // Создаём хелпер-яблочко, которое будет стоять на i-том тайле
-        Food tmp(appleSprite, appleObjects.at(i).rect.left, appleObjects.at(i).rect.top);
+        Apple tmp(appleSprite, appleObjects.at(i).rect.left, appleObjects.at(i).rect.top, appleTexture.getSize());
         apples.push_back(tmp); // Помещаем всё в наш вектор объектов
     }
 
-    //////////////////////////////ДЕЛАЕМ ТЕКСТУРУ ИГРОКОВ//////////////////////////////
-    int widthEntity = 72, heightEntity = 90;
+    //////////////////////////////ПИХАЕМ БАНАНЫ В КАРТУ//////////////////////////////
+    Image bananaImage;
+    bananaImage.loadFromFile("../../images/banana.png");  // Загружаем текстуру яблочка
+    bananaImage.createMaskFromColor(Color(255,255,255));
+    Texture bananaTexture;
+    bananaTexture.loadFromImage(bananaImage);  // Загружаем текстуру яблочка
+    Sprite bananaSprite;
+    bananaSprite.setTexture(bananaTexture);  // Загружаем текстуру в спрайт
+    Banana firstBanana(bananaSprite, firstBananaObject.rect.left, firstBananaObject.rect.top, bananaTexture.getSize()); // Создаём первый банан
+    Banana secondBanana(bananaSprite, secondBananaObject.rect.left, secondBananaObject.rect.top, bananaTexture.getSize()); // Создаём второй банан
+    //////////////////////////////СОЗДАЁМ ИГРОКА//////////////////////////////
+    Player player(obj, playerObject, &apples, &firstBanana, &secondBanana);
 
     //////////////////////////////ДЕЛАЕМ ТЕКСТУРУ LIVES//////////////////////////////
     String pathToLivesImage = "../../images/lives.png"; // 72x90
@@ -56,7 +67,6 @@ int game()
     livesImage.loadFromFile(pathToLivesImage);
     livesImage.createMaskFromColor(Color(255,255,255));
     Lives lives(livesImage, widthLives, heightLives, 1300, 550);
-
 
     //////////////////////////////СОЗДАЁМ ВРАГОВ//////////////////////////////
     vector<Enemy*> entities;//создаю список, сюда буду кидать объекты
@@ -71,9 +81,6 @@ int game()
     entities.push_back(&pinky);//и закидываем в список всех наших врагов с карты
     entities.push_back(&inky);//и закидываем в список всех наших врагов с карты
     entities.push_back(&clyde);//и закидываем в список всех наших врагов с карты
-
-    //////////////////////////////СОЗДАЁМ ИГРОКА//////////////////////////////
-    Player player(obj, playerObject, &apples);
 
     //////////////////////////////РАБОТАЕМ С ТЕКСТОМ//////////////////////////////
     Font font;  // Создаём объект типа шрифт
@@ -100,22 +107,29 @@ int game()
                 window.close();
         }
 
-        //////////////////////////////РИСУЕМ КАРТУ//////////////////////////////
-        lvl.Draw(window);
+        /// Если три раза попались врагу, то игра окончена
+        if(!player.isLive()){
+            window.close();
+            return 1;
+        }
+
+
+        lvl.Draw(window); // Рисуем карту
 
         /*
         //////////////////////////////РИСУЕМ ЛЮКИ//////////////////////////////
         window.draw(hatchRightSprite);
         window.draw(hatchLeftSprite);
         */
+
         //////////////////////////////РАБОТАЕМ С ЕДОЙ//////////////////////////////
         for (auto it : apples) // Проходимся по всем яблочкам
         {
             if(!it.isDead()) // Если яблочко не съели
                 window.draw(it.getSprite()); // То нужно его нарисовать
         }
-
-
+        if(firstBanana.getStatus() == "notEaten") window.draw(firstBanana.getSprite()); // То нужно его нарисовать
+        if(secondBanana.getStatus() == "notEaten") window.draw(secondBanana.getSprite()); // То нужно его нарисовать
         //////////////////////////////ДАРИМ ИГРОКУ ЖИЗНЬ//////////////////////////////
         player.update(time, entities);
         window.draw(player.sprite); // Рисуем игрока
@@ -133,14 +147,7 @@ int game()
         //////////////////////////////РАБОТАЕМ С ТЕКСТОМ//////////////////////////////
         textScore.setPosition(1300, 0); // Устанавливаем счёт очков в угол
         textScore.setString("score: " + std::to_string(player.getScore())); // Получаем нужную надпись
-
         window.draw(textScore); // Рисуем счёт очков
-
-        /// Если три раза попались врагу, то игра окончена
-        if(!player.isLive()){
-            window.close();
-            return 1;
-        }
 
         window.display(); // Показываем наше игровое окно
     }
