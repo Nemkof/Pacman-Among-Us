@@ -10,7 +10,7 @@ private:
     Texture texture;
     Sprite sprite;
 public:
-    Lives(const Image& image, const Object& object);
+    Lives(const Object& object);
 
     void update(int lives);
 

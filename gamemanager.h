@@ -38,6 +38,8 @@ int game()
     Object secondSabotageObject; // Получаем тайл второго саботажа
     Object livesObject;
     Object scoreObject;
+    Object firstVentilation;
+    Object secondVentilation;
     for(auto it: obj){
         if (it.name == "rotate") rotates.push_back(it);
         else if(it.name == "solid") solids.push_back(it);
@@ -84,23 +86,24 @@ int game()
 
     //////////////////////////////ПИХАЕМ БАНАНЫ В КАРТУ//////////////////////////////
     Image bananaImage;
-    bananaImage.loadFromFile("../../images/banana.png");  // Загружаем текстуру яблочка
+    bananaImage.loadFromFile("../../images/banana.png");  // Загружаем текстуру банана
     bananaImage.createMaskFromColor(Color(255,255,255));
     Texture bananaTexture;
-    bananaTexture.loadFromImage(bananaImage);  // Загружаем текстуру яблочка
+    bananaTexture.loadFromImage(bananaImage);  // Загружаем текстуру банана
     Sprite bananaSprite;
     bananaSprite.setTexture(bananaTexture);  // Загружаем текстуру в спрайт
     Banana firstBanana(bananaSprite, firstBananaObject.rect.left, firstBananaObject.rect.top, bananaTexture.getSize()); // Создаём первый банан
     Banana secondBanana(bananaSprite, secondBananaObject.rect.left, secondBananaObject.rect.top, bananaTexture.getSize()); // Создаём второй банан
 
     //////////////////////////////СОЗДАЁМ ИГРОКА//////////////////////////////
-    Player player(obj, playerObject, &apples, &firstBanana, &secondBanana, &firstSabotage, &secondSabotage);
-
+    Player player(obj, playerObject);
+    player.setApples(&apples);
+    player.setFirstBanana(&firstBanana);
+    player.setSecondBanana(&secondBanana);
+    player.setFirstSabotage(&firstSabotage);
+    player.setSecondSabotage(&secondSabotage);
     //////////////////////////////СОЗДАЁМ ОБЪЕКТ СЕРДЕЧЕК//////////////////////////////
-    Image livesImage;
-    livesImage.loadFromFile("../../images/lives.png");
-    livesImage.createMaskFromColor(Color(255,255,255));
-    Lives lives(livesImage, livesObject);
+    Lives lives(livesObject);
 
     //////////////////////////////СОЗДАЁМ ВРАГОВ//////////////////////////////
     vector<Enemy*> entities;// создаём список, сюда будем кидать объекты

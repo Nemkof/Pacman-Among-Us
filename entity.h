@@ -5,16 +5,12 @@ using namespace sf;
 class Entity {    
 public:
     enum Direction { left, right, up, down, stay } state;
-    std::vector<Object> obj; // Вектор объектов карты
     float dx = 0;
     float dy = 0;
-    float x, y;
+    float x, y, w, h, startY, startX;
     float speed = 0;
-    // Warning 72x90
-    float w, h; // Ширина и высота тайла
+
     float player_sprites = 0; // Переменная для переключения спрайтов игрока
-    float startX;
-    float startY;
 
     Texture texture;
     Sprite sprite;

@@ -16,7 +16,8 @@ SOURCES += \
         menuwindow.cpp \
         player.cpp \
         sabotages.cpp \
-        sabotagewidget.cpp
+        sabotagewidget.cpp \
+        ventilations.cpp
 
 
 LIBS += -LC:\myQT\projects\SFML-2.6.1\lib
@@ -40,7 +41,8 @@ HEADERS += \
     menuwindow.h \
     player.h \
     sabotages.h \
-    sabotagewidget.h
+    sabotagewidget.h \
+    ventilations.h
 
 FORMS += \
     menuwindow.ui \

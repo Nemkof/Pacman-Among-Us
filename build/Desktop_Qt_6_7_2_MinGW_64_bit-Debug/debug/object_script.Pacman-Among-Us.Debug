@@ -11,5 +11,6 @@ debug/menuwindow.o
 debug/player.o
 debug/sabotages.o
 debug/sabotagewidget.o
+debug/ventilations.o
 debug/moc_menuwindow.o
 debug/moc_sabotagewidget.o

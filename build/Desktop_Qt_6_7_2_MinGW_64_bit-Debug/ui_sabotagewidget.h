@@ -11,40 +11,45 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QDialog>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_sabotageWidget
 {
 public:
-    QPushButton *pushButton;
-    QLabel *label;
+    QLabel *taskLabel;
+    QPushButton *checkButton;
+    QLineEdit *answerWidget;
 
-    void setupUi(QWidget *sabotageWidget)
+    void setupUi(QDialog *sabotageWidget)
     {
         if (sabotageWidget->objectName().isEmpty())
             sabotageWidget->setObjectName("sabotageWidget");
-        sabotageWidget->resize(480, 409);
-        pushButton = new QPushButton(sabotageWidget);
-        pushButton->setObjectName("pushButton");
-        pushButton->setGeometry(QRect(180, 240, 80, 24));
-        label = new QLabel(sabotageWidget);
-        label->setObjectName("label");
-        label->setGeometry(QRect(110, 110, 251, 61));
+        sabotageWidget->resize(407, 204);
+        taskLabel = new QLabel(sabotageWidget);
+        taskLabel->setObjectName("taskLabel");
+        taskLabel->setGeometry(QRect(40, 20, 199, 92));
+        checkButton = new QPushButton(sabotageWidget);
+        checkButton->setObjectName("checkButton");
+        checkButton->setGeometry(QRect(190, 160, 199, 24));
+        answerWidget = new QLineEdit(sabotageWidget);
+        answerWidget->setObjectName("answerWidget");
+        answerWidget->setGeometry(QRect(230, 130, 113, 24));
 
         retranslateUi(sabotageWidget);
 
         QMetaObject::connectSlotsByName(sabotageWidget);
     } // setupUi
 
-    void retranslateUi(QWidget *sabotageWidget)
+    void retranslateUi(QDialog *sabotageWidget)
     {
-        sabotageWidget->setWindowTitle(QCoreApplication::translate("sabotageWidget", "Form", nullptr));
-        pushButton->setText(QCoreApplication::translate("sabotageWidget", "PushButton", nullptr));
-        label->setText(QCoreApplication::translate("sabotageWidget", "TextLabel", nullptr));
+        sabotageWidget->setWindowTitle(QCoreApplication::translate("sabotageWidget", "Dialog", nullptr));
+        taskLabel->setText(QCoreApplication::translate("sabotageWidget", "TextLabel", nullptr));
+        checkButton->setText(QCoreApplication::translate("sabotageWidget", "Check", nullptr));
     } // retranslateUi
 
 };

@@ -1,23 +1,12 @@
 #include "player.h"
-#include "sabotagewidget.h"
-Player::Player(const std::vector<Object>& _obj, const Object& object, std::vector<Apple>* _apples,
-        Banana* _firstBanana, Banana* _secondBanana, Sabotage* _firstSabotage, Sabotage* _secondSabotage)
+Player::Player(const std::vector<Object>& _obj, const Object& object)
     :Entity(object)
 {
-    score = 0;
     speed = 0.2;
-    state = stay;
-
     sprite.setTextureRect(IntRect(0, 0, w, h));
-
     obj = _obj;
-    apples = _apples;
-    applesNumber = apples->size();
-    firstBanana = _firstBanana;
-    secondBanana = _secondBanana;
 
-    firstSabotage = _firstSabotage;
-    secondSabotage = _secondSabotage;
+    Font font;  // Создаём объект типа шрифт
 }
 
 void Player::control(){
@@ -71,14 +60,12 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy, const std::v
             }
             else if(obj[i].name == "sabotageFirst" || obj[i].name == "sabotageFirst"){
                 if(Keyboard::isKeyPressed(Keyboard::E)){
-                    sabotageWidget wi(nullptr);
-                    wi.show();
+                    firstSabotage->run();
                 }
             }
             else if(obj[i].name == "sabotageSecond" || obj[i].name == "sabotageSecond"){
                 if(Keyboard::isKeyPressed(Keyboard::E)){
-                    sabotageWidget wi(nullptr);
-                    wi.show();
+                    secondSabotage->run();
                 }
             }
         }
@@ -126,6 +113,7 @@ void Player::update(float time, const std::vector<Enemy*>& entities)
 
 int Player::getScore() {return score;}
 
+/// Проверяем, не пора ли выкидывать бананы на карту
 void Player::checkScore(){
     if((score == applesNumber * 5 / 2) && firstBanana->getCondition() == "Hidden"){
         firstBanana->setCondition("notEaten");
@@ -138,4 +126,12 @@ void Player::checkScore(){
 
 int Player::getLives() {return lives;} // Возвращает true, если еще есть жизни
 
+void Player::setApples(std::vector<Apple>* _apples) {
+    apples = _apples;
+    applesNumber = apples->size();
+}
+void Player::setFirstBanana(Banana* _firstBanana) {firstBanana = _firstBanana;}
+void Player::setSecondBanana(Banana* _secondBanana) {secondBanana = _secondBanana;}
+void Player::setFirstSabotage(Sabotage* _firstSabotage) {firstSabotage = _firstSabotage;}
+void Player::setSecondSabotage(Sabotage* _secondSabotage) {secondSabotage = _secondSabotage;}
 

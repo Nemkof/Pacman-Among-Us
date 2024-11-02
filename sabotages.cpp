@@ -1,5 +1,6 @@
 #include "sabotages.h"
 #include <QMainWindow>
+#include "sabotagewidget.h"
 Sabotage::Sabotage(const Image& image, const Object& object)
 {
     texture.loadFromImage(image);
@@ -12,7 +13,8 @@ Sabotage::Sabotage(const Image& image, const Object& object)
 
 void Sabotage::update(float time)
 {
-    if(tasksCondition != Condition::Solved){
+    delay += 0.05 * time;
+    if(tasksCondition != Condition::Solved && delay > 1000){
         spriteNumber += 0.002 * time;
         if(spriteNumber > 2) spriteNumber -= 2;
         sprite.setTextureRect(IntRect(w * (int)spriteNumber, 0, w, h));
@@ -22,5 +24,18 @@ void Sabotage::update(float time)
 Sprite Sabotage::getSprite(){return sprite;}
 
 void Sabotage::run(){
-
+    // Если мы недавно делали саботаж на этом месте
+    // то нужно подождать
+    if(delay < 1000) return;
+    delay = 0;
+    sabotageWidget* wi = new sabotageWidget();
+    wi->show();
+    if(wi->getStatus() == "Solved") {
+        tasksCondition = Condition::Solved;
+        delete wi;
+    }
+    else if(wi->getStatus() == "notSolved"){
+        tasksCondition = Condition::notSolved;
+        delete wi;
+    }
 }

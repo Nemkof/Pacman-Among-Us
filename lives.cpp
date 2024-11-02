@@ -1,7 +1,10 @@
 #include "lives.h"
-Lives::Lives(const Image& image, const Object& object)
+Lives::Lives(const Object& object)
 {
-    texture.loadFromImage(image);
+    Image livesImage;
+    livesImage.loadFromFile("../../images/lives.png");
+    livesImage.createMaskFromColor(Color(255,255,255));
+    texture.loadFromImage(livesImage);
     w = texture.getSize().x;
     h = texture.getSize().y / 3;
     sprite.setTexture(texture);

@@ -15,8 +15,6 @@ public:
     explicit MenuWindow(QWidget *parent = nullptr);
     ~MenuWindow();
 
-    int volume = 5;
-
 private slots:
 
     void on_PlayButton_clicked();

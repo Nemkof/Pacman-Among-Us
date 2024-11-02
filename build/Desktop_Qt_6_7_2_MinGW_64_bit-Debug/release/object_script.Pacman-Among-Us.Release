@@ -11,5 +11,6 @@ release/menuwindow.o
 release/player.o
 release/sabotages.o
 release/sabotagewidget.o
+release/ventilations.o
 release/moc_menuwindow.o
 release/moc_sabotagewidget.o

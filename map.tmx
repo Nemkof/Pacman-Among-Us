@@ -5315,8 +5315,8 @@
   <object id="144" name="solid" x="960" y="640" width="32" height="192"/>
   <object id="145" name="solid" x="640" y="640" width="96" height="32"/>
   <object id="146" name="solid" x="864" y="640" width="96" height="32"/>
-  <object id="147" name="ventilation" x="64" y="704" width="81" height="69"/>
-  <object id="148" name="ventilation" x="1472" y="704" width="81" height="69"/>
+  <object id="147" name="firstVentilation" x="64" y="704" width="81" height="69"/>
+  <object id="148" name="secondVentilation" x="1472" y="704" width="81" height="69"/>
   <object id="776" name="solid" x="0" y="832" width="32" height="128"/>
   <object id="777" name="solid" x="1568" y="832" width="32" height="128"/>
   <object id="778" name="solid" x="0" y="544" width="32" height="128"/>
