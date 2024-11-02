@@ -1,7 +1,7 @@
 #include "player.h"
-
+#include "sabotagewidget.h"
 Player::Player(const std::vector<Object>& _obj, const Object& object, std::vector<Apple>* _apples,
-        Banana* _firstBanana, Banana* _secondBanana)
+        Banana* _firstBanana, Banana* _secondBanana, Sabotage* _firstSabotage, Sabotage* _secondSabotage)
     :Entity(object)
 {
     score = 0;
@@ -15,6 +15,9 @@ Player::Player(const std::vector<Object>& _obj, const Object& object, std::vecto
     applesNumber = apples->size();
     firstBanana = _firstBanana;
     secondBanana = _secondBanana;
+
+    firstSabotage = _firstSabotage;
+    secondSabotage = _secondSabotage;
 }
 
 void Player::control(){
@@ -65,6 +68,18 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy, const std::v
                 secondBanana->setCondition("Eaten"); // Мы кушаем банан, объявляем её съеденной
                 obj[i].name = "deadInsideBanana";
                 score += 50;   // Получаем за неё очки
+            }
+            else if(obj[i].name == "sabotageFirst" || obj[i].name == "sabotageFirst"){
+                if(Keyboard::isKeyPressed(Keyboard::E)){
+                    sabotageWidget wi(nullptr);
+                    wi.show();
+                }
+            }
+            else if(obj[i].name == "sabotageSecond" || obj[i].name == "sabotageSecond"){
+                if(Keyboard::isKeyPressed(Keyboard::E)){
+                    sabotageWidget wi(nullptr);
+                    wi.show();
+                }
             }
         }
     }
@@ -121,6 +136,6 @@ void Player::checkScore(){
 }
 
 
-int Player::isLive() {return lives;} // Возвращает true, если еще есть жизни
+int Player::getLives() {return lives;} // Возвращает true, если еще есть жизни
 
 

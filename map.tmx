@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#4d538c" nextlayerid="8" nextobjectid="923">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#4d538c" nextlayerid="10" nextobjectid="931">
  <tileset firstgid="1" name="Tiny_Chao_Garden_SonicAdv_3_Tile_Sheet" tilewidth="32" tileheight="32" tilecount="7200" columns="144">
   <grid orientation="orthogonal" width="16" height="16"/>
   <image source="images/Tiny_Chao_Garden_SonicAdv_3_Tile_Sheet.png" width="4617" height="1616"/>
@@ -5216,8 +5216,8 @@
   <object id="906" name="firstBanana" x="192" y="1312" width="32" height="32"/>
   <object id="907" name="secondBanana" x="1184" y="288" width="32" height="32"/>
  </objectgroup>
- <objectgroup id="6" name="players" visible="0">
-  <object id="550" name="player" x="768" y="864" width="32" height="32"/>
+ <objectgroup id="6" name="players">
+  <object id="550" name="player" x="725.5" y="854.5" width="32" height="32"/>
   <object id="795" name="Clyde" x="512" y="256" width="32" height="32"/>
   <object id="800" name="Blinky" x="704" y="544" width="32" height="32"/>
   <object id="801" name="Inky" x="960" y="256" width="32" height="32"/>
@@ -5310,8 +5310,8 @@
   <object id="138" name="solid" x="1504" y="64" width="64" height="480"/>
   <object id="139" name="solid" x="1248" y="480" width="256" height="64"/>
   <object id="141" name="solid" x="1248" y="544" width="32" height="128"/>
-  <object id="142" name="solid" x="608" y="640" width="32" height="224"/>
-  <object id="143" name="solid" x="640" y="832" width="352" height="32"/>
+  <object id="142" name="solid" x="608" y="640" width="32" height="213.5"/>
+  <object id="143" name="solid" x="640" y="832" width="352" height="21"/>
   <object id="144" name="solid" x="960" y="640" width="32" height="192"/>
   <object id="145" name="solid" x="640" y="640" width="96" height="32"/>
   <object id="146" name="solid" x="864" y="640" width="96" height="32"/>
@@ -5331,8 +5331,13 @@
   <object id="914" name="solid" x="576" y="128" width="32" height="96"/>
   <object id="916" name="solid" x="1312" y="1248" width="96" height="32"/>
   <object id="917" name="solid" x="1312" y="1088" width="80.6667" height="160"/>
-  <object id="918" x="1472" y="992" width="24.6667" height="12"/>
   <object id="920" name="fakesolid1" x="608" y="224" width="128" height="32"/>
   <object id="922" name="fakesolid2" x="1280" y="992" width="32" height="96"/>
+ </objectgroup>
+ <objectgroup id="8" name="otherElements">
+  <object id="923" name="sabotageFirst" x="640" y="96" width="96" height="64"/>
+  <object id="925" name="sabotageSecond" x="1376" y="1152" width="128" height="96"/>
+  <object id="926" name="lives" x="1312" y="544" width="32" height="32"/>
+  <object id="929" name="score" x="1280" y="0" width="32" height="32"/>
  </objectgroup>
 </map>

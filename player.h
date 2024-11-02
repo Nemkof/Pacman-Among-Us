@@ -2,6 +2,7 @@
 #define PLAYER_H
 #include "enemy.h"
 #include "food.h"
+#include "sabotages.h"
 class Player : public Entity {
 private:
     enum { left, right, up, down, stay } state;
@@ -11,13 +12,16 @@ private:
     Banana* firstBanana;
     Banana* secondBanana;
 
+    Sabotage* firstSabotage;
+    Sabotage* secondSabotage;
+
     int applesNumber;
     int score;
 public:/*
     onst std::vector<Object>& _obj, const Object& object, std::vector<Apple> *const _apples,
         Banana *const _firstBanana, Banana *const _secondBanana*/
     Player(const std::vector<Object>& _obj, const Object& object, std::vector<Apple>* _apples,
-        Banana* _firstBanana, Banana* _secondBanana);
+        Banana* _firstBanana, Banana* _secondBanana, Sabotage* firstSabotage, Sabotage* secondSabotage);
 
     void control();
 
@@ -29,7 +33,7 @@ public:/*
 
     void update(float time, const std::vector<Enemy*>& entities);
 
-    int isLive();
+    int getLives();
 
     int getScore();
 

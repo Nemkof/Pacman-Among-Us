@@ -9,4 +9,7 @@ release/lives.o
 release/main.o
 release/menuwindow.o
 release/player.o
+release/sabotages.o
+release/sabotagewidget.o
 release/moc_menuwindow.o
+release/moc_sabotagewidget.o

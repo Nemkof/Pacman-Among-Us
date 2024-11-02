@@ -2,7 +2,7 @@
 #define GAMEMANAGER_H
 #include "lives.h"
 #include "player.h"
-
+#include "sabotages.h"
 using namespace sf;
 using namespace std;
 int volume = 0;
@@ -12,31 +12,59 @@ int game()
     //////////////////////////////СОЗДАЁМ ОКНО//////////////////////////////
     RenderWindow window(VideoMode(2000, 1750), "Among Us: Final");  // Создаём окно
 
-    Music music;//создаем объект музыки
-    music.openFromFile("../../sounds/music.ogg");//загружаем файл
+    Music music; //создаем объект музыки
+    music.openFromFile("../../sounds/music.ogg"); //загружаем файл
     music.setVolume(volume);
-    music.play();//воспроизводим музыку
+    music.play(); //воспроизводим музыку
 
     //////////////////////////////ЗАГРУЖАЕМ КАРТУ//////////////////////////////
-    Level lvl; // Создаём объект типа "Карта"
-    lvl.LoadFromFile("../../map.tmx");  // Загружаем нашу карту
+    Level lvl;
+    lvl.LoadFromFile("../../map.tmx");
 
-    // Получаем все необходимые объекты карты
+    //////////////////////////////ПОЛУЧАЕМ ВСЕ ОБЪЕКТЫ//////////////////////////////
     std::vector<Object> obj = lvl.GetAllObjects(); // Получаем вектор всех объектов карты
-    std::vector<Object> rotates(lvl.GetObjects("rotate")); // Получаем вектор из всех тайлов-поворотов
-    std::vector<Object> solids(lvl.GetObjects("solid")); // Получаем вектор из всех тайлов-стен
-    solids.push_back(lvl.GetObject("fakesolid1"));
-    solids.push_back(lvl.GetObject("fakesolid2"));
 
-    std::vector<Object> appleObjects(lvl.GetObjects("apple")); // Получаем вектор из всех тайлов-яблочек
-    Object firstBananaObject(lvl.GetObject("firstBanana")); // Получаем первый банан
-    Object secondBananaObject(lvl.GetObject("secondBanana")); // Получаем второй банан
-    Object playerObject = lvl.GetObject("player"); // Получаем тайл игрока
-    Object blinkyObject = lvl.GetObject("Blinky"); // Получаем тайл блинки
-    Object pinkyObject = lvl.GetObject("Pinky"); // Получаем тайл пинки
-    Object inkyObject = lvl.GetObject("Inky"); // Получаем тайл инки
-    Object clydeObject = lvl.GetObject("Clyde"); // Получаем тайл клайда
+    std::vector<Object> rotates; // Получаем вектор из всех тайлов-поворотов
+    std::vector<Object> solids; // Получаем вектор из всех тайлов-стен
+    std::vector<Object> appleObjects; // Получаем вектор из всех тайлов-яблочек
+    Object firstBananaObject; // Получаем первый банан
+    Object secondBananaObject; // Получаем второй банан
+    Object playerObject; // Получаем тайл игрока
+    Object blinkyObject; // Получаем тайл блинки
+    Object pinkyObject; // Получаем тайл пинки
+    Object inkyObject; // Получаем тайл инки
+    Object clydeObject; // Получаем тайл клайда
+    Object firstSabotageObject; // Получаем тайл первого саботажа
+    Object secondSabotageObject; // Получаем тайл второго саботажа
+    Object livesObject;
+    Object scoreObject;
+    for(auto it: obj){
+        if (it.name == "rotate") rotates.push_back(it);
+        else if(it.name == "solid") solids.push_back(it);
+        else if(it.name == "fakesolid1") solids.push_back(it);
+        else if(it.name == "fakesolid2") solids.push_back(it);
+        else if(it.name == "apple") appleObjects.push_back(it);
+        else if(it.name == "firstBanana") firstBananaObject = it;
+        else if(it.name == "secondBanana") secondBananaObject = it;
+        else if(it.name == "player") playerObject = it;
+        else if(it.name == "Blinky") blinkyObject = it;
+        else if(it.name == "Pinky") pinkyObject = it;
+        else if(it.name == "Inky") inkyObject = it;
+        else if(it.name == "Clyde") clydeObject = it;
+        else if(it.name == "sabotageFirst") firstSabotageObject = it;
+        else if(it.name == "sabotageSecond") secondSabotageObject = it;
+        else if(it.name == "lives") livesObject = it;
+        else if(it.name == "score") scoreObject = it;
+    }
 
+    //////////////////////////////ПИХАЕМ САБОТАЖИ В КАРТУ//////////////////////////////
+    Image firstSabotageImage;
+    firstSabotageImage.loadFromFile("../../images/firstSabotage.png");
+    Sabotage firstSabotage(firstSabotageImage, firstSabotageObject);
+
+    Image secondSabotageImage;
+    secondSabotageImage.loadFromFile("../../images/secondSabotage.png");
+    Sabotage secondSabotage(secondSabotageImage, secondSabotageObject);
     //////////////////////////////ПИХАЕМ ЯБЛОКИ В КАРТУ//////////////////////////////
     Image appleImage;
     appleImage.loadFromFile("../../images/apple.png");  // Загружаем текстуру яблочка
@@ -64,30 +92,28 @@ int game()
     bananaSprite.setTexture(bananaTexture);  // Загружаем текстуру в спрайт
     Banana firstBanana(bananaSprite, firstBananaObject.rect.left, firstBananaObject.rect.top, bananaTexture.getSize()); // Создаём первый банан
     Banana secondBanana(bananaSprite, secondBananaObject.rect.left, secondBananaObject.rect.top, bananaTexture.getSize()); // Создаём второй банан
-    //////////////////////////////СОЗДАЁМ ИГРОКА//////////////////////////////
-    Player player(obj, playerObject, &apples, &firstBanana, &secondBanana);
 
-    //////////////////////////////ДЕЛАЕМ ТЕКСТУРУ LIVES//////////////////////////////
-    String pathToLivesImage = "../../images/lives.png"; // 72x90
-    int widthLives = 280, heightLives = 70;
+    //////////////////////////////СОЗДАЁМ ИГРОКА//////////////////////////////
+    Player player(obj, playerObject, &apples, &firstBanana, &secondBanana, &firstSabotage, &secondSabotage);
+
+    //////////////////////////////СОЗДАЁМ ОБЪЕКТ СЕРДЕЧЕК//////////////////////////////
     Image livesImage;
-    livesImage.loadFromFile(pathToLivesImage);
+    livesImage.loadFromFile("../../images/lives.png");
     livesImage.createMaskFromColor(Color(255,255,255));
-    Lives lives(livesImage, widthLives, heightLives, 1300, 550);
+    Lives lives(livesImage, livesObject);
 
     //////////////////////////////СОЗДАЁМ ВРАГОВ//////////////////////////////
-    vector<Enemy*> entities;//создаю список, сюда буду кидать объекты
-
-    //for (size_t i = 0; i < enemies.size(); i++)// проходимся по элементам этого вектора(а именно по врагам)
+    vector<Enemy*> entities;// создаём список, сюда будем кидать объекты
+    // создаём всех врагов
     Blinky blinky(rotates, solids, blinkyObject);
     Pinky pinky(rotates, solids, pinkyObject);
     Inky inky(rotates, solids, inkyObject);
     Clyde clyde(rotates, solids, clydeObject);
-
-    entities.push_back(&blinky);//и закидываем в список всех наших врагов с карты
-    entities.push_back(&pinky);//и закидываем в список всех наших врагов с карты
-    entities.push_back(&inky);//и закидываем в список всех наших врагов с карты
-    entities.push_back(&clyde);//и закидываем в список всех наших врагов с карты
+    // и закидываем в список всех наших врагов с карты
+    entities.push_back(&blinky);
+    entities.push_back(&pinky);
+    entities.push_back(&inky);
+    entities.push_back(&clyde);
 
     //////////////////////////////РАБОТАЕМ С ТЕКСТОМ//////////////////////////////
     Font font;  // Создаём объект типа шрифт
@@ -115,19 +141,13 @@ int game()
         }
 
         /// Если три раза попались врагу, то игра окончена
-        if(!player.isLive()){
+        if(!player.getLives()){
             window.close();
             return 1;
         }
 
 
         lvl.Draw(window); // Рисуем карту
-
-        /*
-        //////////////////////////////РИСУЕМ ЛЮКИ//////////////////////////////
-        window.draw(hatchRightSprite);
-        window.draw(hatchLeftSprite);
-        */
 
         //////////////////////////////РАБОТАЕМ С ЕДОЙ//////////////////////////////
         for (auto it : apples) // Проходимся по всем яблочкам
@@ -137,11 +157,17 @@ int game()
         }
         if(firstBanana.getCondition() == "notEaten") window.draw(firstBanana.getSprite()); // То нужно его нарисовать
         if(secondBanana.getCondition() == "notEaten") window.draw(secondBanana.getSprite()); // То нужно его нарисовать
+        //////////////////////////////ДАРИМ САБОТАЖАМ ЖИЗНЬ//////////////////////////////
+        firstSabotage.update(time);
+        window.draw(firstSabotage.getSprite());
+
+        secondSabotage.update(time);
+        window.draw(secondSabotage.getSprite());
         //////////////////////////////ДАРИМ ИГРОКУ ЖИЗНЬ//////////////////////////////
         player.update(time, entities);
         window.draw(player.sprite); // Рисуем игрока
 
-        lives.update(player.isLive());
+        lives.update(player.getLives());
         window.draw(lives.getSprite());
 
         //////////////////////////////ДАРИМ ВРАГАМ ЖИЗНЬ//////////////////////////////
@@ -151,8 +177,10 @@ int game()
             window.draw(entities[i]->sprite);
         }
 
+
+
         //////////////////////////////РАБОТАЕМ С ТЕКСТОМ//////////////////////////////
-        textScore.setPosition(1300, 0); // Устанавливаем счёт очков в угол
+        textScore.setPosition(scoreObject.rect.left, scoreObject.rect.top); // Устанавливаем счёт очков в угол
         textScore.setString("score: " + std::to_string(player.getScore())); // Получаем нужную надпись
         window.draw(textScore); // Рисуем счёт очков
 

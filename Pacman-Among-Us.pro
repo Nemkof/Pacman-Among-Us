@@ -14,7 +14,9 @@ SOURCES += \
         lives.cpp \
         main.cpp \
         menuwindow.cpp \
-        player.cpp
+        player.cpp \
+        sabotages.cpp \
+        sabotagewidget.cpp
 
 
 LIBS += -LC:\myQT\projects\SFML-2.6.1\lib
@@ -36,10 +38,13 @@ HEADERS += \
     level.h \
     lives.h \
     menuwindow.h \
-    player.h
+    player.h \
+    sabotages.h \
+    sabotagewidget.h
 
 FORMS += \
-    menuwindow.ui
+    menuwindow.ui \
+    sabotagewidget.ui
 
 DISTFILES += \
     images/Blinky.png \

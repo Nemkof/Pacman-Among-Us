@@ -1,6 +1,8 @@
 #ifndef LIVES_H
 #define LIVES_H
 #include <SFML/Graphics.hpp>
+#include "level.h"
+
 using namespace sf;
 class Lives{
 private:
@@ -8,7 +10,7 @@ private:
     Texture texture;
     Sprite sprite;
 public:
-    Lives(Image& image, int w, int h, int posX, int posY);
+    Lives(const Image& image, const Object& object);
 
     void update(int lives);
 

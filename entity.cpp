@@ -22,7 +22,7 @@ void Entity::updateSprites(float Dx, float time)
     if(Dx < 0) // Идём влево
     {
         player_sprites += 0.02 * time;
-        if(player_sprites > 12) player_sprites -= 12;
+        if(player_sprites > 12) player_sprites -= 13;
         sprite.setTextureRect(IntRect(w * (int)player_sprites, 0, w, h));
         sprite.setScale(-1,1);
         return;
