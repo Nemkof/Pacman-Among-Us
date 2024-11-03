@@ -1,14 +1,15 @@
 #include "sabotages.h"
 #include <QMainWindow>
 #include "sabotagewidget.h"
-Sabotage::Sabotage(const Image& image, const Object& object)
+Sabotage::Sabotage(const Image& image, const float& _x, const float& _y)
 {
+    x = _x; y = _y;
     texture.loadFromImage(image);
     w = texture.getSize().x / 2;
     h = texture.getSize().y;
     sprite.setTexture(texture);
     sprite.setTextureRect(IntRect(0, 0, w, h));
-    sprite.setPosition(object.rect.left, object.rect.top);
+    sprite.setPosition(x, y);
 }
 
 void Sabotage::update(float time)
@@ -22,7 +23,9 @@ void Sabotage::update(float time)
 }
 
 Sprite Sabotage::getSprite(){return sprite;}
-
+FloatRect Sabotage::getRect(){  // функция получения прямоугольника. координаты объекта, размер (ширина, высота).
+    return FloatRect(x, y, w, h);
+}
 void Sabotage::run(){
     // Если мы недавно делали саботаж на этом месте
     // то нужно подождать

@@ -2,9 +2,10 @@
 #include <SFML/Audio.hpp>
 #include "level.h"
 using namespace sf;
+enum class Direction { left, right, up, down, stay };
 class Entity {    
 public:
-    enum Direction { left, right, up, down, stay } state;
+    Direction direction;
     float dx = 0;
     float dy = 0;
     float x, y, w, h, startY, startX;

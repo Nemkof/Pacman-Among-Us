@@ -1,39 +1,41 @@
 #include "food.h"
-
-Apple::Apple(const Sprite& _sprite, const float& _x, const float& _y,
-        const Vector2u& size): sprite(_sprite), x(_x), y(_y), w(size.x / 3), h(size.y)
-{
-    sprite.setTextureRect(IntRect(w * (rand() % 3),0,w,h));
+Food::Food(const Sprite& _sprite, const float& _x, const float& _y, const Vector2u& size){
+    sprite = _sprite;
+    x = _x;
+    y = _y;
+    w = size.x;
+    h = size.y;
     sprite.setPosition(x,y);
-    status = false;
 }
+FloatRect Food::getRect(){  // функция получения прямоугольника. координаты объекта, размер (ширина, высота).
+    return FloatRect(x, y, w, h);
+}
+Sprite Food::getSprite(){return sprite;}
 
-bool Apple::isDead(){return status;}
+Condition Food::getCondition(){return condition;}
 
-Sprite Apple::getSprite(){return sprite;}
+void Food::setCondition(Condition _condition){condition = _condition;}
 
-void Apple::Dead(){status = true;}
-
+Apple::Apple(const Sprite& _sprite, const float& _x, const float& _y, const Vector2u& size)
+    :Food(_sprite, _x, _y, size)
+{
+    w /= 3;
+    sprite.setTextureRect(IntRect(w * (rand() % 3),0,w,h));
+    setCondition(Condition::notEaten);
+}
 
 Banana::Banana(const Sprite& _sprite, const float& _x, const float& _y, const Vector2u& size)
-    :sprite(_sprite), x(_x), y(_y), w(size.x), h(size.y)
+    :Food(_sprite, _x, _y, size)
 {
-    sprite.setTextureRect(IntRect(0,0,w,h));
-    sprite.setPosition(x,y);
-    condition = state::Hidden;
+    setCondition(Condition::Hidden);
 }
 
-String Banana::getCondition(){
-    if(condition == state::notEaten) return "notEaten";
-    else if(condition == state::Eaten) return "Eaten";
-    return "Hidden";
+Energy::Energy(const Sprite& _sprite, const float& _x, const float& _y, const Vector2u& size)
+    :Food(_sprite, _x, _y, size)
+{
+    w /= 4;
+    sprite.setTextureRect(IntRect(w * (rand() % 4),0,w,h));
+    setCondition(Condition::notEaten);
 }
 
-void Banana::setCondition(String _status){
-    if(_status == "notEaten") condition = state::notEaten;
-    else if(_status == "Eaten") condition = state::Eaten;
-    else if(_status == "Hidden") condition = state::Hidden;
-}
-
-Sprite Banana::getSprite(){return sprite;}
 

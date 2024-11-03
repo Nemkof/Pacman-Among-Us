@@ -56,9 +56,9 @@ float Entity::getY() {return y;}
 Sprite Entity::getSprite() {return sprite;}
 
 std::string Entity::getDirection(){
-    if(state == left) return "left";
-    if(state == right) return "right";
-    if(state == up) return "up";
-    if(state == down) return "down";
+    if(direction == Direction::left) return "left";
+    if(direction == Direction::right) return "right";
+    if(direction == Direction::up) return "up";
+    if(direction == Direction::down) return "down";
     return "stay";
 }

@@ -1,79 +1,93 @@
 #include "player.h"
-Player::Player(const std::vector<Object>& _obj, const Object& object)
+Player::Player(const Object& object)
     :Entity(object)
 {
-    speed = 0.2;
+    speed = 0.15;
     sprite.setTextureRect(IntRect(0, 0, w, h));
-    obj = _obj;
+    direction = Direction::stay;
 
-    Font font;  // Создаём объект типа шрифт
+    sound.openFromFile("../../sounds/zhelezo.mp3"); //загружаем файл
+    sound.setVolume(5);
+    sound.setLoop(true);
+    sound.play();
+
 }
 
 void Player::control(){
-    if (Keyboard::isKeyPressed(Keyboard::Left) && state != right) {
-        state = left;
+    if (Keyboard::isKeyPressed(Keyboard::Left) && direction != Direction::right) {
+        direction = Direction::left;
     }
-    if (Keyboard::isKeyPressed(Keyboard::Right) && state != left) {
-        state = right;
+    if (Keyboard::isKeyPressed(Keyboard::Right) && direction != Direction::left) {
+        direction = Direction::right;
     }
-    if (Keyboard::isKeyPressed(Keyboard::Up) && state != down) {
-        state = up;
+    if (Keyboard::isKeyPressed(Keyboard::Up) && direction != Direction::down) {
+        direction = Direction::up;
     }
-    if (Keyboard::isKeyPressed(Keyboard::Down) && state != up) {
-        state = down;
+    if (Keyboard::isKeyPressed(Keyboard::Down) && direction != Direction::up) {
+        direction = Direction::down;
     }
 }
 
 
-void Player::checkCollisionWithMap (float time, float Dx, float Dy, const std::vector<Enemy*>& entities)
+void Player::checkCollisionWithMap (float time, float Dx, float Dy)
 {
-    for (size_t i = 0; i < obj.size(); i++) // Проходимся по всем элементам карты
+    /// Проверяем столкновение со стенами
+    for (size_t i = 0; i < solids->size(); i++)
     {
-        if (getRect().intersects(obj[i].rect)) // Если мы пересекаемся с каким-то тайликом
-        {
-
-            if (obj[i].name == "solid") // И этот тайлик помечен знаком "Стена"
-            { // То мы должны остановить нашего игрока перед стеной
-                if (Dy>0)	{ y = obj[i].rect.top - h;  dy = 0; }
-                if (Dy<0)	{ y = obj[i].rect.top + obj[i].rect.height;   dy = 0; }
-                if (Dx>0)	{ x = obj[i].rect.left - w; dx = 0;}
-                if (Dx<0)	{ x = obj[i].rect.left + obj[i].rect.width; dx = 0;}
-            }
-            else if(obj[i].name == "apple") // Если пришли к яблоку
-            {
-                apples->at(i).Dead(); // Мы кушаем банан, объявляем её съеденной
-                obj[i].name = "deadInsideApple"; // Помечаем его в массиве как съеденныей
-                score += 5;   // Получаем за неё очки
-                checkScore(); // Проверяем, не пора ли рисовать банан
-            }
-            else if(obj[i].name == "firstBanana" && firstBanana->getCondition() == "notEaten") // Если пришли к банану
-            {
-                firstBanana->setCondition("Eaten"); // Мы кушаем банан, объявляем её съеденной
-                obj[i].name = "deadInsideBanana";
-                score += 50;   // Получаем за неё очки
-            }
-            else if(obj[i].name == "secondBanana" && secondBanana->getCondition() == "notEaten") // Если пришли к банану
-            {
-                secondBanana->setCondition("Eaten"); // Мы кушаем банан, объявляем её съеденной
-                obj[i].name = "deadInsideBanana";
-                score += 50;   // Получаем за неё очки
-            }
-            else if(obj[i].name == "sabotageFirst" || obj[i].name == "sabotageFirst"){
-                if(Keyboard::isKeyPressed(Keyboard::E)){
-                    firstSabotage->run();
-                }
-            }
-            else if(obj[i].name == "sabotageSecond" || obj[i].name == "sabotageSecond"){
-                if(Keyboard::isKeyPressed(Keyboard::E)){
-                    secondSabotage->run();
-                }
-            }
+        if (getRect().intersects(solids->at(i).rect))
+        {    
+            if (Dy>0)	{ y = solids->at(i).rect.top - h;  dy = 0; }
+            if (Dy<0)	{ y = solids->at(i).rect.top + solids->at(i).rect.height;   dy = 0; }
+            if (Dx>0)	{ x = solids->at(i).rect.left - w; dx = 0;}
+            if (Dx<0)	{ x = solids->at(i).rect.left + solids->at(i).rect.width; dx = 0;}
         }
     }
 
+    /// Проверяем столкновение с яблоками
+    for (size_t i = 0; i < apples->size(); i++)
+    {
+        if (apples->at(i).getCondition() == Condition::notEaten
+            && getRect().intersects(apples->at(i).getRect()))
+        {
+                score += Apple::score;
+                checkScore(); // Проверяем, не пора ли рисовать банан
+                apples->at(i).setCondition(Condition::Eaten);
+        }
+    }
+
+    /// Проверяем столкновение с энерджайзерами
+    for (size_t i = 0; i < energies->size(); i++)
+    {
+        if (energies->at(i).getCondition() == Condition::notEaten
+            && getRect().intersects(energies->at(i).getRect()))
+        {
+            energies->at(i).setCondition(Condition::Eaten);
+        }
+    }
+
+    /// Проверяем столкновение с бананами
+    if(getRect().intersects(firstBanana->getRect()) && firstBanana->getCondition() == Condition::notEaten)
+    {
+        firstBanana->setCondition(Condition::Eaten);
+        score += Banana::score;
+    }
+    if(getRect().intersects(secondBanana->getRect()) && secondBanana->getCondition() == Condition::notEaten)
+    {
+        secondBanana->setCondition(Condition::Eaten);
+        score += Banana::score;
+    }
+
+    /// Проверяем столкновение с саботажем
+    if(getRect().intersects(firstSabotage->getRect()) && Keyboard::isKeyPressed(Keyboard::E)){
+        firstSabotage->run();
+    }
+    if(getRect().intersects(secondSabotage->getRect()) && Keyboard::isKeyPressed(Keyboard::E)){
+        secondSabotage->run();
+    }
+
     /// Проверяем столкновение с врагами
-    for(auto enemy : entities){
-        if(getRect().intersects(enemy->getRect()))
+    for(size_t i = 0; i < enemies->size(); i++){
+        if(getRect().intersects(enemies->at(i)->getRect()))
         {
             if(lives >= 1)
             {
@@ -84,29 +98,29 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy, const std::v
                 if (Dx>0)	{ x -= dx * time;  dx = 0;}
                 if (Dx<0)	{ x += dx * time;  dx = 0;}
                 sprite.setPosition(x + w / 2, y + h / 2);
-                state = stay;
+                direction = Direction::stay;
             }
         }
     }
 }
 
-void Player::updatePosition(float time, const std::vector<Enemy*>& entities){
-    if(state == right) dx = speed;
-    else if(state == left) dx = -speed;
-    else if(state == down) dy = speed;
-    else if(state == up) dy = -speed;
+void Player::updatePosition(float time){
+    if(direction == Direction::right) dx = speed;
+    else if(direction == Direction::left) dx = -speed;
+    else if(direction == Direction::down) dy = speed;
+    else if(direction == Direction::up) dy = -speed;
 
     x += dx*time;
-    checkCollisionWithMap(time, dx, 0, entities);
+    checkCollisionWithMap(time, dx, 0);
     y += dy*time;
-    checkCollisionWithMap(time, 0, dy, entities);
+    checkCollisionWithMap(time, 0, dy);
     sprite.setPosition(x + w / 2, y + h / 2);
 }
 
-void Player::update(float time, const std::vector<Enemy*>& entities)
+void Player::update(float time)
 {
     control();
-    updatePosition(time, entities);
+    updatePosition(time);
     updateSprites(dx, time);
 }
 
@@ -115,23 +129,25 @@ int Player::getScore() {return score;}
 
 /// Проверяем, не пора ли выкидывать бананы на карту
 void Player::checkScore(){
-    if((score == applesNumber * 5 / 2) && firstBanana->getCondition() == "Hidden"){
-        firstBanana->setCondition("notEaten");
+    if((score == ((int)apples->size() * Apple::score / 2)) && firstBanana->getCondition() == Condition::Hidden){
+        firstBanana->setCondition(Condition::notEaten);
     }
-    else if((score >= applesNumber * 5) && secondBanana->getCondition() == "Hidden"){
-        secondBanana->setCondition("notEaten");
+    else if((score >= ((int)apples->size() * Apple::score + Banana::score))
+               && secondBanana->getCondition() == Condition::Hidden){
+        secondBanana->setCondition(Condition::notEaten);
     }
 }
 
 
 int Player::getLives() {return lives;} // Возвращает true, если еще есть жизни
 
-void Player::setApples(std::vector<Apple>* _apples) {
-    apples = _apples;
-    applesNumber = apples->size();
-}
+void Player::setApples(std::vector<Apple>* _apples) { apples = _apples;}
+void Player::setEnergy(std::vector<Energy>* _energies) { energies = _energies;}
 void Player::setFirstBanana(Banana* _firstBanana) {firstBanana = _firstBanana;}
 void Player::setSecondBanana(Banana* _secondBanana) {secondBanana = _secondBanana;}
 void Player::setFirstSabotage(Sabotage* _firstSabotage) {firstSabotage = _firstSabotage;}
 void Player::setSecondSabotage(Sabotage* _secondSabotage) {secondSabotage = _secondSabotage;}
+void Player::setSolids(std::vector<Object>* _solids) { solids = _solids;}
+void Player::setEnemy(std::vector<Enemy*>* _enemies) { enemies = _enemies;}
+
 

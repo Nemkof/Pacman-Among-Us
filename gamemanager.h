@@ -5,17 +5,18 @@
 #include "sabotages.h"
 using namespace sf;
 using namespace std;
-int volume = 0;
+int volume = 5;
 
 int game()
 {
     //////////////////////////////СОЗДАЁМ ОКНО//////////////////////////////
     RenderWindow window(VideoMode(2000, 1750), "Among Us: Final");  // Создаём окно
 
-    Music music; //создаем объект музыки
-    music.openFromFile("../../sounds/music.ogg"); //загружаем файл
-    music.setVolume(volume);
-    music.play(); //воспроизводим музыку
+    // Music music; //создаем объект музыки
+    // music.openFromFile("../../sounds/zhelezo.ogg"); //загружаем файл
+    // music.setVolume(volume);
+    // music.setLoop(true);
+    // music.play(); //воспроизводим музыку
 
     //////////////////////////////ЗАГРУЖАЕМ КАРТУ//////////////////////////////
     Level lvl;
@@ -25,8 +26,10 @@ int game()
     std::vector<Object> obj = lvl.GetAllObjects(); // Получаем вектор всех объектов карты
 
     std::vector<Object> rotates; // Получаем вектор из всех тайлов-поворотов
-    std::vector<Object> solids; // Получаем вектор из всех тайлов-стен
+    std::vector<Object> solidsEnemy; // Получаем вектор из всех тайлов-стен
+    std::vector<Object> solidsPlayer; // Получаем вектор из всех тайлов-стен
     std::vector<Object> appleObjects; // Получаем вектор из всех тайлов-яблочек
+    std::vector<Object> energyObjects; // Получаем вектор из всех тайлов-энерджайзеров
     Object firstBananaObject; // Получаем первый банан
     Object secondBananaObject; // Получаем второй банан
     Object playerObject; // Получаем тайл игрока
@@ -36,16 +39,17 @@ int game()
     Object clydeObject; // Получаем тайл клайда
     Object firstSabotageObject; // Получаем тайл первого саботажа
     Object secondSabotageObject; // Получаем тайл второго саботажа
-    Object livesObject;
-    Object scoreObject;
-    Object firstVentilation;
-    Object secondVentilation;
+    Object livesObject; // Получаем тайл сердечек
+    Object scoreObject; // Получаем тайл очков
+    Object firstVentilation; // Получаем тайл первой вентиляции
+    Object secondVentilation; // Получаем тайл второй вентиляции
     for(auto it: obj){
         if (it.name == "rotate") rotates.push_back(it);
-        else if(it.name == "solid") solids.push_back(it);
-        else if(it.name == "fakesolid1") solids.push_back(it);
-        else if(it.name == "fakesolid2") solids.push_back(it);
+        else if(it.name == "solid") {solidsPlayer.push_back(it); solidsEnemy.push_back(it);}
+        else if(it.name == "fakesolid1") solidsEnemy.push_back(it);
+        else if(it.name == "fakesolid2") solidsEnemy.push_back(it);
         else if(it.name == "apple") appleObjects.push_back(it);
+        else if(it.name == "energy") energyObjects.push_back(it);
         else if(it.name == "firstBanana") firstBananaObject = it;
         else if(it.name == "secondBanana") secondBananaObject = it;
         else if(it.name == "player") playerObject = it;
@@ -62,11 +66,11 @@ int game()
     //////////////////////////////ПИХАЕМ САБОТАЖИ В КАРТУ//////////////////////////////
     Image firstSabotageImage;
     firstSabotageImage.loadFromFile("../../images/firstSabotage.png");
-    Sabotage firstSabotage(firstSabotageImage, firstSabotageObject);
+    Sabotage firstSabotage(firstSabotageImage, firstSabotageObject.rect.left, firstSabotageObject.rect.top);
 
     Image secondSabotageImage;
     secondSabotageImage.loadFromFile("../../images/secondSabotage.png");
-    Sabotage secondSabotage(secondSabotageImage, secondSabotageObject);
+    Sabotage secondSabotage(secondSabotageImage, secondSabotageObject.rect.left, secondSabotageObject.rect.top);
     //////////////////////////////ПИХАЕМ ЯБЛОКИ В КАРТУ//////////////////////////////
     Image appleImage;
     appleImage.loadFromFile("../../images/apple.png");  // Загружаем текстуру яблочка
@@ -95,28 +99,47 @@ int game()
     Banana firstBanana(bananaSprite, firstBananaObject.rect.left, firstBananaObject.rect.top, bananaTexture.getSize()); // Создаём первый банан
     Banana secondBanana(bananaSprite, secondBananaObject.rect.left, secondBananaObject.rect.top, bananaTexture.getSize()); // Создаём второй банан
 
+    //////////////////////////////ПИХАЕМ ЭНЕРДЖАЙЗЕРЫ В КАРТУ//////////////////////////////
+    Image energyImage;
+    energyImage.loadFromFile("../../images/energy.png");  // Загружаем текстуру яблочка
+    energyImage.createMaskFromColor(Color(255,255,255));
+    Texture energyTexture;
+    energyTexture.loadFromImage(energyImage);  // Загружаем текстуру яблочка
+    Sprite energySprite;
+    energySprite.setTexture(energyTexture);  // Загружаем текстуру в спрайт
+
+    std::vector<Energy> energies; // Создаём массив яблочек
+    for(size_t i = 0; i < energyObjects.size(); i++) // Проходимся по всем тайлам-яблочкам
+    {
+        // Создаём хелпер-яблочко, которое будет стоять на i-том тайле
+        Energy tmp(energySprite, energyObjects.at(i).rect.left, energyObjects.at(i).rect.top, energyTexture.getSize());
+        energies.push_back(tmp); // Помещаем всё в наш вектор объектов
+    }
+    //////////////////////////////СОЗДАЁМ ВРАГОВ//////////////////////////////
+    vector<Enemy*> enemies;// создаём список, сюда будем кидать объекты
+    // создаём всех врагов
+    Blinky blinky(rotates, solidsEnemy, blinkyObject);
+    Pinky pinky(rotates, solidsEnemy, pinkyObject);
+    Inky inky(rotates, solidsEnemy, inkyObject);
+    Clyde clyde(rotates, solidsEnemy, clydeObject);
+    // и закидываем в список всех наших врагов с карты
+    enemies.push_back(&blinky);
+    enemies.push_back(&pinky);
+    enemies.push_back(&inky);
+    enemies.push_back(&clyde);
+
     //////////////////////////////СОЗДАЁМ ИГРОКА//////////////////////////////
-    Player player(obj, playerObject);
+    Player player(playerObject);
+    player.setSolids(&solidsPlayer);
     player.setApples(&apples);
+    player.setEnergy(&energies);
     player.setFirstBanana(&firstBanana);
     player.setSecondBanana(&secondBanana);
     player.setFirstSabotage(&firstSabotage);
     player.setSecondSabotage(&secondSabotage);
+    player.setEnemy(&enemies);
     //////////////////////////////СОЗДАЁМ ОБЪЕКТ СЕРДЕЧЕК//////////////////////////////
     Lives lives(livesObject);
-
-    //////////////////////////////СОЗДАЁМ ВРАГОВ//////////////////////////////
-    vector<Enemy*> entities;// создаём список, сюда будем кидать объекты
-    // создаём всех врагов
-    Blinky blinky(rotates, solids, blinkyObject);
-    Pinky pinky(rotates, solids, pinkyObject);
-    Inky inky(rotates, solids, inkyObject);
-    Clyde clyde(rotates, solids, clydeObject);
-    // и закидываем в список всех наших врагов с карты
-    entities.push_back(&blinky);
-    entities.push_back(&pinky);
-    entities.push_back(&inky);
-    entities.push_back(&clyde);
 
     //////////////////////////////РАБОТАЕМ С ТЕКСТОМ//////////////////////////////
     Font font;  // Создаём объект типа шрифт
@@ -155,11 +178,16 @@ int game()
         //////////////////////////////РАБОТАЕМ С ЕДОЙ//////////////////////////////
         for (auto it : apples) // Проходимся по всем яблочкам
         {
-            if(!it.isDead()) // Если яблочко не съели
+            if(it.getCondition() == Condition::notEaten) // Если яблочко не съели
                 window.draw(it.getSprite()); // То нужно его нарисовать
         }
-        if(firstBanana.getCondition() == "notEaten") window.draw(firstBanana.getSprite()); // То нужно его нарисовать
-        if(secondBanana.getCondition() == "notEaten") window.draw(secondBanana.getSprite()); // То нужно его нарисовать
+        for (auto it : energies) // Проходимся по всем энерджайзерам
+        {
+            if(it.getCondition() == Condition::notEaten) // Если яблочко не съели
+                window.draw(it.getSprite()); // То нужно его нарисовать
+        }
+        if(firstBanana.getCondition() == Condition::notEaten) window.draw(firstBanana.getSprite()); // То нужно его нарисовать
+        if(secondBanana.getCondition() == Condition::notEaten) window.draw(secondBanana.getSprite()); // То нужно его нарисовать
         //////////////////////////////ДАРИМ САБОТАЖАМ ЖИЗНЬ//////////////////////////////
         firstSabotage.update(time);
         window.draw(firstSabotage.getSprite());
@@ -167,17 +195,17 @@ int game()
         secondSabotage.update(time);
         window.draw(secondSabotage.getSprite());
         //////////////////////////////ДАРИМ ИГРОКУ ЖИЗНЬ//////////////////////////////
-        player.update(time, entities);
+        player.update(time);
         window.draw(player.sprite); // Рисуем игрока
 
         lives.update(player.getLives());
         window.draw(lives.getSprite());
 
         //////////////////////////////ДАРИМ ВРАГАМ ЖИЗНЬ//////////////////////////////
-        for(size_t i = 0; i < entities.size(); i++)
+        for(size_t i = 0; i < enemies.size(); i++)
         {
-            entities[i]->update(time, player.x, player.y);
-            window.draw(entities[i]->sprite);
+            enemies[i]->update(time, player.x, player.y);
+            window.draw(enemies[i]->sprite);
         }
 
 

@@ -1,12 +1,13 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 #include "entity.h"
+enum class GhostState{ Chase, Scatter, Frightened };
 class Enemy: public Entity{
 private:
     Direction lastDir;
     std::vector<Object> rotates;
     std::vector<Object> solids; // Вектор объектов карты
-    enum { Chase, Scatter, Frightened } condition;
+    GhostState ghostState;
     float timeRotates;
 
     float lastRotateX = 0.0;
@@ -44,8 +45,12 @@ public:
     {
 
     }
-    float getTargetX(float x) override {return x;}
-    float getTargetY(float y) override {return y;}
+    float getTargetX(float x) override {
+        return x;
+    }
+    float getTargetY(float y) override {
+        return y;
+    }
 };
 
 // Розовый
@@ -56,8 +61,12 @@ public:
     {
 
     }
-    float getTargetX(float x) override {return x + 400;}
-    float getTargetY(float y) override {return y;}
+    float getTargetX(float x) override {
+        return x + 320;
+    }
+    float getTargetY(float y) override {
+        return y;
+    }
 };
 
 
@@ -67,10 +76,14 @@ public:
     Inky(const std::vector<Object>& _rotates, const std::vector<Object>& _solids, const Object& object) :
         Enemy(_rotates, _solids, object)
     {
-        state = left;
+        direction = Direction::left;
     }
-    float getTargetX(float x) override {return x - 400;}
-    float getTargetY(float y) override {return y;}
+    float getTargetX(float x) override {
+        return x - 320;
+    }
+    float getTargetY(float y) override {
+        return y;
+    }
 };
 
 // Оранжевый
@@ -79,10 +92,14 @@ public:
     Clyde(const std::vector<Object>& _rotates, const std::vector<Object>& _solids, const Object& object)
         : Enemy(_rotates, _solids, object)
     {
-        state = left;
+        direction = Direction::left;
     }
-    float getTargetX(float x) override {return x;}
-    float getTargetY(float y) override {return y + 400;}
+    float getTargetX(float x) override {
+        return x;
+    }
+    float getTargetY(float y) override {
+        return y + 320;
+    }
 };
 
 #endif // ENEMY_H

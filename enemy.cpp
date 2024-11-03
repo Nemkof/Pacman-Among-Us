@@ -10,7 +10,7 @@ Enemy::Enemy(const std::vector<Object>& _rotates, const std::vector<Object>& _so
     speed = 0.1;
     dx = speed;
     dy = 0;
-    state = right;
+    direction = Direction::right;
     rotates = _rotates;
 
     lastRotateX = 0.0;
@@ -19,11 +19,11 @@ Enemy::Enemy(const std::vector<Object>& _rotates, const std::vector<Object>& _so
 
 /// Логика движения за игроком
 void Enemy::selectDirection(float targetX, float targetY){
-    Direction nextDir = stay;
+    Direction nextDir = Direction::stay;
 
     float minDist = std::numeric_limits<float>::max();
 
-    if(!isSolid(x - 32, y) && (state != Direction::right))
+    if(!isSolid(x - 32, y) && (direction != Direction::right))
     {
         double dist = calculateDist(targetX, targetY, x - 32, y);
         if (dist < minDist){
@@ -31,7 +31,7 @@ void Enemy::selectDirection(float targetX, float targetY){
             minDist = dist;
         }
     }
-    if(!isSolid(x + 32, y) && (state != Direction::left))
+    if(!isSolid(x + 32, y) && (direction != Direction::left))
     {
         double dist = calculateDist(targetX, targetY, x + 32, y);
         if (dist < minDist){
@@ -39,7 +39,7 @@ void Enemy::selectDirection(float targetX, float targetY){
             minDist = dist;
         }
     }
-    if(!isSolid(x, y - 32) && (state != Direction::down))
+    if(!isSolid(x, y - 32) && (direction != Direction::down))
     {
         double dist = calculateDist(targetX, targetY, x, y - 32);
         if (dist < minDist){
@@ -47,21 +47,21 @@ void Enemy::selectDirection(float targetX, float targetY){
             minDist = dist;
         }
     }
-    if(!isSolid(x, y + 32) && (state != Direction::up))
+    if(!isSolid(x, y + 32) && (direction != Direction::up))
     {
         double dist = calculateDist(targetX, targetY, x, y + 32);
         if (dist < minDist){
             nextDir = Direction::down;
         }
     }
-    if(nextDir != stay) {
-        state = nextDir;
+    if(nextDir != Direction::stay) {
+        direction = nextDir;
     }
     else{
-        if(state == right) {state = left;}
-        else if(state == left) {state = right;}
-        else if(state == down) {state = up;}
-        else if(state == up) {state = down;}
+        if(direction == Direction::right) {direction = Direction::left;}
+        else if(direction == Direction::left) {direction = Direction::right;}
+        else if(direction == Direction::down) {direction = Direction::up;}
+        else if(direction == Direction::up) {direction = Direction::down;}
     }
 
 }
@@ -88,19 +88,19 @@ void Enemy::checkCollisionWithMap(float Dx, float Dy){
         if (getRect().intersects(solids[i].rect)) // Если мы пересекаемся с каким-то тайликом
         {
            // То мы должны остановить нашего игрока перед стеной
-            if (Dy>0)	{ y = solids[i].rect.top - h;  dy = 0; state = down;}
-            if (Dy<0)	{ y = solids[i].rect.top + solids[i].rect.height;   dy = 0; state = up;}
-            if (Dx>0)	{ x = solids[i].rect.left - w; dx = 0; state = right;}
-            if (Dx<0)	{ x = solids[i].rect.left + solids[i].rect.width; dx = 0; state = left;}
+            if (Dy>0)	{ y = solids[i].rect.top - h;  dy = 0; direction = Direction::down;}
+            if (Dy<0)	{ y = solids[i].rect.top + solids[i].rect.height;   dy = 0; direction = Direction::up;}
+            if (Dx>0)	{ x = solids[i].rect.left - w; dx = 0; direction = Direction::right;}
+            if (Dx<0)	{ x = solids[i].rect.left + solids[i].rect.width; dx = 0; direction = Direction::left;}
         }
     }
 }
 
 void Enemy::updatePosition(float time){
-    if(state == right) {dx = speed; dy = 0; state = right;}
-    else if(state == left) {dx = -speed; dy = 0; state = left;}
-    else if(state == down) {dy = speed; dx = 0; state = down;}
-    else if(state == up) {dy = -speed; dx = 0; state = up;}
+    if(direction == Direction::right) {dx = speed; dy = 0; direction = Direction::right;}
+    else if(direction == Direction::left) {dx = -speed; dy = 0; direction = Direction::left;}
+    else if(direction == Direction::down) {dy = speed; dx = 0; direction = Direction::down;}
+    else if(direction == Direction::up) {dy = -speed; dx = 0; direction = Direction::up;}
 
     x += dx*time;
     checkCollisionWithMap(dx, 0);

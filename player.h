@@ -5,36 +5,37 @@
 #include "sabotages.h"
 class Player : public Entity {
 private:
-    enum { left, right, up, down, stay } state = stay;
     short lives = 3;
-    std::vector<Object> obj; // Вектор объектов карты
-
+    std::vector<Object>* solids;
     std::vector<Apple>* apples;
+    std::vector<Energy>* energies;
+    std::vector<Enemy*>* enemies;
     Banana* firstBanana;
     Banana* secondBanana;
-
     Sabotage* firstSabotage;
     Sabotage* secondSabotage;
 
-    int applesNumber;
     int score = 0;
+
+    Music sound;
 public:
-    Player(const std::vector<Object>& _obj, const Object& object);
+    Player(const Object& object);
 
     void control();
 
-    /// Проверяем столкновения
-    void checkCollisionWithMap (float time, float Dx, float Dy, const std::vector<Enemy*>& entities);
-    /// Обновляем позицию игрока
-    void updatePosition(float time, const std::vector<Enemy*>& entities);
-    void update(float time, const std::vector<Enemy*>& entities);
+    void checkCollisionWithMap (float time, float Dx, float Dy);
+    void updatePosition(float time);
+    void update(float time);
 
     int getLives();
 
     int getScore();
     void checkScore();
 
+    void setSolids(std::vector<Object>* _solids);
     void setApples(std::vector<Apple>* _apples);
+    void setEnergy(std::vector<Energy>* _energies);
+    void setEnemy(std::vector<Enemy*>* _enemies);
     void setFirstBanana(Banana* _firstBanana);
     void setSecondBanana(Banana* _secondBanana);
     void setFirstSabotage(Sabotage* _firstSabotage);
