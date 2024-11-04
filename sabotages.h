@@ -1,7 +1,6 @@
 #ifndef SABOTAGES_H
 #define SABOTAGES_H
 #include <SFML/Graphics.hpp>
-#include "level.h"
 using namespace sf;
 
 class Sabotage{

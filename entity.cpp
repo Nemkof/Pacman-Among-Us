@@ -17,8 +17,6 @@ Entity::Entity(const Object& object)
 /// Обновляем спрайты игрока
 void Entity::updateSprites(float Dx, float time)
 {
-    // < 0 - идем влево
-    // >= 0 - иначе
     if(Dx < 0) // Идём влево
     {
         player_sprites += 0.02 * time;
@@ -42,23 +40,4 @@ FloatRect Entity::getRect(){  // функция получения прямоу�
     return FloatRect(x, y, w, h);
 }
 
-FloatRect Entity::getRectForRotates(){  // функция получения прямоугольника. координаты объекта, размер (ширина, высота).
-    return FloatRect(x, y, w / 2, h / 2); // нужна для проверки столкновений
-}
 
-
-float Entity::getX() {return x;}
-
-
-float Entity::getY() {return y;}
-
-
-Sprite Entity::getSprite() {return sprite;}
-
-std::string Entity::getDirection(){
-    if(direction == Direction::left) return "left";
-    if(direction == Direction::right) return "right";
-    if(direction == Direction::up) return "up";
-    if(direction == Direction::down) return "down";
-    return "stay";
-}

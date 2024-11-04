@@ -1,6 +1,6 @@
 #ifndef FOOD_H
 #define FOOD_H
-#include "level.h"
+#include <SFML/Graphics.hpp>
 using namespace sf;
 
 enum class Condition{

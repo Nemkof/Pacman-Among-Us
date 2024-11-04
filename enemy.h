@@ -7,8 +7,9 @@ private:
     Direction lastDir;
     std::vector<Object> rotates;
     std::vector<Object> solids; // Вектор объектов карты
-    GhostState ghostState;
-    float timeRotates;
+
+    GhostState ghostState = GhostState::Chase;
+    float timeGhostState;
 
     float lastRotateX = 0.0;
     float lastRotateY = 0.0;
@@ -20,20 +21,16 @@ public:
 
     float calculateDist(float x1, float y1, float x2, float y2);
 
-    /// Проверяем столкновения
     void checkCollisionWithMap(float Dx, float Dy);
-
-    /// Обновляем позицию игрока
     void updatePosition(float time);
-
     void update(float time, float targetX, float targetY);
+
+    FloatRect getRectForRotates();
 
     bool isSolid(float _x, float _y);
 
     virtual float getTargetX(float x) = 0;
     virtual float getTargetY(float y) = 0;
-
-    void vov();
 };
 
 

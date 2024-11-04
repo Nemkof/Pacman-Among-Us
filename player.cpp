@@ -5,12 +5,6 @@ Player::Player(const Object& object)
     speed = 0.15;
     sprite.setTextureRect(IntRect(0, 0, w, h));
     direction = Direction::stay;
-
-    sound.openFromFile("../../sounds/zhelezo.mp3"); //загружаем файл
-    sound.setVolume(5);
-    sound.setLoop(true);
-    sound.play();
-
 }
 
 void Player::control(){
@@ -87,19 +81,17 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy)
 
     /// Проверяем столкновение с врагами
     for(size_t i = 0; i < enemies->size(); i++){
-        if(getRect().intersects(enemies->at(i)->getRect()))
+        if(getRect().intersects(enemies->at(i)->getRect())
+            && lives >= 1)
         {
-            if(lives >= 1)
-            {
-                lives--;
-                x = startX; y = startY;
-                if (Dy>0)	{ y -= dy * time;  dy = 0; }
-                if (Dy<0)	{ y += dy * time;  dy = 0; }
-                if (Dx>0)	{ x -= dx * time;  dx = 0;}
-                if (Dx<0)	{ x += dx * time;  dx = 0;}
-                sprite.setPosition(x + w / 2, y + h / 2);
-                direction = Direction::stay;
-            }
+            lives--;
+            x = startX; y = startY;
+            if (Dy>0)	{ y -= dy * time;  dy = 0; }
+            if (Dy<0)	{ y += dy * time;  dy = 0; }
+            if (Dx>0)	{ x -= dx * time;  dx = 0;}
+            if (Dx<0)	{ x += dx * time;  dx = 0;}
+            sprite.setPosition(x + w / 2, y + h / 2);
+            direction = Direction::stay;
         }
     }
 }
@@ -129,7 +121,7 @@ int Player::getScore() {return score;}
 
 /// Проверяем, не пора ли выкидывать бананы на карту
 void Player::checkScore(){
-    if((score == ((int)apples->size() * Apple::score / 2)) && firstBanana->getCondition() == Condition::Hidden){
+    if((score >= ((int)apples->size() * Apple::score / 2)) && firstBanana->getCondition() == Condition::Hidden){
         firstBanana->setCondition(Condition::notEaten);
     }
     else if((score >= ((int)apples->size() * Apple::score + Banana::score))

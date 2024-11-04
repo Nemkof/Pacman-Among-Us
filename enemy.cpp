@@ -3,7 +3,6 @@
 Enemy::Enemy(const std::vector<Object>& _rotates, const std::vector<Object>& _solids, const Object& object)
     : Entity(object)
 {
-    solids = _solids;
     sprite.setTextureRect(IntRect(0, 0, w, h));
     sprite.setColor(Color::White);
     sprite.setPosition(x, y);
@@ -11,7 +10,9 @@ Enemy::Enemy(const std::vector<Object>& _rotates, const std::vector<Object>& _so
     dx = speed;
     dy = 0;
     direction = Direction::right;
+
     rotates = _rotates;
+    solids = _solids;
 
     lastRotateX = 0.0;
     lastRotateY = 0.0;
@@ -124,7 +125,6 @@ void Enemy::update(float time, float playerX, float playerY)
                 selectDirection(targetX, targetY);
                 lastRotateX = rotates[i].rect.left;
                 lastRotateY = rotates[i].rect.top;
-
             }
         }
     }
@@ -142,9 +142,8 @@ void Enemy::update(float time, float playerX, float playerY)
     sprite.setPosition(x + w / 2, y + h / 2);
     updateSprites(dx, time);
 
-    vov();
+}
+FloatRect Enemy::getRectForRotates(){  // функция получения прямоугольника. координаты объекта, размер (ширина, высота).
+    return FloatRect(x, y, w / 2, h / 2); // нужна для проверки столкновений
 }
 
-void Enemy::vov(){
-    sprite.setColor(Color(rand(),rand(),rand()));
-}

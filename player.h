@@ -5,7 +5,6 @@
 #include "sabotages.h"
 class Player : public Entity {
 private:
-    short lives = 3;
     std::vector<Object>* solids;
     std::vector<Apple>* apples;
     std::vector<Energy>* energies;
@@ -15,9 +14,8 @@ private:
     Sabotage* firstSabotage;
     Sabotage* secondSabotage;
 
+    short lives = 3;
     int score = 0;
-
-    Music sound;
 public:
     Player(const Object& object);
 

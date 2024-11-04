@@ -3,7 +3,7 @@
 #include "level.h"
 using namespace sf;
 enum class Direction { left, right, up, down, stay };
-class Entity {    
+class Entity {
 public:
     Direction direction;
     float dx = 0;
@@ -19,13 +19,7 @@ public:
     Entity(const Object& object);
 
     FloatRect getRect();
-    FloatRect getRectForRotates();
-    Sprite getSprite();
-    float getX();
-    float getY();
-    std::string getDirection();
 
-    // Обновляем спрайты игрока
     void updateSprites(float Dx, float time);
 };
 
