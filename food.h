@@ -1,6 +1,6 @@
 #ifndef FOOD_H
 #define FOOD_H
-#include <SFML/Graphics.hpp>
+#include "Entity.h"
 using namespace sf;
 
 enum class Condition{
@@ -9,16 +9,12 @@ enum class Condition{
     Hidden     // Скрыт от игрока (для бананов)
 };
 
-class Food{
+class Food: public Entity{
 private:
     Condition condition;
 public:
-    float x, y, w, h;
-    Sprite sprite;
-    Food(const Sprite& _sprite, const float& _x, const float& _y, const Vector2u& size);
+    Food(const Object& object);
 
-    Sprite getSprite();
-    FloatRect getRect();
     Condition getCondition();
     void setCondition(Condition _condition);
 };
@@ -29,7 +25,7 @@ class Apple: public Food{
 private:
 public:
     static const int score = 5;
-    Apple(const Sprite& _sprite, const float& _x, const float& _y, const Vector2u& size);
+    Apple(const Object& object);
 
 };
 
@@ -37,14 +33,14 @@ class Banana: public Food{
 private:
 public:
     static const int score = 50;
-    Banana(const Sprite& _sprite, const float& _x, const float& _y, const Vector2u& size);
+    Banana(const Object& object);
 
 };
 
 class Energy: public Food{
 private:
 public:
-    Energy(const Sprite& _sprite, const float& _x, const float& _y, const Vector2u& size);
+    Energy(const Object& object);
 };
 
 

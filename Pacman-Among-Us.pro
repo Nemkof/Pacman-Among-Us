@@ -9,7 +9,6 @@ SOURCES += \
         TinyXML/tinyxmlerror.cpp \
         TinyXML/tinyxmlparser.cpp \
         enemy.cpp \
-        entity.cpp \
         food.cpp \
         lives.cpp \
         main.cpp \
@@ -30,10 +29,11 @@ INCLUDEPATH += C:\myQT\projects\SFML-2.6.1\include
 DEPENDPATH += C:\myQT\projects\SFML-2.6.1\include
 
 HEADERS += \
+    Entity.h \
+    MovableEntity.h \
     TinyXML/tinystr.h \
     TinyXML/tinyxml.h \
     enemy.h \
-    entity.h \
     food.h \
     gamemanager.h \
     level.h \

@@ -3,10 +3,10 @@
 #include "enemy.h"
 #include "food.h"
 #include "sabotages.h"
-class Player : public Entity {
+class Player : public MovableEntity {
 private:
     std::vector<Object>* solids;
-    std::vector<Apple>* apples;
+    std::vector<Apple*>* apples;
     std::vector<Energy>* energies;
     std::vector<Enemy*>* enemies;
     Banana* firstBanana;
@@ -31,7 +31,7 @@ public:
     void checkScore();
 
     void setSolids(std::vector<Object>* _solids);
-    void setApples(std::vector<Apple>* _apples);
+    void setApples(std::vector<Apple*>* _apples);
     void setEnergy(std::vector<Energy>* _energies);
     void setEnemy(std::vector<Enemy*>* _enemies);
     void setFirstBanana(Banana* _firstBanana);

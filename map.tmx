@@ -5215,9 +5215,9 @@
   <object id="770" name="apple" x="1344" y="288" width="32" height="32"/>
   <object id="906" name="firstBanana" x="192" y="1312" width="32" height="32"/>
   <object id="907" name="secondBanana" x="1184" y="288" width="32" height="32"/>
-  <object id="931" name="energy" x="128" y="96" width="32" height="32"/>
-  <object id="932" name="energy" x="1440" y="64" width="32" height="32"/>
-  <object id="933" name="energy" x="1440" y="1440" width="32" height="32"/>
+  <object id="931" name="energy" x="127" y="77" width="32" height="32"/>
+  <object id="932" name="energy" x="1440" y="78" width="32" height="32"/>
+  <object id="933" name="energy" x="1457" y="1438" width="32" height="32"/>
   <object id="934" name="energy" x="128" y="1440" width="32" height="32"/>
   <object id="935" name="apple" x="1349" y="1468" width="32" height="32"/>
   <object id="936" name="apple" x="128" y="1312" width="32" height="32"/>

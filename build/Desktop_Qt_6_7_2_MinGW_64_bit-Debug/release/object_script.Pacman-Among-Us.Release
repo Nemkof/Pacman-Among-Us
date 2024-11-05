@@ -3,7 +3,6 @@ release/tinyxml.o
 release/tinyxmlerror.o
 release/tinyxmlparser.o
 release/enemy.o
-release/entity.o
 release/food.o
 release/lives.o
 release/main.o

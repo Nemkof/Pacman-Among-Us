@@ -1,8 +1,8 @@
 #include "player.h"
 Player::Player(const Object& object)
-    :Entity(object)
+    :MovableEntity(object)
 {
-    speed = 0.15;
+    speed = 0.35;
     sprite.setTextureRect(IntRect(0, 0, w, h));
     direction = Direction::stay;
 }
@@ -40,12 +40,12 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy)
     /// Проверяем столкновение с яблоками
     for (size_t i = 0; i < apples->size(); i++)
     {
-        if (apples->at(i).getCondition() == Condition::notEaten
-            && getRect().intersects(apples->at(i).getRect()))
+        if (apples->at(i)->getCondition() == Condition::notEaten
+            && getRect().intersects(apples->at(i)->getRect()))
         {
                 score += Apple::score;
                 checkScore(); // Проверяем, не пора ли рисовать банан
-                apples->at(i).setCondition(Condition::Eaten);
+                apples->at(i)->setCondition(Condition::Eaten);
         }
     }
 
@@ -133,7 +133,7 @@ void Player::checkScore(){
 
 int Player::getLives() {return lives;} // Возвращает true, если еще есть жизни
 
-void Player::setApples(std::vector<Apple>* _apples) { apples = _apples;}
+void Player::setApples(std::vector<Apple*>* _apples) { apples = _apples;}
 void Player::setEnergy(std::vector<Energy>* _energies) { energies = _energies;}
 void Player::setFirstBanana(Banana* _firstBanana) {firstBanana = _firstBanana;}
 void Player::setSecondBanana(Banana* _secondBanana) {secondBanana = _secondBanana;}

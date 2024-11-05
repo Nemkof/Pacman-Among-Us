@@ -64,70 +64,52 @@ int game()
     }
 
     //////////////////////////////ПИХАЕМ САБОТАЖИ В КАРТУ//////////////////////////////
-    Image firstSabotageImage;
-    firstSabotageImage.loadFromFile("../../images/firstSabotage.png");
-    Sabotage firstSabotage(firstSabotageImage, firstSabotageObject.rect.left, firstSabotageObject.rect.top);
+    Sabotage firstSabotage(firstSabotageObject);
 
-    Image secondSabotageImage;
-    secondSabotageImage.loadFromFile("../../images/secondSabotage.png");
-    Sabotage secondSabotage(secondSabotageImage, secondSabotageObject.rect.left, secondSabotageObject.rect.top);
+    Sabotage secondSabotage(secondSabotageObject);
     //////////////////////////////ПИХАЕМ ЯБЛОКИ В КАРТУ//////////////////////////////
-    Image appleImage;
-    appleImage.loadFromFile("../../images/apple.png");  // Загружаем текстуру яблочка
-    appleImage.createMaskFromColor(Color(255,255,255));
-    Texture appleTexture;
-    appleTexture.loadFromImage(appleImage);  // Загружаем текстуру яблочка
-    Sprite appleSprite;
-    appleSprite.setTexture(appleTexture);  // Загружаем текстуру в спрайт
-
-    std::vector<Apple> apples; // Создаём массив яблочек
+    std::vector<Apple*> apples; // Создаём массив яблочек
     for(size_t i = 0; i < appleObjects.size(); i++) // Проходимся по всем тайлам-яблочкам
     {
-        // Создаём хелпер-яблочко, которое будет стоять на i-том тайле
-        Apple tmp(appleSprite, appleObjects.at(i).rect.left, appleObjects.at(i).rect.top, appleTexture.getSize());
+        Apple* tmp = new Apple(appleObjects.at(i));
         apples.push_back(tmp); // Помещаем всё в наш вектор объектов
     }
 
     //////////////////////////////ПИХАЕМ БАНАНЫ В КАРТУ//////////////////////////////
-    Image bananaImage;
-    bananaImage.loadFromFile("../../images/banana.png");  // Загружаем текстуру банана
-    bananaImage.createMaskFromColor(Color(255,255,255));
-    Texture bananaTexture;
-    bananaTexture.loadFromImage(bananaImage);  // Загружаем текстуру банана
-    Sprite bananaSprite;
-    bananaSprite.setTexture(bananaTexture);  // Загружаем текстуру в спрайт
-    Banana firstBanana(bananaSprite, firstBananaObject.rect.left, firstBananaObject.rect.top, bananaTexture.getSize()); // Создаём первый банан
-    Banana secondBanana(bananaSprite, secondBananaObject.rect.left, secondBananaObject.rect.top, bananaTexture.getSize()); // Создаём второй банан
+    Banana firstBanana(firstBananaObject); // Создаём первый банан
+    Banana secondBanana(secondBananaObject); // Создаём второй банан
 
     //////////////////////////////ПИХАЕМ ЭНЕРДЖАЙЗЕРЫ В КАРТУ//////////////////////////////
-    Image energyImage;
-    energyImage.loadFromFile("../../images/energy.png");  // Загружаем текстуру яблочка
-    energyImage.createMaskFromColor(Color(255,255,255));
-    Texture energyTexture;
-    energyTexture.loadFromImage(energyImage);  // Загружаем текстуру яблочка
-    Sprite energySprite;
-    energySprite.setTexture(energyTexture);  // Загружаем текстуру в спрайт
-
     std::vector<Energy> energies; // Создаём массив яблочек
     for(size_t i = 0; i < energyObjects.size(); i++) // Проходимся по всем тайлам-яблочкам
     {
         // Создаём хелпер-яблочко, которое будет стоять на i-том тайле
-        Energy tmp(energySprite, energyObjects.at(i).rect.left, energyObjects.at(i).rect.top, energyTexture.getSize());
+        Energy tmp(energyObjects.at(i));
         energies.push_back(tmp); // Помещаем всё в наш вектор объектов
     }
     //////////////////////////////СОЗДАЁМ ВРАГОВ//////////////////////////////
     vector<Enemy*> enemies;// создаём список, сюда будем кидать объекты
     // создаём всех врагов
-    Blinky blinky(rotates, solidsEnemy, blinkyObject);
-    Pinky pinky(rotates, solidsEnemy, pinkyObject);
-    Inky inky(rotates, solidsEnemy, inkyObject);
-    Clyde clyde(rotates, solidsEnemy, clydeObject);
+    Blinky blinky(blinkyObject);
+    blinky.setRotates(rotates);
+    blinky.setSolids(solidsEnemy);
+
+    Pinky pinky(pinkyObject);
+    pinky.setRotates(rotates);
+    pinky.setSolids(solidsEnemy);
+
+    Inky inky(inkyObject);
+    inky.setRotates(rotates);
+    inky.setSolids(solidsEnemy);
+
+    Clyde clyde(clydeObject);
+    clyde.setRotates(rotates);
+    clyde.setSolids(solidsEnemy);
     // и закидываем в список всех наших врагов с карты
     enemies.push_back(&blinky);
     enemies.push_back(&pinky);
     enemies.push_back(&inky);
     enemies.push_back(&clyde);
-
     //////////////////////////////СОЗДАЁМ ИГРОКА//////////////////////////////
     Player player(playerObject);
     player.setSolids(&solidsPlayer);
@@ -178,8 +160,8 @@ int game()
         //////////////////////////////РАБОТАЕМ С ЕДОЙ//////////////////////////////
         for (auto it : apples) // Проходимся по всем яблочкам
         {
-            if(it.getCondition() == Condition::notEaten) // Если яблочко не съели
-                window.draw(it.getSprite()); // То нужно его нарисовать
+            if(it->getCondition() == Condition::notEaten) // Если яблочко не съели
+                window.draw(it->getSprite()); // То нужно его нарисовать
         }
         for (auto it : energies) // Проходимся по всем энерджайзерам
         {

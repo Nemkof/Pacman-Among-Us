@@ -1,7 +1,7 @@
 #include "enemy.h"
 #include <limits>
-Enemy::Enemy(const std::vector<Object>& _rotates, const std::vector<Object>& _solids, const Object& object)
-    : Entity(object)
+Enemy::Enemy(const Object& object)
+    : MovableEntity(object)
 {
     sprite.setTextureRect(IntRect(0, 0, w, h));
     sprite.setColor(Color::White);
@@ -10,9 +10,6 @@ Enemy::Enemy(const std::vector<Object>& _rotates, const std::vector<Object>& _so
     dx = speed;
     dy = 0;
     direction = Direction::right;
-
-    rotates = _rotates;
-    solids = _solids;
 
     lastRotateX = 0.0;
     lastRotateY = 0.0;

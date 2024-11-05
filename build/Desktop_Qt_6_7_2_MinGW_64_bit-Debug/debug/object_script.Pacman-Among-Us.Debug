@@ -3,7 +3,6 @@ debug/tinyxml.o
 debug/tinyxmlerror.o
 debug/tinyxmlparser.o
 debug/enemy.o
-debug/entity.o
 debug/food.o
 debug/lives.o
 debug/main.o
