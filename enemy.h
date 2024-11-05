@@ -4,12 +4,11 @@
 enum class GhostState{ Chase, Scatter, Frightened };
 class Enemy: public MovableEntity{
 public:
-    Direction lastDir;
-    std::vector<Object> rotates;
-    std::vector<Object> solids; // Вектор объектов карты
+    std::vector<Object>* rotates;
+    std::vector<Object>* solids; // Вектор объектов карты
 
-    GhostState ghostState = GhostState::Chase;
-    float timeGhostState;
+    GhostState ghostState = GhostState::Chase;    
+    float timeGhostState = 0.0;
 
     float lastRotateX = 0.0;
     float lastRotateY = 0.0;
@@ -32,8 +31,8 @@ public:
     virtual float getTargetX(float x) = 0;
     virtual float getTargetY(float y) = 0;
 
-    void setRotates(const std::vector<Object>& _rotates) {rotates = _rotates;}
-    void setSolids(const std::vector<Object>& _solids) {solids = _solids;}
+    void setRotates(std::vector<Object>* _rotates) {rotates = _rotates;}
+    void setSolids(std::vector<Object>* _solids) {solids = _solids;}
 };
 
 // Красный
@@ -42,7 +41,8 @@ public:
     Blinky(const Object& object)
         : Enemy(object)
     {
-
+        name = "Blinky";
+        textName.setString(name);
     }
     float getTargetX(float x) override {
         return x;
@@ -58,7 +58,8 @@ public:
     Pinky(const Object& object)
         : Enemy(object)
     {
-
+        name = "Pinky";
+        textName.setString(name);
     }
     float getTargetX(float x) override {
         return x + 320;
@@ -75,7 +76,8 @@ public:
     Inky(const Object& object) :
         Enemy(object)
     {
-        direction = Direction::left;
+        name = "Inky";
+        textName.setString(name);
     }
     float getTargetX(float x) override {
         return x - 320;
@@ -91,7 +93,8 @@ public:
     Clyde(const Object& object)
         : Enemy(object)
     {
-        direction = Direction::left;
+        name = "Clyde";
+        textName.setString(name);
     }
     float getTargetX(float x) override {
         return x;

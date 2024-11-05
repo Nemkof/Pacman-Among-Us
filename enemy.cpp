@@ -65,9 +65,9 @@ void Enemy::selectDirection(float targetX, float targetY){
 }
 
 bool Enemy::isSolid(float _x, float _y){
-    for (size_t i = 0; i < solids.size(); i++)
+    for (size_t i = 0; i < solids->size(); i++)
     {
-        if (FloatRect(_x, _y, w, h).intersects(solids[i].rect)) // Если пересекаемся с каким-то тайликом
+        if (FloatRect(_x, _y, w, h).intersects(solids->at(i).rect)) // Если пересекаемся с каким-то тайликом
         {
             return true; // То мы не можем идти в эту сторону
         }
@@ -81,15 +81,15 @@ float Enemy::calculateDist(float x1, float y1, float x2, float y2){
 
 /// Проверяем столкновения
 void Enemy::checkCollisionWithMap(float Dx, float Dy){
-    for (size_t i = 0; i < solids.size(); i++) // Проходимся по всем элементам карты
+    for (size_t i = 0; i < solids->size(); i++) // Проходимся по всем элементам карты
     {
-        if (getRect().intersects(solids[i].rect)) // Если мы пересекаемся с каким-то тайликом
+        if (getRect().intersects(solids->at(i).rect)) // Если мы пересекаемся с каким-то тайликом
         {
            // То мы должны остановить нашего игрока перед стеной
-            if (Dy>0)	{ y = solids[i].rect.top - h;  dy = 0; direction = Direction::down;}
-            if (Dy<0)	{ y = solids[i].rect.top + solids[i].rect.height;   dy = 0; direction = Direction::up;}
-            if (Dx>0)	{ x = solids[i].rect.left - w; dx = 0; direction = Direction::right;}
-            if (Dx<0)	{ x = solids[i].rect.left + solids[i].rect.width; dx = 0; direction = Direction::left;}
+            if (Dy>0)	{ y = solids->at(i).rect.top - h;  dy = 0; direction = Direction::down;}
+            if (Dy<0)	{ y = solids->at(i).rect.top + solids->at(i).rect.height;   dy = 0; direction = Direction::up;}
+            if (Dx>0)	{ x = solids->at(i).rect.left - w; dx = 0; direction = Direction::right;}
+            if (Dx<0)	{ x = solids->at(i).rect.left + solids->at(i).rect.width; dx = 0; direction = Direction::left;}
         }
     }
 }
@@ -113,15 +113,15 @@ void Enemy::update(float time, float playerX, float playerY)
     float targetY = getTargetY(playerY);
 
     // Проходимся по всем элементам карты
-    for (size_t i = 0; i < rotates.size(); i++)
+    for (size_t i = 0; i < rotates->size(); i++)
     {
         // Если мы находимся на перекрестке
-        if (getRectForRotates().intersects(rotates[i].rect))
+        if (getRectForRotates().intersects(rotates->at(i).rect))
         {
-            if(calculateDist(lastRotateX, lastRotateY, rotates[i].rect.left, rotates[i].rect.top) > 96){
+            if(calculateDist(lastRotateX, lastRotateY, rotates->at(i).rect.left, rotates->at(i).rect.top) > 96){
                 selectDirection(targetX, targetY);
-                lastRotateX = rotates[i].rect.left;
-                lastRotateY = rotates[i].rect.top;
+                lastRotateX = rotates->at(i).rect.left;
+                lastRotateY = rotates->at(i).rect.top;
             }
         }
     }
@@ -139,6 +139,7 @@ void Enemy::update(float time, float playerX, float playerY)
     sprite.setPosition(x + w / 2, y + h / 2);
     updateSprites(dx, time);
 
+    updateNamePosition();
 }
 FloatRect Enemy::getRectForRotates(){  // функция получения прямоугольника. координаты объекта, размер (ширина, высота).
     return FloatRect(x, y, w / 2, h / 2); // нужна для проверки столкновений

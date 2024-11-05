@@ -9,14 +9,11 @@ SOURCES += \
         TinyXML/tinyxmlerror.cpp \
         TinyXML/tinyxmlparser.cpp \
         enemy.cpp \
-        food.cpp \
-        lives.cpp \
         main.cpp \
         menuwindow.cpp \
         player.cpp \
         sabotages.cpp \
-        sabotagewidget.cpp \
-        ventilations.cpp
+        sabotagewidget.cpp
 
 
 LIBS += -LC:\myQT\projects\SFML-2.6.1\lib
@@ -33,6 +30,7 @@ HEADERS += \
     MovableEntity.h \
     TinyXML/tinystr.h \
     TinyXML/tinyxml.h \
+    Ventilation.h \
     enemy.h \
     food.h \
     gamemanager.h \
@@ -41,8 +39,7 @@ HEADERS += \
     menuwindow.h \
     player.h \
     sabotages.h \
-    sabotagewidget.h \
-    ventilations.h
+    sabotagewidget.h
 
 FORMS += \
     menuwindow.ui \

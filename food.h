@@ -13,10 +13,10 @@ class Food: public Entity{
 private:
     Condition condition;
 public:
-    Food(const Object& object);
+    Food(const Object& object): Entity(object) {}
 
-    Condition getCondition();
-    void setCondition(Condition _condition);
+    Condition getCondition() {return condition;}
+    void setCondition(Condition _condition) {condition = _condition;}
 };
 
 
@@ -25,7 +25,12 @@ class Apple: public Food{
 private:
 public:
     static const int score = 5;
-    Apple(const Object& object);
+    Apple(const Object& object) :Food(object)
+    {
+        w /= 3;
+        sprite.setTextureRect(IntRect(w * (rand() % 3),0,w,h));
+        setCondition(Condition::notEaten);
+    }
 
 };
 
@@ -33,14 +38,18 @@ class Banana: public Food{
 private:
 public:
     static const int score = 50;
-    Banana(const Object& object);
-
+    Banana(const Object& object): Food(object) {setCondition(Condition::Hidden);}
 };
 
 class Energy: public Food{
 private:
 public:
-    Energy(const Object& object);
+    Energy(const Object& object): Food(object)
+    {
+        w /= 4;
+        sprite.setTextureRect(IntRect(w * (rand() % 4),0,w,h));
+        setCondition(Condition::notEaten);
+    }
 };
 
 

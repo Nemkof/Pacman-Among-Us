@@ -1,10 +1,14 @@
 #include "player.h"
 Player::Player(const Object& object)
-    :MovableEntity(object)
+    :MovableEntity(object, "Player")
 {
     speed = 0.35;
     sprite.setTextureRect(IntRect(0, 0, w, h));
     direction = Direction::stay;
+
+    name = "Player";
+    textName.setFillColor(Color::Red);
+    textName.setString(name);
 }
 
 void Player::control(){
@@ -114,6 +118,7 @@ void Player::update(float time)
     control();
     updatePosition(time);
     updateSprites(dx, time);
+    updateNamePosition();
 }
 
 

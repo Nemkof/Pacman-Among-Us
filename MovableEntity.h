@@ -1,17 +1,20 @@
 #ifndef MOVABLEENTITY_H
 #define MOVABLEENTITY_H
 #include "Entity.h"
+
 enum class Direction { left, right, up, down, stay };
 class MovableEntity: public Entity{
 public:
     float dx = 0, dy = 0, speed = 0, startX = 0, startY = 0;
     Direction direction = Direction::stay;
     string name;
+    Font font;
+    Text textName;
 
     float player_sprites = 0; // Переменная для переключения спрайтов игрока
 
-    MovableEntity(const Object& object):
-        Entity(object){
+    MovableEntity(const Object& object, string name = ""): Entity(object, name)
+    {
         startX = x; startY = y;
 
         w = texture.getSize().x / 13;
@@ -19,6 +22,12 @@ public:
 
         sprite.setOrigin(w / 2, h / 2);    // Создаём имя главного героя
         sprite.setTextureRect(IntRect(0, 0, w, h));
+
+        font.loadFromFile("../../images/forText.ttf");
+        textName.setFont(font);
+        textName.setCharacterSize(25);
+        textName.setStyle(Text::Bold);
+        textName.setFillColor(Color::White);
     }
 
     void updateSprites(float Dx, float time)
@@ -40,6 +49,12 @@ public:
             return;
         }
     }
+
+    void updateNamePosition(){
+        textName.setPosition(x + 10, y - 20);
+    }
 };
+
+
 
 #endif // MOVABLEENTITY_H

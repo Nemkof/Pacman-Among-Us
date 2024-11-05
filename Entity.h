@@ -6,16 +6,18 @@ using namespace sf;
 using namespace std;
 class Entity{
 public:
-    float w,h;
-    float x,y;
+    float w = 0.0, h = 0.0;
+    float x = 0.0, y = 0.0;
     Texture texture;
     Sprite sprite;
     string name;
 
-    Entity(const Object& object):
+    Entity(const Object& object, string _name = ""):
         x(object.rect.left), y(object.rect.top)
     {
-        name = object.name;
+        // Если мы не передали имя, то ставим имя default
+        if(_name == "") name = object.name;
+        else name = _name;
         texture.loadFromFile("../../images/" + name + ".png");
         sprite.setTexture(texture);
         w = texture.getSize().x;
