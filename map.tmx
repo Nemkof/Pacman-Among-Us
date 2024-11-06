@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#4d538c" nextlayerid="10" nextobjectid="942">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#4d538c" nextlayerid="10" nextobjectid="948">
  <tileset firstgid="1" name="Tiny_Chao_Garden_SonicAdv_3_Tile_Sheet" tilewidth="32" tileheight="32" tilecount="7200" columns="144">
   <grid orientation="orthogonal" width="16" height="16"/>
   <image source="images/Tiny_Chao_Garden_SonicAdv_3_Tile_Sheet.png" width="4617" height="1616"/>
@@ -5268,7 +5268,7 @@
   <object id="838" name="rotate" x="1036" y="305.333" width="8" height="8"/>
   <object id="902" name="rotate" x="230.667" y="1326.67" width="8" height="8"/>
  </objectgroup>
- <objectgroup id="3" name="collision">
+ <objectgroup id="3" name="collision" visible="0">
   <object id="86" name="solid" x="32" y="32" width="64" height="512"/>
   <object id="87" name="solid" x="96" y="480" width="256" height="64"/>
   <object id="88" name="solid" x="320" y="544" width="32" height="160"/>
@@ -5341,10 +5341,15 @@
   <object id="920" name="fakesolid1" x="608" y="224" width="128" height="32"/>
   <object id="922" name="fakesolid2" x="1280" y="992" width="32" height="96"/>
  </objectgroup>
- <objectgroup id="8" name="otherElements" visible="0">
+ <objectgroup id="8" name="otherElements">
   <object id="923" name="sabotageFirst" x="640" y="96" width="96" height="64"/>
   <object id="925" name="sabotageSecond" x="1376" y="1152" width="128" height="96"/>
   <object id="926" name="lives" x="1312" y="544" width="32" height="32"/>
-  <object id="929" name="score" x="1280" y="0" width="32" height="32"/>
+  <object id="929" name="score" x="64" y="544" width="32" height="32"/>
+  <object id="942" name="BlinkyTarget" x="256" y="192" width="32" height="32"/>
+  <object id="943" name="InkyTarget" x="1312" y="192" width="32" height="32"/>
+  <object id="945" name="PinkyTarget" x="1120" y="1408" width="32" height="32"/>
+  <object id="946" name="ClydeTarget" x="480" y="1408" width="32" height="32"/>
+  <object id="947" name="time" x="64" y="608" width="32" height="32"/>
  </objectgroup>
 </map>

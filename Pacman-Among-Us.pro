@@ -4,6 +4,7 @@ CONFIG -= app_bundle
 CONFIG += qt
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 SOURCES += \
+        GameManager.cpp \
         TinyXML/tinystr.cpp \
         TinyXML/tinyxml.cpp \
         TinyXML/tinyxmlerror.cpp \
@@ -27,13 +28,14 @@ DEPENDPATH += C:\myQT\projects\SFML-2.6.1\include
 
 HEADERS += \
     Entity.h \
+    Game.h \
+    GameManager.h \
     MovableEntity.h \
     TinyXML/tinystr.h \
     TinyXML/tinyxml.h \
     Ventilation.h \
     enemy.h \
     food.h \
-    gamemanager.h \
     level.h \
     lives.h \
     menuwindow.h \

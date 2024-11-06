@@ -1,6 +1,7 @@
 #include "menuwindow.h"
+#include "Game.h"
 #include "ui_menuwindow.h"
-#include "GameManager.h"
+#include "Game.h"
 
 MenuWindow::MenuWindow(QWidget *parent)
     : QMainWindow(parent)

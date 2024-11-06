@@ -1,15 +1,18 @@
 #include "enemy.h"
 #include <limits>
-Enemy::Enemy(const Object& object)
+Enemy::Enemy(const Object& object, const Object& targetPoint)
     : MovableEntity(object)
 {
     sprite.setTextureRect(IntRect(0, 0, w, h));
     sprite.setColor(Color::White);
     sprite.setPosition(x, y);
-    speed = 0.1;
+    speed = 0.15;
     dx = speed;
     dy = 0;
     direction = Direction::right;
+
+    targetPointX = targetPoint.rect.left;
+    targetPointY = targetPoint.rect.top;
 
     lastRotateX = 0.0;
     lastRotateY = 0.0;
@@ -109,6 +112,18 @@ void Enemy::updatePosition(float time){
 
 void Enemy::update(float time, float playerX, float playerY)
 {
+    timeGhostState += time;
+    if(timeGhostState > 10000){
+        if(ghostState == GhostState::Chase)
+            ghostState = GhostState::Scatter;
+        else
+            ghostState = GhostState::Chase;
+        timeGhostState = 0;
+        speed = 0.15;
+        sprite.setColor(Color::White);
+    }
+
+
     float targetX = getTargetX(playerX);
     float targetY = getTargetY(playerY);
 
@@ -140,8 +155,28 @@ void Enemy::update(float time, float playerX, float playerY)
     updateSprites(dx, time);
 
     updateNamePosition();
+
+    if(ghostState == GhostState::Frightened)
+    {
+        sprite.setColor(Color(rand(), rand(), rand()));
+        speed = 0.05;
+    }
 }
 FloatRect Enemy::getRectForRotates(){  // функция получения прямоугольника. координаты объекта, размер (ширина, высота).
     return FloatRect(x, y, w / 2, h / 2); // нужна для проверки столкновений
 }
 
+
+void Enemy::kill(){
+    x = startX;
+    y = startY;
+}
+
+void Enemy::runAway(){
+    ghostState = GhostState::Frightened;
+    if(direction == Direction::down) direction = Direction::up;
+    else if(direction == Direction::left) direction = Direction::right;
+    else if(direction == Direction::right) direction = Direction::left;
+    else if(direction == Direction::up) direction = Direction::down;
+
+}

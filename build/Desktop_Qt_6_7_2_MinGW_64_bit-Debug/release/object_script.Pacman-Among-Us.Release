@@ -1,3 +1,4 @@
+release/GameManager.o
 release/tinystr.o
 release/tinyxml.o
 release/tinyxmlerror.o

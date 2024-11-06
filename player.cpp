@@ -60,6 +60,9 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy)
             && getRect().intersects(energies->at(i).getRect()))
         {
             energies->at(i).setCondition(Condition::Eaten);
+            for(size_t i = 0; i < enemies->size(); i++){
+                enemies->at(i)->runAway();
+            }
         }
     }
 
@@ -85,17 +88,22 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy)
 
     /// Проверяем столкновение с врагами
     for(size_t i = 0; i < enemies->size(); i++){
-        if(getRect().intersects(enemies->at(i)->getRect())
-            && lives >= 1)
+        if(getRect().intersects(enemies->at(i)->getRect()))
         {
-            lives--;
-            x = startX; y = startY;
-            if (Dy>0)	{ y -= dy * time;  dy = 0; }
-            if (Dy<0)	{ y += dy * time;  dy = 0; }
-            if (Dx>0)	{ x -= dx * time;  dx = 0;}
-            if (Dx<0)	{ x += dx * time;  dx = 0;}
-            sprite.setPosition(x + w / 2, y + h / 2);
-            direction = Direction::stay;
+            if(enemies->at(i)->ghostState != GhostState::Frightened && lives >= 1){
+                lives--;
+                x = startX; y = startY;
+                if (Dy>0)	{ y -= dy * time;  dy = 0; }
+                if (Dy<0)	{ y += dy * time;  dy = 0; }
+                if (Dx>0)	{ x -= dx * time;  dx = 0;}
+                if (Dx<0)	{ x += dx * time;  dx = 0;}
+                sprite.setPosition(x + w / 2, y + h / 2);
+                direction = Direction::stay;
+            }
+            else{
+                score += 100;
+                enemies->at(i)->kill();
+            }
         }
     }
 
