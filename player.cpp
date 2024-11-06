@@ -98,6 +98,22 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy)
             direction = Direction::stay;
         }
     }
+
+    /// Проверяем столкновение с вентиляцией
+    if(getRect().intersects(firstVentilation->getRect()) && Keyboard::isKeyPressed(Keyboard::E)){
+        if(timeVentilation > 2000){
+            x = secondVentilation->x;
+            y = secondVentilation->y;
+            timeVentilation = 0;
+        }
+    }
+    else if(getRect().intersects(secondVentilation->getRect()) && Keyboard::isKeyPressed(Keyboard::E)){
+        if(timeVentilation > 2000){
+            x = firstVentilation->x;
+            y = firstVentilation->y;
+            timeVentilation = 0;
+        }
+    }
 }
 
 void Player::updatePosition(float time){
@@ -119,6 +135,8 @@ void Player::update(float time)
     updatePosition(time);
     updateSprites(dx, time);
     updateNamePosition();
+
+    timeVentilation += time;
 }
 
 
@@ -146,5 +164,6 @@ void Player::setFirstSabotage(Sabotage* _firstSabotage) {firstSabotage = _firstS
 void Player::setSecondSabotage(Sabotage* _secondSabotage) {secondSabotage = _secondSabotage;}
 void Player::setSolids(std::vector<Object>* _solids) { solids = _solids;}
 void Player::setEnemy(std::vector<Enemy*>* _enemies) { enemies = _enemies;}
-
+void Player::setFirstVentilation(Ventilation* _firstVentilation) {firstVentilation = _firstVentilation;}
+void Player::setSecondVentilation(Ventilation* _secondVentilation) {secondVentilation = _secondVentilation;}
 

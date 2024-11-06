@@ -3,7 +3,7 @@
 #include "lives.h"
 #include "player.h"
 #include "sabotages.h"
-#include "ventilation.h"
+#include "Ventilation.h"
 using namespace sf;
 using namespace std;
 int volume = 5;
@@ -122,6 +122,8 @@ int game()
     player.setFirstSabotage(&firstSabotage);
     player.setSecondSabotage(&secondSabotage);
     player.setEnemy(&enemies);
+    player.setFirstVentilation(&firstVentilation);
+    player.setSecondVentilation(&secondVentilation);
     //////////////////////////////СОЗДАЁМ ОБЪЕКТ СЕРДЕЧЕК//////////////////////////////
     Lives lives(livesObject);
     //////////////////////////////РАБОТАЕМ С ТЕКСТОМ//////////////////////////////

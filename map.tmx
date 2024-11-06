@@ -5227,7 +5227,7 @@
   <object id="940" name="apple" x="1376" y="96" width="32" height="32"/>
   <object id="941" name="apple" x="1440" y="160" width="32" height="32"/>
  </objectgroup>
- <objectgroup id="6" name="players" visible="0">
+ <objectgroup id="6" name="players">
   <object id="550" name="player" x="725.5" y="854.5" width="32" height="32"/>
   <object id="795" name="Clyde" x="512" y="256" width="32" height="32"/>
   <object id="800" name="Blinky" x="704" y="544" width="32" height="32"/>
@@ -5322,8 +5322,8 @@
   <object id="144" name="solid" x="960" y="640" width="32" height="192"/>
   <object id="145" name="solid" x="640" y="640" width="96" height="32"/>
   <object id="146" name="solid" x="864" y="640" width="96" height="32"/>
-  <object id="147" name="firstVentilation" x="61" y="723" width="81" height="69"/>
-  <object id="148" name="secondVentilation" x="1469" y="723" width="81" height="69"/>
+  <object id="147" name="firstVentilation" x="67.9242" y="705.455" width="21.3333" height="22.5"/>
+  <object id="148" name="secondVentilation" x="1451.27" y="704.864" width="28" height="29"/>
   <object id="776" name="solid" x="0" y="832" width="32" height="128"/>
   <object id="777" name="solid" x="1568" y="832" width="32" height="128"/>
   <object id="778" name="solid" x="0" y="544" width="32" height="128"/>
