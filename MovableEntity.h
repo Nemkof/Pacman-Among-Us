@@ -23,7 +23,7 @@ public:
         sprite.setOrigin(w / 2, h / 2);    // Создаём имя главного героя
         sprite.setTextureRect(IntRect(0, 0, w, h));
 
-        font.loadFromFile("../../images/forText.ttf");
+        font.loadFromFile("images/forText.ttf");
         textName.setFont(font);
         textName.setCharacterSize(25);
         textName.setStyle(Text::Bold);

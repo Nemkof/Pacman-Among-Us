@@ -1,0 +1,17 @@
+release/Enemy.o
+release/GameManager.o
+release/HistoryWindow.o
+release/MenuWindow.o
+release/Player.o
+release/SabotageWidget.o
+release/Sabotages.o
+release/SettingsWidget.o
+release/tinystr.o
+release/tinyxml.o
+release/tinyxmlerror.o
+release/tinyxmlparser.o
+release/main.o
+release/moc_HistoryWindow.o
+release/moc_MenuWindow.o
+release/moc_SabotageWidget.o
+release/moc_SettingsWidget.o

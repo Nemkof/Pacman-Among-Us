@@ -1,9 +1,9 @@
-release/GameManager.o
 release/tinystr.o
 release/tinyxml.o
 release/tinyxmlerror.o
 release/tinyxmlparser.o
 release/enemy.o
+release/historywindow.o
 release/main.o
 release/menuwindow.o
 release/player.o

@@ -12,13 +12,15 @@ public:
     Sprite sprite;
     string name;
 
+    // Чтобы не умирать по 100 раз за касание
+
     Entity(const Object& object, string _name = ""):
         x(object.rect.left), y(object.rect.top)
     {
         // Если мы не передали имя, то ставим имя default
         if(_name == "") name = object.name;
         else name = _name;
-        texture.loadFromFile("../../images/" + name + ".png");
+        texture.loadFromFile("images/" + name + ".png");
         sprite.setTexture(texture);
         w = texture.getSize().x;
         h = texture.getSize().y;

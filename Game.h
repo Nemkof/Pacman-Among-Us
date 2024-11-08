@@ -1,8 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
-#include "lives.h"
-#include "player.h"
-#include "sabotages.h"
+#include "Lives.h"
+#include "Player.h"
+#include "Sabotages.h"
 #include "Ventilation.h"
 using namespace sf;
 using namespace std;
@@ -11,17 +11,17 @@ int volume = 5;
 int game()
 {
     //////////////////////////////СОЗДАЁМ ОКНО//////////////////////////////
-    RenderWindow window(VideoMode(2000, 1750), "Among Us: Final");  // Создаём окно
+    RenderWindow window(VideoMode(2000, 1750), "Pacman Among Us");  // Создаём окно
     float gameTime = 0;
     // Music music; //создаем объект музыки
-    // music.openFromFile("../../sounds/zhelezo.ogg"); //загружаем файл
+    // music.openFromFile("sounds/zhelezo.ogg"); //загружаем файл
     // music.setVolume(volume);
     // music.setLoop(true);
     // music.play(); //воспроизводим музыку
 
     //////////////////////////////ЗАГРУЖАЕМ КАРТУ//////////////////////////////
     Level lvl;
-    lvl.LoadFromFile("../../map.tmx");
+    lvl.LoadFromFile("map.tmx");
 
     //////////////////////////////ПОЛУЧАЕМ ВСЕ ОБЪЕКТЫ//////////////////////////////
     std::vector<Object> obj = lvl.GetAllObjects(); // Получаем вектор всех объектов карты
@@ -74,7 +74,6 @@ int game()
         else if(it.name == "time") timeObject = it;
         else if(it.name == "firstVentilation") firstVentilationObject = it;
         else if(it.name == "secondVentilation") secondVentilationObject = it;
-
     }
     //////////////////////////////ПИХАЕМ САБОТАЖИ В КАРТУ//////////////////////////////
     Sabotage firstSabotage(firstSabotageObject);
@@ -138,7 +137,7 @@ int game()
     Lives lives(livesObject);
     //////////////////////////////РАБОТАЕМ С ТЕКСТОМ//////////////////////////////
     Font font;  // Создаём объект типа шрифт
-    font.loadFromFile("../../images/forText.ttf"); // Загружаем шрифт в объект
+    font.loadFromFile("images/forText.ttf"); // Загружаем шрифт в объект
     // Создаём текст с количеством очков
     Text textScore("", font, 40);
     textScore.setStyle(sf::Text::Bold);

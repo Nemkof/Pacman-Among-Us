@@ -1,0 +1,17 @@
+debug/Enemy.o
+debug/GameManager.o
+debug/HistoryWindow.o
+debug/MenuWindow.o
+debug/Player.o
+debug/SabotageWidget.o
+debug/Sabotages.o
+debug/SettingsWidget.o
+debug/tinystr.o
+debug/tinyxml.o
+debug/tinyxmlerror.o
+debug/tinyxmlparser.o
+debug/main.o
+debug/moc_HistoryWindow.o
+debug/moc_MenuWindow.o
+debug/moc_SabotageWidget.o
+debug/moc_SettingsWidget.o

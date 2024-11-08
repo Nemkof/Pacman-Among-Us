@@ -72,7 +72,7 @@ public:
         // пытаемся загрузить тайлсет
         sf::Image img;
 
-        if (!img.loadFromFile("../../" + imagepath))
+        if (!img.loadFromFile(imagepath))
         {
             std::cout << "Failed to load tile sheet." << std::endl;//если не удалось загрузить тайлсет-выводим ошибку в консоль
             return false;

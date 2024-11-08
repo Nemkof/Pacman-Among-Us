@@ -4,17 +4,19 @@ CONFIG -= app_bundle
 CONFIG += qt
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 SOURCES += \
+        Enemy.cpp \
         GameManager.cpp \
+        HistoryWindow.cpp \
+        MenuWindow.cpp \
+        Player.cpp \
+        SabotageWidget.cpp \
+        Sabotages.cpp \
+        SettingsWidget.cpp \
         TinyXML/tinystr.cpp \
         TinyXML/tinyxml.cpp \
         TinyXML/tinyxmlerror.cpp \
         TinyXML/tinyxmlparser.cpp \
-        enemy.cpp \
-        main.cpp \
-        menuwindow.cpp \
-        player.cpp \
-        sabotages.cpp \
-        sabotagewidget.cpp
+        main.cpp
 
 
 LIBS += -LC:\myQT\projects\SFML-2.6.1\lib
@@ -27,25 +29,30 @@ INCLUDEPATH += C:\myQT\projects\SFML-2.6.1\include
 DEPENDPATH += C:\myQT\projects\SFML-2.6.1\include
 
 HEADERS += \
+    Enemy.h \
     Entity.h \
+    Food.h \
     Game.h \
     GameManager.h \
+    GameSettings.h \
+    HistoryWindow.h \
+    Lives.h \
+    MenuWindow.h \
     MovableEntity.h \
+    Player.h \
+    SabotageWidget.h \
+    Sabotages.h \
+    SettingsWidget.h \
     TinyXML/tinystr.h \
     TinyXML/tinyxml.h \
     Ventilation.h \
-    enemy.h \
-    food.h \
-    level.h \
-    lives.h \
-    menuwindow.h \
-    player.h \
-    sabotages.h \
-    sabotagewidget.h
+    level.h
 
 FORMS += \
-    menuwindow.ui \
-    sabotagewidget.ui
+    HistoryWindow.ui \
+    MenuWindow.ui \
+    SabotageWidget.ui \
+    SettingsWidget.ui
 
 DISTFILES += \
     images/Blinky.png \

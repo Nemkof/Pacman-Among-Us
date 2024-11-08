@@ -1,9 +1,9 @@
-debug/GameManager.o
 debug/tinystr.o
 debug/tinyxml.o
 debug/tinyxmlerror.o
 debug/tinyxmlparser.o
 debug/enemy.o
+debug/historywindow.o
 debug/main.o
 debug/menuwindow.o
 debug/player.o
