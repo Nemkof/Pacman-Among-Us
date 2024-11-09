@@ -19,13 +19,12 @@ private:
 
     Ventilation* firstVentilation;
     Ventilation* secondVentilation;
+    int score = 0;
+    int lives = 3;
+public:
     float timeVentilation = 0.0;
-
     float timeAfterDeath = 0.0;
 
-    short lives = 3;
-    int score = 0;
-public:
     Player(const Object& object);
 
     void control();

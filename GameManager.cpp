@@ -1,14 +1,74 @@
 #include "GameManager.h"
+void GameManager::play(float time){
+    gameTime += time / (float)1000;
 
-GameManager::GameManager() {}
+    firstSabotage->update(time);
+    secondSabotage->update(time);
+    player->update(time);
+    for(size_t i = 0; i < enemies->size(); i++)
+    {
+        enemies->at(i)->update(time, player->x, player->y);
+    }
+    lives->update(player->getLives());
+}
 
-void GameManager::setApples(std::vector<Apple*>* _apples) { apples = _apples;}
-void GameManager::setEnergy(std::vector<Energy>* _energies) { energies = _energies;}
-void GameManager::setFirstBanana(Banana* _firstBanana) {firstBanana = _firstBanana;}
-void GameManager::setSecondBanana(Banana* _secondBanana) {secondBanana = _secondBanana;}
-void GameManager::setFirstSabotage(Sabotage* _firstSabotage) {firstSabotage = _firstSabotage;}
-void GameManager::setSecondSabotage(Sabotage* _secondSabotage) {secondSabotage = _secondSabotage;}
+void GameManager::draw(RenderWindow& window){
+    window.draw(secondVentilation->sprite);
+    window.draw(firstVentilation->sprite);
+    window.draw(firstSabotage->getSprite());
+    window.draw(secondSabotage->getSprite());
+    window.draw(player->sprite);
+    window.draw(player->textName);
+    window.draw(lives->getSprite());
+
+    for (auto it : *apples) // Проходимся по всем яблочкам
+    {
+        if(it->getCondition() == Condition::notEaten)
+            window.draw(it->getSprite());
+    }
+    // for (size_t i = 0; i < energies.size(); i++)
+    // {
+    //     if(energies[i].getCondition() == Condition::notEaten)
+    //         window.draw(energies[i].getSprite());
+    // }
+    if(firstBanana->getCondition() == Condition::notEaten) window.draw(firstBanana->getSprite()); // То нужно его нарисовать
+    if(secondBanana->getCondition() == Condition::notEaten) window.draw(secondBanana->getSprite()); // То нужно его нарисовать
+    for(size_t i = 0; i < enemies->size(); i++)
+    {
+        window.draw(enemies->at(i)->sprite);
+        window.draw(enemies->at(i)->textName);
+    }
+
+    textScore->setString("score: " + std::to_string(player->getScore()));
+    window.draw(*textScore);
+
+    textTime->setString("time: " + std::to_string((int)gameTime));
+    window.draw(*textTime);
+}
+
+
+void GameManager::setFood(std::vector<Apple*>* _apples, Banana* _firstBanana,
+                          Banana* _secondBanana, std::vector<Energy>& _energies){
+    apples = _apples;
+    firstBanana = _firstBanana;
+    secondBanana =_secondBanana;
+    energies = _energies;
+}
+
+void GameManager::setSabotages(Sabotage* _firstSabotage, Sabotage* _secondSabotage){
+    firstSabotage = _firstSabotage;
+    secondSabotage = _secondSabotage;
+}
+
+void GameManager::setVentilation(Ventilation* _firstVentilation, Ventilation* _secondVentilation){
+    firstVentilation = _firstVentilation;
+    secondVentilation = _secondVentilation;
+}
 void GameManager::setSolids(std::vector<Object>* _solids) { solids = _solids;}
 void GameManager::setEnemy(std::vector<Enemy*>* _enemies) { enemies = _enemies;}
-void GameManager::setFirstVentilation(Ventilation* _firstVentilation) {firstVentilation = _firstVentilation;}
-void GameManager::setSecondVentilation(Ventilation* _secondVentilation) {secondVentilation = _secondVentilation;}
+void GameManager::setPlayer(Player* _player) { player = _player;}
+void GameManager::setLives(Lives *_lives){ lives = _lives;}
+void GameManager::setText(Text* _textScore, Text* _textTime){
+    textScore = _textScore;
+    textTime = _textTime;
+}

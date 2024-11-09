@@ -33,7 +33,7 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy)
     for (size_t i = 0; i < solids->size(); i++)
     {
         if (getRect().intersects(solids->at(i).rect))
-        {    
+        {
             if (Dy>0)	{ y = solids->at(i).rect.top - h;  dy = 0; }
             if (Dy<0)	{ y = solids->at(i).rect.top + solids->at(i).rect.height;   dy = 0; }
             if (Dx>0)	{ x = solids->at(i).rect.left - w; dx = 0;}
@@ -47,9 +47,9 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy)
         if (apples->at(i)->getCondition() == Condition::notEaten
             && getRect().intersects(apples->at(i)->getRect()))
         {
-                score += Apple::score;
-                checkScore(); // Проверяем, не пора ли рисовать банан
-                apples->at(i)->setCondition(Condition::Eaten);
+            score += Apple::score;
+            checkScore(); // Проверяем, не пора ли рисовать банан
+            apples->at(i)->setCondition(Condition::Eaten);
         }
     }
 
@@ -165,13 +165,13 @@ void Player::checkScore(){
         firstBanana->setCondition(Condition::notEaten);
     }
     else if((score >= ((int)apples->size() * Apple::score + Banana::score))
-               && secondBanana->getCondition() == Condition::Hidden){
+             && secondBanana->getCondition() == Condition::Hidden){
         secondBanana->setCondition(Condition::notEaten);
     }
 }
 
 
-int Player::getLives() {return lives;} // Возвращает true, если еще есть жизни
+int Player::getLives() {return lives;}
 
 void Player::setApples(std::vector<Apple*>* _apples) { apples = _apples;}
 void Player::setEnergy(std::vector<Energy>* _energies) { energies = _energies;}
@@ -183,4 +183,3 @@ void Player::setSolids(std::vector<Object>* _solids) { solids = _solids;}
 void Player::setEnemy(std::vector<Enemy*>* _enemies) { enemies = _enemies;}
 void Player::setFirstVentilation(Ventilation* _firstVentilation) {firstVentilation = _firstVentilation;}
 void Player::setSecondVentilation(Ventilation* _secondVentilation) {secondVentilation = _secondVentilation;}
-

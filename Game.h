@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Sabotages.h"
 #include "Ventilation.h"
+#include "GameManager.h"
 using namespace sf;
 using namespace std;
 int volume = 5;
@@ -12,17 +13,14 @@ int game()
 {
     //////////////////////////////СОЗДАЁМ ОКНО//////////////////////////////
     RenderWindow window(VideoMode(2000, 1750), "Pacman Among Us");  // Создаём окно
-    float gameTime = 0;
     // Music music; //создаем объект музыки
     // music.openFromFile("sounds/zhelezo.ogg"); //загружаем файл
     // music.setVolume(volume);
     // music.setLoop(true);
     // music.play(); //воспроизводим музыку
-
     //////////////////////////////ЗАГРУЖАЕМ КАРТУ//////////////////////////////
     Level lvl;
     lvl.LoadFromFile("map.tmx");
-
     //////////////////////////////ПОЛУЧАЕМ ВСЕ ОБЪЕКТЫ//////////////////////////////
     std::vector<Object> obj = lvl.GetAllObjects(); // Получаем вектор всех объектов карты
 
@@ -75,27 +73,27 @@ int game()
         else if(it.name == "firstVentilation") firstVentilationObject = it;
         else if(it.name == "secondVentilation") secondVentilationObject = it;
     }
-    //////////////////////////////ПИХАЕМ САБОТАЖИ В КАРТУ//////////////////////////////
+    //////////////////////////////СОЗДАЕМ САБОТАЖИ//////////////////////////////
     Sabotage firstSabotage(firstSabotageObject);
     Sabotage secondSabotage(secondSabotageObject);
-    //////////////////////////////ПИХАЕМ ЯБЛОКИ В КАРТУ//////////////////////////////
+    //////////////////////////////СОЗДАЕМ ЯБЛОКИ //////////////////////////////
     std::vector<Apple*> apples;
     for(size_t i = 0; i < appleObjects.size(); i++)
     {
         Apple* tmp = new Apple(appleObjects.at(i));
         apples.push_back(tmp);
     }
-    //////////////////////////////ПИХАЕМ БАНАНЫ В КАРТУ//////////////////////////////
+    //////////////////////////////СОЗДАЕМ БАНАНЫ//////////////////////////////
     Banana firstBanana(firstBananaObject);
     Banana secondBanana(secondBananaObject);
-    //////////////////////////////ПИХАЕМ ЭНЕРДЖАЙЗЕРЫ В КАРТУ//////////////////////////////
+    //////////////////////////////СОЗДАЕМ ЭНЕРДЖАЙЗЕРЫ//////////////////////////////
     std::vector<Energy> energies;
     for(size_t i = 0; i < energyObjects.size(); i++)
     {
         Energy tmp(energyObjects.at(i));
         energies.push_back(tmp);
     }
-    //////////////////////////////ПИХАЕМ ВЕНТИЛЯЦИЮ В КАРТУ//////////////////////////////
+    //////////////////////////////СОЗДАЁМ ВЕНТИЛЯЦИЮ//////////////////////////////
     Ventilation firstVentilation(firstVentilationObject);
     Ventilation secondVentilation(secondVentilationObject);
     //////////////////////////////СОЗДАЁМ ВРАГОВ//////////////////////////////
@@ -121,6 +119,8 @@ int game()
     enemies.push_back(&pinky);
     enemies.push_back(&inky);
     enemies.push_back(&clyde);
+    //////////////////////////////СОЗДАЁМ ОБЪЕКТ СЕРДЕЧЕК//////////////////////////////
+    Lives lives(livesObject);
     //////////////////////////////СОЗДАЁМ ИГРОКА//////////////////////////////
     Player player(playerObject);
     player.setSolids(&solidsPlayer);
@@ -133,8 +133,6 @@ int game()
     player.setEnemy(&enemies);
     player.setFirstVentilation(&firstVentilation);
     player.setSecondVentilation(&secondVentilation);
-    //////////////////////////////СОЗДАЁМ ОБЪЕКТ СЕРДЕЧЕК//////////////////////////////
-    Lives lives(livesObject);
     //////////////////////////////РАБОТАЕМ С ТЕКСТОМ//////////////////////////////
     Font font;  // Создаём объект типа шрифт
     font.loadFromFile("images/forText.ttf"); // Загружаем шрифт в объект
@@ -148,16 +146,26 @@ int game()
     textTime.setStyle(sf::Text::Bold);
     textTime.setFillColor(Color::White);
 
+    textScore.setPosition(scoreObject.rect.left, scoreObject.rect.top);
+    textTime.setPosition(timeObject.rect.left, timeObject.rect.top);
+    //////////////////////////////СОЗДАЁМ ИРОВОЙ ПРОЦЕСС//////////////////////////////
+    GameManager* game = new GameManager();
+    game->setSolids(&solidsPlayer);
+    game->setFood(&apples, &firstBanana, &secondBanana, energies);
+    game->setSabotages(&firstSabotage, &secondSabotage);
+    game->setEnemy(&enemies);
+    game->setPlayer(&player);
+    game->setLives(&lives);
+    game->setVentilation(&firstVentilation, &secondVentilation);
+    game->setText(&textScore, &textTime);
     // Создаём часики для работы со временем
     Clock clock;
     while (window.isOpen())
     {
         //////////////////////////////ВРЕМЯ//////////////////////////////
-        float time = clock.getElapsedTime().asMicroseconds(); // Берём у часиков время
+        float time = clock.getElapsedTime().asMilliseconds(); // Берём у часиков время
         clock.restart(); // Запускаем часики
-        time = time / 800; // Уменьшаем время, чтобы не так быстро всё летало
-
-        gameTime += time / (float)1000;
+        //time = time / 1000; // Уменьшаем время, чтобы не так быстро всё летало
         //////////////////////////////ДАРИМ ИГРЕ ЖИЗНЬ//////////////////////////////
         Event event;
         while (window.pollEvent(event))
@@ -165,59 +173,20 @@ int game()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
         /// Если три раза попались врагу, то игра окончена
         if(!player.getLives()){
             window.close();
             return 1;
         }
-
         lvl.Draw(window); // Рисуем карту
-        //////////////////////////////РАБОТАЕМ С ЕДОЙ//////////////////////////////
-        for (auto it : apples) // Проходимся по всем яблочкам
-        {
-            if(it->getCondition() == Condition::notEaten)
-                window.draw(it->getSprite());
-        }
+
         for (auto it : energies)
         {
             if(it.getCondition() == Condition::notEaten)
                 window.draw(it.getSprite());
         }
-        if(firstBanana.getCondition() == Condition::notEaten) window.draw(firstBanana.getSprite()); // То нужно его нарисовать
-        if(secondBanana.getCondition() == Condition::notEaten) window.draw(secondBanana.getSprite()); // То нужно его нарисовать
-        //////////////////////////////ДАРИМ САБОТАЖАМ ЖИЗНЬ//////////////////////////////
-        firstSabotage.update(time);
-        window.draw(firstSabotage.getSprite());
-
-        secondSabotage.update(time);
-        window.draw(secondSabotage.getSprite());
-        //////////////////////////////ДАРИМ ВЕНТИЛЯЦИИ ЖИЗНЬ//////////////////////////////
-        window.draw(secondVentilation.sprite);
-        window.draw(firstVentilation.sprite);
-        //////////////////////////////ДАРИМ ИГРОКУ ЖИЗНЬ//////////////////////////////
-        player.update(time);
-        window.draw(player.sprite);
-        window.draw(player.textName);
-
-
-        lives.update(player.getLives());
-        window.draw(lives.getSprite());
-        //////////////////////////////ДАРИМ ВРАГАМ ЖИЗНЬ//////////////////////////////
-        for(size_t i = 0; i < enemies.size(); i++)
-        {
-            enemies[i]->update(time, player.x, player.y);
-            window.draw(enemies[i]->sprite);
-            window.draw(enemies[i]->textName);
-        }
-        //////////////////////////////РАБОТАЕМ С ТЕКСТОМ//////////////////////////////
-        textScore.setPosition(scoreObject.rect.left, scoreObject.rect.top);
-        textScore.setString("score: " + std::to_string(player.getScore()));
-        window.draw(textScore);
-
-        textTime.setPosition(timeObject.rect.left, timeObject.rect.top);
-        textTime.setString("time: " + std::to_string((int)gameTime));
-        window.draw(textTime);
+        game->play(time);
+        game->draw(window);
 
         window.display();
     }

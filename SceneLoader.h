@@ -1,0 +1,4 @@
+#ifndef SCENELOADER_H
+#define SCENELOADER_H
+
+#endif // SCENELOADER_H

@@ -11,6 +11,7 @@ SOURCES += \
         Player.cpp \
         SabotageWidget.cpp \
         Sabotages.cpp \
+        SceneLoader.cpp \
         SettingsWidget.cpp \
         TinyXML/tinystr.cpp \
         TinyXML/tinyxml.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
     Player.h \
     SabotageWidget.h \
     Sabotages.h \
+    SceneLoader.h \
     SettingsWidget.h \
     TinyXML/tinystr.h \
     TinyXML/tinyxml.h \
