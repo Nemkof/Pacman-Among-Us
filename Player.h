@@ -8,7 +8,7 @@ class Player : public MovableEntity {
 private:
     std::vector<Object>* solids;
     std::vector<Apple*>* apples;
-    std::vector<Energy>* energies;
+    std::vector<Energy*>* energies;
     std::vector<Enemy*>* enemies;
 
     Banana* firstBanana;
@@ -40,7 +40,7 @@ public:
 
     void setSolids(std::vector<Object>* _solids);
     void setApples(std::vector<Apple*>* _apples);
-    void setEnergy(std::vector<Energy>* _energies);
+    void setEnergy(std::vector<Energy*>* _energies);
     void setEnemy(std::vector<Enemy*>* _enemies);
     void setFirstBanana(Banana* _firstBanana);
     void setSecondBanana(Banana* _secondBanana);

@@ -26,11 +26,11 @@ void GameManager::draw(RenderWindow& window){
         if(it->getCondition() == Condition::notEaten)
             window.draw(it->getSprite());
     }
-    // for (size_t i = 0; i < energies.size(); i++)
-    // {
-    //     if(energies[i].getCondition() == Condition::notEaten)
-    //         window.draw(energies[i].getSprite());
-    // }
+    for (auto it : *energies) // Проходимся по всем яблочкам
+    {
+        if(it->getCondition() == Condition::notEaten)
+            window.draw(it->getSprite());
+    }
     if(firstBanana->getCondition() == Condition::notEaten) window.draw(firstBanana->getSprite()); // То нужно его нарисовать
     if(secondBanana->getCondition() == Condition::notEaten) window.draw(secondBanana->getSprite()); // То нужно его нарисовать
     for(size_t i = 0; i < enemies->size(); i++)
@@ -48,7 +48,7 @@ void GameManager::draw(RenderWindow& window){
 
 
 void GameManager::setFood(std::vector<Apple*>* _apples, Banana* _firstBanana,
-                          Banana* _secondBanana, std::vector<Energy>& _energies){
+                          Banana* _secondBanana, std::vector<Energy*>* _energies){
     apples = _apples;
     firstBanana = _firstBanana;
     secondBanana =_secondBanana;
@@ -71,4 +71,34 @@ void GameManager::setLives(Lives *_lives){ lives = _lives;}
 void GameManager::setText(Text* _textScore, Text* _textTime){
     textScore = _textScore;
     textTime = _textTime;
+}
+void GameManager::setGameObjects(SceneLoader& sceneLoader){
+    setSolids(&sceneLoader.playerSolids);
+    setFood(&sceneLoader.apples, sceneLoader.firstBanana, sceneLoader.secondBanana, &sceneLoader.energies);
+    setSabotages(sceneLoader.firstSabotage, sceneLoader.secondSabotage);
+    setEnemy(&sceneLoader.enemies);
+    setPlayer(sceneLoader.player);
+    setLives(sceneLoader.lives);
+    setVentilation(sceneLoader.firstVentilation, sceneLoader.secondVentilation);
+    setText(sceneLoader.textScore, sceneLoader.textTime);
+
+    // apples = &sceneLoader.apples;
+    // firstBanana = sceneLoader.firstBanana;
+    // secondBanana = sceneLoader.secondBanana;
+    // energies = &sceneLoader.energies;
+
+    // firstSabotage = sceneLoader.firstSabotage;
+    // secondSabotage = sceneLoader.secondSabotage;
+
+    // firstVentilation = sceneLoader.firstVentilation;
+    // secondVentilation = sceneLoader.secondVentilation;
+
+    // enemySolids = &sceneLoader.enemySolids;
+    // playerSolids = &sceneLoader.enemySolids;
+
+    // enemies = &sceneLoader.enemies;
+    // player = sceneLoader.player;
+    // lives = sceneLoader.lives;
+    // textScore = sceneLoader.textScore;
+    // textTime = sceneLoader.textTime;
 }

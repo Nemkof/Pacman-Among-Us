@@ -5,6 +5,7 @@ release/MenuWindow.o
 release/Player.o
 release/SabotageWidget.o
 release/Sabotages.o
+release/SceneLoader.o
 release/SettingsWidget.o
 release/tinystr.o
 release/tinyxml.o

@@ -21,6 +21,7 @@ int game()
     //////////////////////////////ЗАГРУЖАЕМ КАРТУ//////////////////////////////
     Level lvl;
     lvl.LoadFromFile("map.tmx");
+
     //////////////////////////////ПОЛУЧАЕМ ВСЕ ОБЪЕКТЫ//////////////////////////////
     std::vector<Object> obj = lvl.GetAllObjects(); // Получаем вектор всех объектов карты
 
@@ -87,10 +88,10 @@ int game()
     Banana firstBanana(firstBananaObject);
     Banana secondBanana(secondBananaObject);
     //////////////////////////////СОЗДАЕМ ЭНЕРДЖАЙЗЕРЫ//////////////////////////////
-    std::vector<Energy> energies;
+    std::vector<Energy*> energies;
     for(size_t i = 0; i < energyObjects.size(); i++)
     {
-        Energy tmp(energyObjects.at(i));
+        Energy* tmp = new Energy(energyObjects.at(i));
         energies.push_back(tmp);
     }
     //////////////////////////////СОЗДАЁМ ВЕНТИЛЯЦИЮ//////////////////////////////
@@ -151,7 +152,7 @@ int game()
     //////////////////////////////СОЗДАЁМ ИРОВОЙ ПРОЦЕСС//////////////////////////////
     GameManager* game = new GameManager();
     game->setSolids(&solidsPlayer);
-    game->setFood(&apples, &firstBanana, &secondBanana, energies);
+    game->setFood(&apples, &firstBanana, &secondBanana, &energies);
     game->setSabotages(&firstSabotage, &secondSabotage);
     game->setEnemy(&enemies);
     game->setPlayer(&player);
@@ -162,29 +163,22 @@ int game()
     Clock clock;
     while (window.isOpen())
     {
-        //////////////////////////////ВРЕМЯ//////////////////////////////
         float time = clock.getElapsedTime().asMilliseconds(); // Берём у часиков время
         clock.restart(); // Запускаем часики
-        //time = time / 1000; // Уменьшаем время, чтобы не так быстро всё летало
-        //////////////////////////////ДАРИМ ИГРЕ ЖИЗНЬ//////////////////////////////
+
         Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-        /// Если три раза попались врагу, то игра окончена
-        if(!player.getLives()){
+
+        if(player.getLives() == 0){
             window.close();
             return 1;
         }
-        lvl.Draw(window); // Рисуем карту
+        lvl.Draw(window); // рисуем карту
 
-        for (auto it : energies)
-        {
-            if(it.getCondition() == Condition::notEaten)
-                window.draw(it.getSprite());
-        }
         game->play(time);
         game->draw(window);
 

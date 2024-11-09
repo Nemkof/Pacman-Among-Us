@@ -56,10 +56,10 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy)
     /// Проверяем столкновение с энерджайзерами
     for (size_t i = 0; i < energies->size(); i++)
     {
-        if (energies->at(i).getCondition() == Condition::notEaten
-            && getRect().intersects(energies->at(i).getRect()))
+        if (energies->at(i)->getCondition() == Condition::notEaten
+            && getRect().intersects(energies->at(i)->getRect()))
         {
-            energies->at(i).setCondition(Condition::Eaten);
+            energies->at(i)->setCondition(Condition::Eaten);
             for(size_t i = 0; i < enemies->size(); i++){
                 enemies->at(i)->runAway();
             }
@@ -174,7 +174,7 @@ void Player::checkScore(){
 int Player::getLives() {return lives;}
 
 void Player::setApples(std::vector<Apple*>* _apples) { apples = _apples;}
-void Player::setEnergy(std::vector<Energy>* _energies) { energies = _energies;}
+void Player::setEnergy(std::vector<Energy*>* _energies) { energies = _energies;}
 void Player::setFirstBanana(Banana* _firstBanana) {firstBanana = _firstBanana;}
 void Player::setSecondBanana(Banana* _secondBanana) {secondBanana = _secondBanana;}
 void Player::setFirstSabotage(Sabotage* _firstSabotage) {firstSabotage = _firstSabotage;}
