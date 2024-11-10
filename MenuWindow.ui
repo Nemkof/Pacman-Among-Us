@@ -14,57 +14,57 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="ExitButton">
+   <widget class="QWidget" name="verticalLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>440</y>
-      <width>161</width>
-      <height>41</height>
+      <x>430</x>
+      <y>290</y>
+      <width>241</width>
+      <height>151</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Exit</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="PlayButton">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>250</y>
-      <width>211</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>StartGame</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="SettingsButton">
-    <property name="geometry">
-     <rect>
-      <x>482</x>
-      <y>390</y>
-      <width>291</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Settings</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="HowToPlay">
-    <property name="geometry">
-     <rect>
-      <x>510</x>
-      <y>330</y>
-      <width>231</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>History</string>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QPushButton" name="PlayButton">
+       <property name="text">
+        <string>StartGame</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QPushButton" name="HistoryButton">
+           <property name="text">
+            <string>History</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QPushButton" name="SettingsButton">
+           <property name="text">
+            <string>Settings</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="ExitButton">
+           <property name="text">
+            <string>Exit</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

@@ -1,9 +1,14 @@
 #include "Player.h"
 #include "GameSettings.h"
+
+int Player::score = 0;
+short Player::lives = 3;
+float Player::gameTime = 0.0;
+
 Player::Player(const Object& object)
     :MovableEntity(object, "Player")
 {
-    speed = 0.8;
+    speed = 0.3;
     sprite.setTextureRect(IntRect(0, 0, w, h));
     direction = Direction::stay;
 
@@ -109,7 +114,7 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy)
     for(size_t i = 0; i < enemies->size(); i++){
         if(getRect().intersects(enemies->at(i)->getRect())){
             if(Enemy::ghostState != GhostState::Frightened
-                && lives >= 1 && timeAfterDeath > 2500){
+                && lives >= 1 && timeAfterDeath > 2000){
                 lives--;
                 x = startX; y = startY;
                 if (Dy>0)	{ y -= dy * time;  dy = 0; }
@@ -159,6 +164,8 @@ void Player::updatePosition(float time){
 
 void Player::update(float time)
 {
+    gameTime += time / (float)1000;
+
     control();
     updatePosition(time);
     updateSprites(dx, time);
@@ -166,7 +173,8 @@ void Player::update(float time)
 
     timeVentilation += time;
     timeAfterDeath += time;
-    if(timeAfterDeath < 2500){
+
+    if(timeAfterDeath < 2000){
         sprite.setColor(Color(rand(), rand(), rand()));
     }
     else{

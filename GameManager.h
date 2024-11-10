@@ -10,6 +10,7 @@ using namespace std;
 class GameManager final
 {
 public:
+    int levelNum = 0;
     std::vector<Object>* enemySolids;
     std::vector<Object>* playerSolids;
     std::vector<Object>* solids;
@@ -28,11 +29,11 @@ public:
     Ventilation* firstVentilation;
     Ventilation* secondVentilation;
 
-    float gameTime = 0;
     Text* textScore;
     Text* textTime;
     Text* textState;
     Text* textTasks;
+    Text* textLevelNum;
     std::vector<Apple*>* apples;
 
     void play(float time);
@@ -46,9 +47,6 @@ public:
     void setSabotages(Sabotage* _firstSabotage, Sabotage* _secondSabotage);
     void setVentilation(Ventilation* _firstVentilation, Ventilation* _secondVentilation);
     void setLives(Lives *_lives);
-    void setText(Text* _textScore, Text* _textTime, Text* _textState, Text* _textTasks);
-
-
+    void setText(Text* _textScore, Text* _textTime, Text* _textState, Text* _textTasks, Text* textLevelNum);
 };
-//GameManager* GameManager::gameManager = nullptr;
 #endif // GAMEMANAGER_H

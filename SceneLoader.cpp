@@ -26,6 +26,7 @@ SceneLoader::SceneLoader(Level& lvl){
         else if(it.name == "time") timeObject = it;
         else if(it.name == "state") stateObject = it;
         else if(it.name == "tasks") tasksObject = it;
+        else if(it.name == "levelNum") levelNumObject = it;
         else if(it.name == "firstVentilation") firstVentilationObject = it;
         else if(it.name == "secondVentilation") secondVentilationObject = it;
     }

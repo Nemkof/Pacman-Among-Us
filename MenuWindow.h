@@ -16,7 +16,7 @@ class MenuWindow : public QMainWindow
 public:
     explicit MenuWindow(QWidget *parent = nullptr);
     ~MenuWindow();
-
+    void gamerunning(int& gameLevel);
 private slots:
 
     void on_PlayButton_clicked();
@@ -25,7 +25,7 @@ private slots:
 
     void on_SettingsButton_clicked();
 
-    void on_HowToPlay_clicked();
+    void on_HistoryButton_clicked();
 
 private:
     Ui::MenuWindow *ui;

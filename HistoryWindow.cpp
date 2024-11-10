@@ -15,23 +15,17 @@ HistoryWindow::HistoryWindow(QWidget *parent)
     setWindowTitle("History of games");
     csvModel = new QStandardItemModel(this);
 
-    csvModel->setColumnCount(4);
-    csvModel->setHorizontalHeaderLabels(QStringList() << "Nickname" << "Date" << "Score" << "Levels");
-    ui->tableView->setModel(csvModel); // Устанавливаем модель в таблицу
-    //tableView->sortByColumn(3, Qt::SortOrder::AscendingOrder);
+    csvModel->setColumnCount(5);
+    csvModel->setHorizontalHeaderLabels(QStringList() << "Nickname" << "Date" << "Score" << "Game time " << "Levels");
+    ui->tableView->setModel(csvModel);
 
-    // Открываем файл из ресурсов. Вместо данного файла
-    // необходимо указывать путь к вашему требуемому файлу
     QFile file("testing.csv");
     if ( !file.open(QFile::ReadOnly | QFile::Text) ) {
         qDebug() << "File not exists";
     } else {
-        // Создаём поток для извлечения данных из файла
         QTextStream in(&file);
-        // Считываем данные до конца файла
         while (!in.atEnd())
         {
-            // ... построчно
             QString line = in.readLine();
             // Добавляем в модель по строке с элементами
             QList<QStandardItem *> standardItemsList;

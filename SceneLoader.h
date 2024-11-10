@@ -26,6 +26,7 @@ public:
     Object stateObject; // Получаем тайл очков
     Object timeObject; // Получаем тайл очков
     Object tasksObject; // Получаем тайл очков
+    Object levelNumObject; // Получаем тайл очков
     Object firstVentilationObject; // Получаем тайл первой вентиляции
     Object secondVentilationObject; // Получаем тайл второй вентиляции
 

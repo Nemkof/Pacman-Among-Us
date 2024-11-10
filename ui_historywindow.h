@@ -1,5 +1,5 @@
 /********************************************************************************
-** Form generated from reading UI file 'historywindow.ui'
+** Form generated from reading UI file 'HistoryWindow.ui'
 **
 ** Created by: Qt User Interface Compiler version 6.7.2
 **
@@ -26,10 +26,10 @@ public:
     {
         if (HistoryWindow->objectName().isEmpty())
             HistoryWindow->setObjectName("HistoryWindow");
-        HistoryWindow->resize(480, 329);
+        HistoryWindow->resize(566, 329);
         tableView = new QTableView(HistoryWindow);
         tableView->setObjectName("tableView");
-        tableView->setGeometry(QRect(20, 20, 421, 271));
+        tableView->setGeometry(QRect(20, 20, 531, 271));
 
         retranslateUi(HistoryWindow);
 

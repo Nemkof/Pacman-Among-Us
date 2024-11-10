@@ -7,10 +7,12 @@
 #include "GameManager.h"
 #include "SceneLoader.h"
 #include <SFML/Audio.hpp>
+#include "MenuWindow.h"
 using namespace sf;
 using namespace std;
 int volume = 5;
-int game()
+
+int game(int& gameLevel)
 {
     //////////////////////////////СОЗДАЁМ ОКНО//////////////////////////////
     RenderWindow window(VideoMode(2000, 1750), "Pacman Among Us");  // Создаём окно
@@ -93,6 +95,12 @@ int game()
     textTasks.setStyle(sf::Text::Bold);
     textTasks.setFillColor(Color::White);
     textTasks.setPosition(scene.tasksObject.rect.left, scene.tasksObject.rect.top);
+
+    // Создаём текст с кол-вом решенных задач
+    Text textLevelNum("", font, 40);
+    textLevelNum.setStyle(sf::Text::Bold);
+    textLevelNum.setFillColor(Color::White);
+    textLevelNum.setPosition(scene.levelNumObject.rect.left, scene.levelNumObject.rect.top);
     //////////////////////////////СОЗДАЁМ ИРОВОЙ ПРОЦЕСС//////////////////////////////
     GameManager* game = new GameManager();
     game->setSolids(&scene.solidsPlayer);
@@ -102,7 +110,9 @@ int game()
     game->setPlayer(&player);
     game->setLives(&lives);
     game->setVentilation(&firstVentilation, &secondVentilation);
-    game->setText(&textScore, &textTime, &textState, &textTasks);
+    game->setText(&textScore, &textTime, &textState, &textTasks, &textLevelNum);
+    game->levelNum = gameLevel;
+    //////////////////////////////ИГРАЕМ//////////////////////////////
     Clock clock;
     while (window.isOpen())
     {
@@ -116,7 +126,7 @@ int game()
         }
         if(player.getLives() == 0){
             window.close();
-            return 1;
+            return 0;
         }
         if(Sabotage::getSolvedTasks() == 4){
             window.close();
@@ -129,5 +139,6 @@ int game()
     }
     return 0;
 }
+
 
 #endif // GAME_H

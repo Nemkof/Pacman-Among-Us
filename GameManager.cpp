@@ -1,7 +1,6 @@
 #include "GameManager.h"
-void GameManager::play(float time){
-    gameTime += time / (float)500;
 
+void GameManager::play(float time){
     firstSabotage->update(time);
     secondSabotage->update(time);
     player->update(time);
@@ -43,12 +42,16 @@ void GameManager::draw(RenderWindow& window){
     textScore->setString("score: " + std::to_string(player->getScore()));
     window.draw(*textScore);
 
-    textTime->setString("time: " + std::to_string((int)gameTime));
+    textTime->setString("time: " + std::to_string((int)player->gameTime));
     window.draw(*textTime);
 
     //textTasks->setString("tasks: " + std::to_string(player->solvedTasks) + "/4");
     textTasks->setString("tasks: " + std::to_string(Sabotage::getSolvedTasks()) + "/4");
     window.draw(*textTasks);
+
+    textLevelNum->setString("level: " + std::to_string(levelNum));
+    window.draw(*textLevelNum);
+
     /////////////////////////////////////////////////////////
     if(enemies->at(0)->ghostState == GhostState::Chase){
         textState->setFillColor(Color::Green);
@@ -89,9 +92,10 @@ void GameManager::setSolids(std::vector<Object>* _solids) { solids = _solids;}
 void GameManager::setEnemy(std::vector<Enemy*>* _enemies) { enemies = _enemies;}
 void GameManager::setPlayer(Player* _player) { player = _player;}
 void GameManager::setLives(Lives *_lives){ lives = _lives;}
-void GameManager::setText(Text* _textScore, Text* _textTime, Text* _textState,  Text* _textTasks){
+void GameManager::setText(Text* _textScore, Text* _textTime, Text* _textState,  Text* _textTasks, Text* _textLevelNum){
     textScore = _textScore;
     textTime = _textTime;
     textState = _textState;
     textTasks = _textTasks;
+    textLevelNum = _textLevelNum;
 }
