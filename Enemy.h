@@ -7,8 +7,8 @@ public:
     std::vector<Object>* rotates;
     std::vector<Object>* solids; // Вектор объектов карты
 
-    GhostState ghostState = GhostState::Chase;    
-    float timeGhostState = 0.0;
+    static GhostState ghostState;
+    static float timeGhostState;
 
     float lastRotateX = 0.0;
     float lastRotateY = 0.0;

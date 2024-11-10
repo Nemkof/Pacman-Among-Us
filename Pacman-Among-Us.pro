@@ -30,6 +30,7 @@ INCLUDEPATH += C:\myQT\projects\SFML-2.6.1\include
 DEPENDPATH += C:\myQT\projects\SFML-2.6.1\include
 
 HEADERS += \
+    Constants.h \
     Enemy.h \
     Entity.h \
     Food.h \

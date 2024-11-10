@@ -11,7 +11,7 @@ Sabotage::Sabotage(const Object& object):
 void Sabotage::update(float time)
 {
     delay += 0.3 * time;
-    if(tasksCondition != TaskCondition::Solved && delay > 1000){
+    if(delay > 1000){
         spriteNumber += 0.005 * time;
         if(spriteNumber > 2) spriteNumber -= 2;
         sprite.setTextureRect(IntRect(w * (int)spriteNumber, 0, w, h));
@@ -19,23 +19,13 @@ void Sabotage::update(float time)
 }
 
 bool Sabotage::run(){
-    // Если мы недавно делали саботаж на этом месте
-    // то нужно подождать
-    tasksCondition = TaskCondition::notSolved;
-    bool status = false;
-    delay = 0;
-    sabotageWidget* wi = new sabotageWidget(status);
+    sabotageWidget* wi = new sabotageWidget();
     wi->show();
-    if(wi->getStatus() == "Solved") {
-        tasksCondition = TaskCondition::Solved;
+    if(wi->getStatus() == SabotageCondition::Finished) {
         delete wi;
-        cout << "successing" << endl;
+        delay = 0;
     }
-    else if(wi->getStatus() == "notSolved"){
-        tasksCondition = TaskCondition::notSolved;
-        delete wi;
-        cout << "332323successing" << endl;
-    }
-    if(status) tasksCondition = TaskCondition::Solved;
     return 0;
 }
+
+short Sabotage::solvedTasks = 0;

@@ -1,6 +1,6 @@
 #include "GameManager.h"
 void GameManager::play(float time){
-    gameTime += time / (float)1000;
+    gameTime += time / (float)500;
 
     firstSabotage->update(time);
     secondSabotage->update(time);
@@ -46,7 +46,8 @@ void GameManager::draw(RenderWindow& window){
     textTime->setString("time: " + std::to_string((int)gameTime));
     window.draw(*textTime);
 
-    textTasks->setString("tasks: " + std::to_string(player->solvedTasks) + "/4");
+    //textTasks->setString("tasks: " + std::to_string(player->solvedTasks) + "/4");
+    textTasks->setString("tasks: " + std::to_string(Sabotage::getSolvedTasks()) + "/4");
     window.draw(*textTasks);
     /////////////////////////////////////////////////////////
     if(enemies->at(0)->ghostState == GhostState::Chase){

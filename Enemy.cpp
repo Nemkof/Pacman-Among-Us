@@ -10,13 +10,14 @@ Enemy::Enemy(const Object& object, const Object& targetPoint)
     dx = speed;
     dy = 0;
     direction = Direction::right;
-    ghostState = GhostState::Scatter;
     targetPointX = targetPoint.rect.left;
     targetPointY = targetPoint.rect.top;
 
     lastRotateX = 0.0;
     lastRotateY = 0.0;
 }
+GhostState Enemy::ghostState = GhostState::Chase;
+float Enemy::timeGhostState = 0.0;
 
 /// Логика движения за игроком
 void Enemy::selectDirection(float targetX, float targetY){
@@ -115,7 +116,7 @@ void Enemy::update(float time, float playerX, float playerY)
     timeGhostState += time;
     //timeAfterDeath += time;
 
-    if(timeGhostState > 6000){
+    if(timeGhostState > 10000){
         if(ghostState == GhostState::Chase)
             ghostState = GhostState::Scatter;
         else

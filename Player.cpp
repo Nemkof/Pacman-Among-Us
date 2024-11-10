@@ -2,7 +2,7 @@
 Player::Player(const Object& object)
     :MovableEntity(object, "Player")
 {
-    speed = 0.4;
+    speed = 0.8;
     sprite.setTextureRect(IntRect(0, 0, w, h));
     direction = Direction::stay;
 
@@ -67,37 +67,31 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy)
     }
 
     /// Проверяем столкновение с бананами
-    if(getRect().intersects(firstBanana->getRect()) && firstBanana->getCondition() == Condition::notEaten)
-    {
+    if(getRect().intersects(firstBanana->getRect()) && firstBanana->getCondition() == Condition::notEaten){
         firstBanana->setCondition(Condition::Eaten);
         score += Banana::score;
     }
-    if(getRect().intersects(secondBanana->getRect()) && secondBanana->getCondition() == Condition::notEaten)
-    {
+    if(getRect().intersects(secondBanana->getRect()) && secondBanana->getCondition() == Condition::notEaten){
         secondBanana->setCondition(Condition::Eaten);
         score += Banana::score;
     }
 
     /// Проверяем столкновение с саботажем
     if(getRect().intersects(firstSabotage->getRect()) && Keyboard::isKeyPressed(Keyboard::E)){
-        if(firstSabotage->delay > 1000) {
+        if(firstSabotage->delay > 1000)
             firstSabotage->run();
-            if(firstSabotage->tasksCondition == Sabotage::TaskCondition::Solved)
-                solvedTasks++;
-        }
-        else{
-            solvedTasks+=66;
-        }
     }
     if(getRect().intersects(secondSabotage->getRect()) && Keyboard::isKeyPressed(Keyboard::E)){
-        if(secondSabotage->run()) solvedTasks++;
+        if(secondSabotage->delay > 1000){
+            secondSabotage->run();
+            x = startX; y = startY;
+        }
     }
 
     /// Проверяем столкновение с врагами
     for(size_t i = 0; i < enemies->size(); i++){
-        if(getRect().intersects(enemies->at(i)->getRect()))
-        {
-            if(enemies->at(i)->ghostState != GhostState::Frightened
+        if(getRect().intersects(enemies->at(i)->getRect())){
+            if(Enemy::ghostState != GhostState::Frightened
                 && lives >= 1 && timeAfterDeath > 2500){
                 lives--;
                 x = startX; y = startY;
@@ -109,7 +103,7 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy)
                 direction = Direction::stay;
                 timeAfterDeath = 0;
             }
-            else if (enemies->at(i)->ghostState == GhostState::Frightened){
+            else if (Enemy::ghostState == GhostState::Frightened){
                 score += 100;
                 enemies->at(i)->death();
             }

@@ -1,5 +1,5 @@
 /********************************************************************************
-** Form generated from reading UI file 'settingsWidget.ui'
+** Form generated from reading UI file 'SettingsWidget.ui'
 **
 ** Created by: Qt User Interface Compiler version 6.7.2
 **
@@ -11,7 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QRadioButton>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -19,16 +19,16 @@ QT_BEGIN_NAMESPACE
 class Ui_Settings
 {
 public:
-    QRadioButton *radioButton;
+    QCheckBox *checkBox;
 
     void setupUi(QWidget *Settings)
     {
         if (Settings->objectName().isEmpty())
             Settings->setObjectName("Settings");
         Settings->resize(480, 358);
-        radioButton = new QRadioButton(Settings);
-        radioButton->setObjectName("radioButton");
-        radioButton->setGeometry(QRect(310, 70, 91, 22));
+        checkBox = new QCheckBox(Settings);
+        checkBox->setObjectName("checkBox");
+        checkBox->setGeometry(QRect(210, 140, 77, 22));
 
         retranslateUi(Settings);
 
@@ -38,7 +38,7 @@ public:
     void retranslateUi(QWidget *Settings)
     {
         Settings->setWindowTitle(QCoreApplication::translate("Settings", "Form", nullptr));
-        radioButton->setText(QCoreApplication::translate("Settings", "Sounds", nullptr));
+        checkBox->setText(QCoreApplication::translate("Settings", "CheckBox", nullptr));
     } // retranslateUi
 
 };

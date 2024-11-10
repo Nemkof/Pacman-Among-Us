@@ -1,12 +1,11 @@
 #include "SabotageWidget.h"
 #include "ui_SabotageWidget.h"
-
-sabotageWidget::sabotageWidget(bool& _sttatus, QWidget *parent)
+#include "Sabotages.h"
+sabotageWidget::sabotageWidget(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::sabotageWidget)
 {
     ui->setupUi(this);
-    sttatus = _sttatus;
 
     questionNumber = rand() % (questions.size());
     QString task = QString::fromStdString(questions.at(questionNumber).first);
@@ -22,10 +21,9 @@ sabotageWidget::~sabotageWidget()
     delete ui;
 }
 
-std::string sabotageWidget::getStatus() {
-    if(status == Condition::Solved) return "Solved";
-    else if(status == Condition::notSolved) return "notSolved";
-    else return "inProcess";
+SabotageCondition sabotageWidget::getStatus() {
+    if(status == SabotageCondition::Finished) return SabotageCondition::Finished;
+    else return SabotageCondition::inProcess;
 }
 
 void sabotageWidget::on_checkButton_clicked()
@@ -38,16 +36,15 @@ void sabotageWidget::on_checkButton_clicked()
     message->setWindowIcon(messageIcon);
 
     if((answer != nullptr) && (answer.toInt() == questions.at(questionNumber).second)){
-        status = Condition::Solved;
+        status = SabotageCondition::Finished;
         message->setText("Sabotage is Success!");
         message->show();
-        sttatus = true;
+        Sabotage::setSolvedTasks();
     }
     else{
-        status = Condition::notSolved;
+        status = SabotageCondition::Finished;
         message->setText("Sabotage is Error! Try again later");
         message->show();
-        sttatus = false;
     }
     close();
 }

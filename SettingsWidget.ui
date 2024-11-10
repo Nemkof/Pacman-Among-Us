@@ -13,17 +13,17 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QRadioButton" name="radioButton">
+  <widget class="QCheckBox" name="checkBox">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>70</y>
-     <width>91</width>
+     <x>210</x>
+     <y>140</y>
+     <width>77</width>
      <height>22</height>
     </rect>
    </property>
    <property name="text">
-    <string>Sounds</string>
+    <string>CheckBox</string>
    </property>
   </widget>
  </widget>

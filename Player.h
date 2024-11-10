@@ -25,7 +25,6 @@ public:
     float timeAfterDeath = 0.0;
     int score = 0;
     short lives = 3;
-    short solvedTasks = 0;
 
     Player(const Object& object);
 

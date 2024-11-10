@@ -9,7 +9,7 @@ Settings::Settings(QWidget *parent)
     setWindowTitle("Settings");
     QPixmap messageIcon("images/menu/settings.png");
     setWindowIcon(messageIcon);
-    ui->radioButton->setChecked(true);
+    ui->checkBox->setChecked(true);
 }
 
 Settings::~Settings()
