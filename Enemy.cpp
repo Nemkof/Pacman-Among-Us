@@ -6,11 +6,11 @@ Enemy::Enemy(const Object& object, const Object& targetPoint)
     sprite.setTextureRect(IntRect(0, 0, w, h));
     sprite.setColor(Color::White);
     sprite.setPosition(x, y);
-    speed = 0.15;
+    speed = 0.4;
     dx = speed;
     dy = 0;
     direction = Direction::right;
-
+    ghostState = GhostState::Scatter;
     targetPointX = targetPoint.rect.left;
     targetPointY = targetPoint.rect.top;
 
@@ -24,33 +24,33 @@ void Enemy::selectDirection(float targetX, float targetY){
 
     float minDist = std::numeric_limits<float>::max();
 
-    if(!isSolid(x - 32, y) && (direction != Direction::right))
+    if(!isSolid(x - 48, y) && (direction != Direction::right))
     {
-        double dist = calculateDist(targetX, targetY, x - 32, y);
+        double dist = calculateDist(targetX, targetY, x - 8, y);
         if (dist < minDist){
             nextDir = Direction::left;
             minDist = dist;
         }
     }
-    if(!isSolid(x + 32, y) && (direction != Direction::left))
+    if(!isSolid(x + 48, y) && (direction != Direction::left))
     {
-        double dist = calculateDist(targetX, targetY, x + 32, y);
+        double dist = calculateDist(targetX, targetY, x + 8, y);
         if (dist < minDist){
             nextDir = Direction::right;
             minDist = dist;
         }
     }
-    if(!isSolid(x, y - 32) && (direction != Direction::down))
+    if(!isSolid(x, y - 48) && (direction != Direction::down))
     {
-        double dist = calculateDist(targetX, targetY, x, y - 32);
+        double dist = calculateDist(targetX, targetY, x, y - 8);
         if (dist < minDist){
             nextDir = Direction::up;
             minDist = dist;
         }
     }
-    if(!isSolid(x, y + 32) && (direction != Direction::up))
+    if(!isSolid(x, y + 48) && (direction != Direction::up))
     {
-        double dist = calculateDist(targetX, targetY, x, y + 32);
+        double dist = calculateDist(targetX, targetY, x, y + 8);
         if (dist < minDist){
             nextDir = Direction::down;
         }
@@ -107,7 +107,7 @@ void Enemy::updatePosition(float time){
     checkCollisionWithMap(dx, 0);
     y += dy*time;
     checkCollisionWithMap(0, dy);
-    sprite.setPosition(x + w / 2, y + h / 2);
+    sprite.setPosition(x + w / 4, y + h / 4);
 }
 
 void Enemy::update(float time, float playerX, float playerY)
@@ -115,17 +115,15 @@ void Enemy::update(float time, float playerX, float playerY)
     timeGhostState += time;
     //timeAfterDeath += time;
 
-
-    if(timeGhostState > 10000){
+    if(timeGhostState > 6000){
         if(ghostState == GhostState::Chase)
             ghostState = GhostState::Scatter;
         else
             ghostState = GhostState::Chase;
         timeGhostState = 0;
-        speed = 0.15;
+        speed = 0.4;
         sprite.setColor(Color::White);
     }
-
 
     float targetX = getTargetX(playerX);
     float targetY = getTargetY(playerY);

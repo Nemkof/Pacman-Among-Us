@@ -20,7 +20,7 @@ void GameManager::draw(RenderWindow& window){
     window.draw(player->sprite);
     window.draw(player->textName);
     window.draw(lives->getSprite());
-
+    /////////////////////////////////////////////////////////
     for (auto it : *apples) // Проходимся по всем яблочкам
     {
         if(it->getCondition() == Condition::notEaten)
@@ -33,17 +33,37 @@ void GameManager::draw(RenderWindow& window){
     }
     if(firstBanana->getCondition() == Condition::notEaten) window.draw(firstBanana->getSprite()); // То нужно его нарисовать
     if(secondBanana->getCondition() == Condition::notEaten) window.draw(secondBanana->getSprite()); // То нужно его нарисовать
+    /////////////////////////////////////////////////////////
     for(size_t i = 0; i < enemies->size(); i++)
     {
         window.draw(enemies->at(i)->sprite);
         window.draw(enemies->at(i)->textName);
     }
-
+    /////////////////////////////////////////////////////////
     textScore->setString("score: " + std::to_string(player->getScore()));
     window.draw(*textScore);
 
     textTime->setString("time: " + std::to_string((int)gameTime));
     window.draw(*textTime);
+
+    textTasks->setString("tasks: " + std::to_string(player->solvedTasks) + "/4");
+    window.draw(*textTasks);
+    /////////////////////////////////////////////////////////
+    if(enemies->at(0)->ghostState == GhostState::Chase){
+        textState->setFillColor(Color::Green);
+        textState->setString("should run");
+    }
+    else if(enemies->at(0)->ghostState == GhostState::Frightened){
+        textState->setFillColor(Color::Red);
+        textState->setString("kill him");
+    }
+    else if(enemies->at(0)->ghostState == GhostState::Scatter){
+        textState->setFillColor(Color::White);
+        textState->setString("just relax");
+    }
+    window.draw(*textState);
+
+
 }
 
 
@@ -68,37 +88,9 @@ void GameManager::setSolids(std::vector<Object>* _solids) { solids = _solids;}
 void GameManager::setEnemy(std::vector<Enemy*>* _enemies) { enemies = _enemies;}
 void GameManager::setPlayer(Player* _player) { player = _player;}
 void GameManager::setLives(Lives *_lives){ lives = _lives;}
-void GameManager::setText(Text* _textScore, Text* _textTime){
+void GameManager::setText(Text* _textScore, Text* _textTime, Text* _textState,  Text* _textTasks){
     textScore = _textScore;
     textTime = _textTime;
-}
-void GameManager::setGameObjects(SceneLoader& sceneLoader){
-    setSolids(&sceneLoader.playerSolids);
-    setFood(&sceneLoader.apples, sceneLoader.firstBanana, sceneLoader.secondBanana, &sceneLoader.energies);
-    setSabotages(sceneLoader.firstSabotage, sceneLoader.secondSabotage);
-    setEnemy(&sceneLoader.enemies);
-    setPlayer(sceneLoader.player);
-    setLives(sceneLoader.lives);
-    setVentilation(sceneLoader.firstVentilation, sceneLoader.secondVentilation);
-    setText(sceneLoader.textScore, sceneLoader.textTime);
-
-    // apples = &sceneLoader.apples;
-    // firstBanana = sceneLoader.firstBanana;
-    // secondBanana = sceneLoader.secondBanana;
-    // energies = &sceneLoader.energies;
-
-    // firstSabotage = sceneLoader.firstSabotage;
-    // secondSabotage = sceneLoader.secondSabotage;
-
-    // firstVentilation = sceneLoader.firstVentilation;
-    // secondVentilation = sceneLoader.secondVentilation;
-
-    // enemySolids = &sceneLoader.enemySolids;
-    // playerSolids = &sceneLoader.enemySolids;
-
-    // enemies = &sceneLoader.enemies;
-    // player = sceneLoader.player;
-    // lives = sceneLoader.lives;
-    // textScore = sceneLoader.textScore;
-    // textTime = sceneLoader.textTime;
+    textState = _textState;
+    textTasks = _textTasks;
 }

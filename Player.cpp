@@ -2,7 +2,7 @@
 Player::Player(const Object& object)
     :MovableEntity(object, "Player")
 {
-    speed = 0.35;
+    speed = 0.4;
     sprite.setTextureRect(IntRect(0, 0, w, h));
     direction = Direction::stay;
 
@@ -80,10 +80,17 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy)
 
     /// Проверяем столкновение с саботажем
     if(getRect().intersects(firstSabotage->getRect()) && Keyboard::isKeyPressed(Keyboard::E)){
-        firstSabotage->run();
+        if(firstSabotage->delay > 1000) {
+            firstSabotage->run();
+            if(firstSabotage->tasksCondition == Sabotage::TaskCondition::Solved)
+                solvedTasks++;
+        }
+        else{
+            solvedTasks+=66;
+        }
     }
     if(getRect().intersects(secondSabotage->getRect()) && Keyboard::isKeyPressed(Keyboard::E)){
-        secondSabotage->run();
+        if(secondSabotage->run()) solvedTasks++;
     }
 
     /// Проверяем столкновение с врагами
@@ -91,7 +98,7 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy)
         if(getRect().intersects(enemies->at(i)->getRect()))
         {
             if(enemies->at(i)->ghostState != GhostState::Frightened
-                && lives >= 1 && timeAfterDeath > 5000){
+                && lives >= 1 && timeAfterDeath > 2500){
                 lives--;
                 x = startX; y = startY;
                 if (Dy>0)	{ y -= dy * time;  dy = 0; }
@@ -102,7 +109,7 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy)
                 direction = Direction::stay;
                 timeAfterDeath = 0;
             }
-            else{
+            else if (enemies->at(i)->ghostState == GhostState::Frightened){
                 score += 100;
                 enemies->at(i)->death();
             }
@@ -148,7 +155,7 @@ void Player::update(float time)
 
     timeVentilation += time;
     timeAfterDeath += time;
-    if(timeAfterDeath < 5000){
+    if(timeAfterDeath < 2500){
         sprite.setColor(Color(rand(), rand(), rand()));
     }
     else{
@@ -175,11 +182,17 @@ int Player::getLives() {return lives;}
 
 void Player::setApples(std::vector<Apple*>* _apples) { apples = _apples;}
 void Player::setEnergy(std::vector<Energy*>* _energies) { energies = _energies;}
-void Player::setFirstBanana(Banana* _firstBanana) {firstBanana = _firstBanana;}
-void Player::setSecondBanana(Banana* _secondBanana) {secondBanana = _secondBanana;}
-void Player::setFirstSabotage(Sabotage* _firstSabotage) {firstSabotage = _firstSabotage;}
-void Player::setSecondSabotage(Sabotage* _secondSabotage) {secondSabotage = _secondSabotage;}
+void Player::setBananas(Banana* _firstBanana, Banana* _secondBanana){
+    firstBanana = _firstBanana;
+    secondBanana = _secondBanana;
+}
+void Player::setSabotages(Sabotage* _firstSabotage, Sabotage* _secondSabotage){
+    firstSabotage = _firstSabotage;
+    secondSabotage = _secondSabotage;
+}
 void Player::setSolids(std::vector<Object>* _solids) { solids = _solids;}
 void Player::setEnemy(std::vector<Enemy*>* _enemies) { enemies = _enemies;}
-void Player::setFirstVentilation(Ventilation* _firstVentilation) {firstVentilation = _firstVentilation;}
-void Player::setSecondVentilation(Ventilation* _secondVentilation) {secondVentilation = _secondVentilation;}
+void Player::setVentilations(Ventilation* _firstVentilation, Ventilation* _secondVentilation) {
+    firstVentilation = _firstVentilation;
+    secondVentilation = _secondVentilation;
+}

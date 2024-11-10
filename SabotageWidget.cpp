@@ -1,12 +1,12 @@
 #include "SabotageWidget.h"
 #include "ui_SabotageWidget.h"
 
-sabotageWidget::sabotageWidget(QWidget *parent)
+sabotageWidget::sabotageWidget(bool& _sttatus, QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::sabotageWidget)
 {
     ui->setupUi(this);
-
+    sttatus = _sttatus;
 
     questionNumber = rand() % (questions.size());
     QString task = QString::fromStdString(questions.at(questionNumber).first);
@@ -41,11 +41,13 @@ void sabotageWidget::on_checkButton_clicked()
         status = Condition::Solved;
         message->setText("Sabotage is Success!");
         message->show();
+        sttatus = true;
     }
     else{
         status = Condition::notSolved;
         message->setText("Sabotage is Error! Try again later");
         message->show();
+        sttatus = false;
     }
     close();
 }

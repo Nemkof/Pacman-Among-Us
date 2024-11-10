@@ -1,6 +1,9 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
-#include "SceneLoader.h"
+#include "Lives.h"
+#include "Player.h"
+#include "Sabotages.h"
+#include "Ventilation.h"
 using namespace std;
 
 /// Singleton
@@ -28,6 +31,8 @@ public:
     float gameTime = 0;
     Text* textScore;
     Text* textTime;
+    Text* textState;
+    Text* textTasks;
     std::vector<Apple*>* apples;
 
     void play(float time);
@@ -41,9 +46,9 @@ public:
     void setSabotages(Sabotage* _firstSabotage, Sabotage* _secondSabotage);
     void setVentilation(Ventilation* _firstVentilation, Ventilation* _secondVentilation);
     void setLives(Lives *_lives);
-    void setText(Text* textScore, Text* textTime);
+    void setText(Text* _textScore, Text* _textTime, Text* _textState, Text* _textTasks);
 
-    void setGameObjects(SceneLoader& sceneLoader);
+
 };
 //GameManager* GameManager::gameManager = nullptr;
 #endif // GAMEMANAGER_H

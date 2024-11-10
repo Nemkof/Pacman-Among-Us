@@ -29,7 +29,8 @@ class sabotageWidget : public QDialog
     Q_OBJECT
 
 public:
-    explicit sabotageWidget(QWidget *parent = nullptr);
+    bool sttatus;
+    explicit sabotageWidget(bool& status, QWidget *parent = nullptr);
     ~sabotageWidget();
     std::string getStatus();
 private slots:

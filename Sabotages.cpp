@@ -10,27 +10,32 @@ Sabotage::Sabotage(const Object& object):
 
 void Sabotage::update(float time)
 {
-    delay += 0.05 * time;
-    if(tasksCondition != Condition::Solved && delay > 1000){
-        spriteNumber += 0.002 * time;
+    delay += 0.3 * time;
+    if(tasksCondition != TaskCondition::Solved && delay > 1000){
+        spriteNumber += 0.005 * time;
         if(spriteNumber > 2) spriteNumber -= 2;
         sprite.setTextureRect(IntRect(w * (int)spriteNumber, 0, w, h));
     }
 }
 
-void Sabotage::run(){
+bool Sabotage::run(){
     // Если мы недавно делали саботаж на этом месте
     // то нужно подождать
-    if(delay < 1000) return;
+    tasksCondition = TaskCondition::notSolved;
+    bool status = false;
     delay = 0;
-    sabotageWidget* wi = new sabotageWidget();
+    sabotageWidget* wi = new sabotageWidget(status);
     wi->show();
     if(wi->getStatus() == "Solved") {
-        tasksCondition = Condition::Solved;
+        tasksCondition = TaskCondition::Solved;
         delete wi;
+        cout << "successing" << endl;
     }
     else if(wi->getStatus() == "notSolved"){
-        tasksCondition = Condition::notSolved;
+        tasksCondition = TaskCondition::notSolved;
         delete wi;
+        cout << "332323successing" << endl;
     }
+    if(status) tasksCondition = TaskCondition::Solved;
+    return 0;
 }

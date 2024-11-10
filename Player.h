@@ -19,11 +19,13 @@ private:
 
     Ventilation* firstVentilation;
     Ventilation* secondVentilation;
-    int score = 0;
-    int lives = 3;
+    ;
 public:
     float timeVentilation = 0.0;
     float timeAfterDeath = 0.0;
+    int score = 0;
+    short lives = 3;
+    short solvedTasks = 0;
 
     Player(const Object& object);
 
@@ -42,14 +44,9 @@ public:
     void setApples(std::vector<Apple*>* _apples);
     void setEnergy(std::vector<Energy*>* _energies);
     void setEnemy(std::vector<Enemy*>* _enemies);
-    void setFirstBanana(Banana* _firstBanana);
-    void setSecondBanana(Banana* _secondBanana);
-
-    void setFirstSabotage(Sabotage* _firstSabotage);
-    void setSecondSabotage(Sabotage* _secondSabotage);
-
-    void setFirstVentilation(Ventilation* _firstVentilation);
-    void setSecondVentilation(Ventilation* _secondVentilation);
+    void setBananas(Banana* _firstBanana, Banana* _secondBanana);
+    void setSabotages(Sabotage* _firstSabotage, Sabotage* _secondSabotage);
+    void setVentilations(Ventilation* _firstVentilation, Ventilation* _secondVentilation);
 };
 
 #endif // PLAYER_H

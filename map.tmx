@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#4d538c" nextlayerid="10" nextobjectid="948">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#4d538c" nextlayerid="10" nextobjectid="950">
  <tileset firstgid="1" name="Tiny_Chao_Garden_SonicAdv_3_Tile_Sheet" tilewidth="32" tileheight="32" tilecount="7200" columns="144">
   <grid orientation="orthogonal" width="16" height="16"/>
   <image source="images/Tiny_Chao_Garden_SonicAdv_3_Tile_Sheet.png" width="4617" height="1616"/>
@@ -5227,18 +5227,11 @@
   <object id="940" name="apple" x="1376" y="96" width="32" height="32"/>
   <object id="941" name="apple" x="1440" y="160" width="32" height="32"/>
  </objectgroup>
- <objectgroup id="6" name="players">
-  <object id="550" name="player" x="725.5" y="854.5" width="32" height="32"/>
-  <object id="795" name="Clyde" x="512" y="256" width="32" height="32"/>
-  <object id="800" name="Blinky" x="704" y="544" width="32" height="32"/>
-  <object id="801" name="Inky" x="960" y="256" width="32" height="32"/>
-  <object id="802" name="Pinky" x="864" y="544" width="32" height="32"/>
- </objectgroup>
- <objectgroup id="7" name="rotates" visible="0">
+ <objectgroup id="7" name="rotates">
   <object id="803" name="rotate" x="396" y="305.333" width="8" height="8"/>
   <object id="805" name="rotate" x="140" y="305.333" width="8" height="8"/>
   <object id="806" name="rotate" x="396" y="433.333" width="8" height="8"/>
-  <object id="807" name="rotate" x="396" y="753.333" width="8" height="8"/>
+  <object id="807" name="rotate" x="396" y="746" width="8" height="8"/>
   <object id="808" name="rotate" x="556" y="753.333" width="8" height="8"/>
   <object id="809" name="rotate" x="556" y="913.333" width="8" height="8"/>
   <object id="810" name="rotate" x="396" y="1041.33" width="8" height="8"/>
@@ -5263,10 +5256,17 @@
   <object id="833" name="rotate" x="876" y="305.333" width="8" height="8"/>
   <object id="834" name="rotate" x="716" y="305.333" width="8" height="8"/>
   <object id="835" name="rotate" x="556" y="305.333" width="8" height="8"/>
-  <object id="836" name="rotate" x="716" y="593.333" width="8" height="8"/>
-  <object id="837" name="rotate" x="876" y="593.333" width="8" height="8"/>
-  <object id="838" name="rotate" x="1036" y="305.333" width="8" height="8"/>
+  <object id="836" name="rotate" x="720" y="578.333" width="8" height="8"/>
+  <object id="837" name="rotate" x="876.5" y="576.833" width="8" height="8"/>
+  <object id="838" name="rotate" x="1035" y="300.333" width="8" height="8"/>
   <object id="902" name="rotate" x="230.667" y="1326.67" width="8" height="8"/>
+ </objectgroup>
+ <objectgroup id="6" name="players" visible="0">
+  <object id="550" name="player" x="725.5" y="854.5" width="32" height="32"/>
+  <object id="795" name="Clyde" x="512" y="256" width="32" height="32"/>
+  <object id="800" name="Blinky" x="704" y="544" width="32" height="32"/>
+  <object id="801" name="Inky" x="960" y="256" width="32" height="32"/>
+  <object id="802" name="Pinky" x="864" y="544" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="3" name="collision" visible="0">
   <object id="86" name="solid" x="32" y="32" width="64" height="512"/>
@@ -5351,5 +5351,7 @@
   <object id="945" name="PinkyTarget" x="1120" y="1408" width="32" height="32"/>
   <object id="946" name="ClydeTarget" x="480" y="1408" width="32" height="32"/>
   <object id="947" name="time" x="64" y="608" width="32" height="32"/>
+  <object id="948" name="state" x="64" y="896" width="32" height="32"/>
+  <object id="949" name="tasks" x="64" y="832" width="32" height="32"/>
  </objectgroup>
 </map>
