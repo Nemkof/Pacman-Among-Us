@@ -21,10 +21,7 @@ sabotageWidget::~sabotageWidget()
     delete ui;
 }
 
-SabotageCondition sabotageWidget::getStatus() {
-    if(status == SabotageCondition::Finished) return SabotageCondition::Finished;
-    else return SabotageCondition::inProcess;
-}
+SabotageCondition sabotageWidget::getStatus() { return status; }
 
 void sabotageWidget::on_checkButton_clicked()
 {

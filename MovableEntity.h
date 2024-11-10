@@ -5,7 +5,7 @@
 enum class Direction { left, right, up, down, stay };
 class MovableEntity: public Entity{
 public:
-    float dx = 0, dy = 0, speed = 0, startX = 0, startY = 0;
+    float dx = 0, dy = 0, startX = 0, startY = 0;
     Direction direction = Direction::stay;
     string name;
     Font font;
@@ -34,7 +34,7 @@ public:
     {
         if(Dx < 0) // Идём влево
         {
-            player_sprites += 0.02 * time;
+            player_sprites += 0.03 * time;
             if(player_sprites > 12) player_sprites -= 13;
             sprite.setTextureRect(IntRect(w * (int)player_sprites, 0, w, h));
             sprite.setScale(-1,1);
@@ -42,7 +42,7 @@ public:
         }
         else// Идём вправо, вверх, вниз
         {
-            player_sprites += 0.02 * time;
+            player_sprites += 0.03 * time;
             if(player_sprites > 11) player_sprites -= 12;
             sprite.setTextureRect(IntRect(w * (int)player_sprites, 0, w, h));
             sprite.setScale(1,1);

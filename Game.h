@@ -6,19 +6,19 @@
 #include "Ventilation.h"
 #include "GameManager.h"
 #include "SceneLoader.h"
+#include <SFML/Audio.hpp>
 using namespace sf;
 using namespace std;
 int volume = 5;
-
 int game()
 {
     //////////////////////////////СОЗДАЁМ ОКНО//////////////////////////////
     RenderWindow window(VideoMode(2000, 1750), "Pacman Among Us");  // Создаём окно
-    // Music music; //создаем объект музыки
-    // music.openFromFile("sounds/zhelezo.ogg"); //загружаем файл
-    // music.setVolume(volume);
-    // music.setLoop(true);
-    // music.play(); //воспроизводим музыку
+    Music music; //создаем объект музыки
+    music.openFromFile("sounds/zhelezo.ogg"); //загружаем файл
+    music.setVolume(volume);
+    music.setLoop(true);
+    music.play(); //воспроизводим музыку
     //////////////////////////////ЗАГРУЖАЕМ КАРТУ//////////////////////////////
     Level lvl;
     lvl.LoadFromFile("map.tmx");
@@ -115,6 +115,10 @@ int game()
                 window.close();
         }
         if(player.getLives() == 0){
+            window.close();
+            return 1;
+        }
+        if(Sabotage::getSolvedTasks() == 4){
             window.close();
             return 1;
         }

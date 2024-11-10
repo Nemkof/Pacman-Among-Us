@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "GameSettings.h"
 Player::Player(const Object& object)
     :MovableEntity(object, "Player")
 {
@@ -6,23 +7,39 @@ Player::Player(const Object& object)
     sprite.setTextureRect(IntRect(0, 0, w, h));
     direction = Direction::stay;
 
-    name = "Player";
+    name = GameSettings::Nickname;
     textName.setFillColor(Color::Red);
     textName.setString(name);
 }
 
 void Player::control(){
-    if (Keyboard::isKeyPressed(Keyboard::Left) && direction != Direction::right) {
-        direction = Direction::left;
+    if(GameSettings::controller == Controller::Arrows){
+        if (Keyboard::isKeyPressed(Keyboard::Left) && direction != Direction::right) {
+            direction = Direction::left;
+        }
+        if (Keyboard::isKeyPressed(Keyboard::Right) && direction != Direction::left) {
+            direction = Direction::right;
+        }
+        if (Keyboard::isKeyPressed(Keyboard::Up) && direction != Direction::down) {
+            direction = Direction::up;
+        }
+        if (Keyboard::isKeyPressed(Keyboard::Down) && direction != Direction::up) {
+            direction = Direction::down;
+        }
     }
-    if (Keyboard::isKeyPressed(Keyboard::Right) && direction != Direction::left) {
-        direction = Direction::right;
-    }
-    if (Keyboard::isKeyPressed(Keyboard::Up) && direction != Direction::down) {
-        direction = Direction::up;
-    }
-    if (Keyboard::isKeyPressed(Keyboard::Down) && direction != Direction::up) {
-        direction = Direction::down;
+    else if(GameSettings::controller == Controller::Letters){
+        if (Keyboard::isKeyPressed(Keyboard::A) && direction != Direction::right) {
+            direction = Direction::left;
+        }
+        if (Keyboard::isKeyPressed(Keyboard::D) && direction != Direction::left) {
+            direction = Direction::right;
+        }
+        if (Keyboard::isKeyPressed(Keyboard::W) && direction != Direction::down) {
+            direction = Direction::up;
+        }
+        if (Keyboard::isKeyPressed(Keyboard::S) && direction != Direction::up) {
+            direction = Direction::down;
+        }
     }
 }
 

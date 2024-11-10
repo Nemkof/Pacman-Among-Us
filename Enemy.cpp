@@ -18,6 +18,7 @@ Enemy::Enemy(const Object& object, const Object& targetPoint)
 }
 GhostState Enemy::ghostState = GhostState::Chase;
 float Enemy::timeGhostState = 0.0;
+float Enemy::speed = 0.0;
 
 /// Логика движения за игроком
 void Enemy::selectDirection(float targetX, float targetY){
@@ -117,13 +118,15 @@ void Enemy::update(float time, float playerX, float playerY)
     //timeAfterDeath += time;
 
     if(timeGhostState > 10000){
-        if(ghostState == GhostState::Chase)
+        sprite.setColor(Color::White);
+        if(ghostState == GhostState::Chase){
             ghostState = GhostState::Scatter;
-        else
+        }
+        else{
             ghostState = GhostState::Chase;
+        }
         timeGhostState = 0;
         speed = 0.4;
-        sprite.setColor(Color::White);
     }
 
     float targetX = getTargetX(playerX);

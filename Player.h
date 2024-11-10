@@ -25,7 +25,7 @@ public:
     float timeAfterDeath = 0.0;
     int score = 0;
     short lives = 3;
-
+    float speed = 0;
     Player(const Object& object);
 
     void control();

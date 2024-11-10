@@ -9,6 +9,7 @@ public:
 
     static GhostState ghostState;
     static float timeGhostState;
+    static float speed;
 
     float lastRotateX = 0.0;
     float lastRotateY = 0.0;

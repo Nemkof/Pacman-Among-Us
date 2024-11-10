@@ -3,14 +3,15 @@
 #include <iostream>
 
 using namespace std;
+enum class Controller{
+    Letters,
+    Arrows
+};
 class GameSettings{
 public:
     static string Nickname;
-    static int SoundsVolume;
-    static enum class Controller{
-        Letters,
-        Arrows
-    } controller;
+    static bool Sounds;
+    static Controller controller;
 };
 
 #endif // GAMESETTINGS_H

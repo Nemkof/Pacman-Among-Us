@@ -19,11 +19,11 @@ void Sabotage::update(float time)
 }
 
 bool Sabotage::run(){
+    delay = 0;
     sabotageWidget* wi = new sabotageWidget();
     wi->show();
     if(wi->getStatus() == SabotageCondition::Finished) {
         delete wi;
-        delay = 0;
     }
     return 0;
 }
