@@ -11,7 +11,7 @@ Sabotage::Sabotage(const Object& object):
 void Sabotage::update(float time)
 {
     delay += 0.3 * time;
-    if(delay > 1000){
+    if(delay > 5000){
         spriteNumber += 0.005 * time;
         if(spriteNumber > 2) spriteNumber -= 2;
         sprite.setTextureRect(IntRect(w * (int)spriteNumber, 0, w, h));

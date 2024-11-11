@@ -5,12 +5,13 @@
 #include <fstream>
 #include "GameSettings.h"
 #include <QDate>
+//#include <QMovie>
 MenuWindow::MenuWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MenuWindow)
 {
     ui->setupUi(this);
-    QPixmap bkgnd("images/menu/Background.png");
+    QPixmap bkgnd("images/menu/BackgroundSmall.png");
     resize(bkgnd.width(), bkgnd.height());
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
@@ -19,6 +20,10 @@ MenuWindow::MenuWindow(QWidget *parent)
     setWindowIcon(QIcon("images/menu/icon.jpeg"));
     setWindowTitle("Pacman Among Us");
 
+    ui->PlayButton->resize(200,200);
+    // QMovie *movie = new QMovie("images/testGiss.gif");
+    // ui->testLabel->setMovie(movie);
+    // movie->start();
 }
 
 MenuWindow::~MenuWindow()
@@ -38,7 +43,7 @@ void MenuWindow::gamerunning(int& gameLevel){
         std::ofstream file("testing.csv", std::ios::app); // ios::app открывает файл для добавления данных в конец
 
         if (file.is_open()) {
-            file << GameSettings::Nickname << ";" << (QDate::currentDate().toString("hh dd.MM.yyyy")).toStdString()
+            file << GameSettings::Nickname << ";" << (QDateTime::currentDateTime().toString("hh:mm dd.MM.yyyy")).toStdString()
                  << ";" << Player::score << ";" << (int)Player::gameTime << ";" << gameLevel << "\n";
             file.close();
         }
@@ -70,5 +75,12 @@ void MenuWindow::on_HistoryButton_clicked()
 {
     historyWindow = new HistoryWindow();
     historyWindow->show();
+}
+
+
+void MenuWindow::on_AboutButton_clicked()
+{
+    aboutGameWidget = new AboutGameWidget();
+    aboutGameWidget->show();
 }
 

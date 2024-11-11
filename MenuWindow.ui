@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>896</width>
+    <height>504</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QWidget" name="verticalLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>290</y>
+      <x>300</x>
+      <y>160</y>
       <width>241</width>
       <height>151</height>
      </rect>
@@ -26,6 +26,12 @@
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
       <widget class="QPushButton" name="PlayButton">
+       <property name="maximumSize">
+        <size>
+         <width>239</width>
+         <height>24</height>
+        </size>
+       </property>
        <property name="text">
         <string>StartGame</string>
        </property>
@@ -39,6 +45,13 @@
           <widget class="QPushButton" name="HistoryButton">
            <property name="text">
             <string>History</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="AboutButton">
+           <property name="text">
+            <string>About game</string>
            </property>
           </widget>
          </item>

@@ -1,3 +1,4 @@
+release/AboutGameWindow.o
 release/Enemy.o
 release/GameManager.o
 release/HistoryWindow.o
@@ -12,6 +13,7 @@ release/tinyxml.o
 release/tinyxmlerror.o
 release/tinyxmlparser.o
 release/main.o
+release/moc_AboutGameWindow.o
 release/moc_HistoryWindow.o
 release/moc_MenuWindow.o
 release/moc_SabotageWidget.o

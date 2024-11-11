@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "HistoryWindow.h"
 #include "SettingsWidget.h"
+#include "AboutGameWindow.h"
 namespace Ui {
 class MenuWindow;
 class SettingsWindow;
@@ -27,9 +28,12 @@ private slots:
 
     void on_HistoryButton_clicked();
 
+    void on_AboutButton_clicked();
+
 private:
     Ui::MenuWindow *ui;
     HistoryWindow *historyWindow;
+    AboutGameWidget *aboutGameWidget;
     Settings *settings;
 };
 

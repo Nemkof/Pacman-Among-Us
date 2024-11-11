@@ -4,6 +4,7 @@ CONFIG -= app_bundle
 CONFIG += qt
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 SOURCES += \
+        AboutGameWindow.cpp \
         Enemy.cpp \
         GameManager.cpp \
         HistoryWindow.cpp \
@@ -30,6 +31,7 @@ INCLUDEPATH += C:\myQT\projects\SFML-2.6.1\include
 DEPENDPATH += C:\myQT\projects\SFML-2.6.1\include
 
 HEADERS += \
+    AboutGameWindow.h \
     Enemy.h \
     Entity.h \
     Food.h \
@@ -51,6 +53,7 @@ HEADERS += \
     level.h
 
 FORMS += \
+    AboutGameWindow.ui \
     HistoryWindow.ui \
     MenuWindow.ui \
     SabotageWidget.ui \

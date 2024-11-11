@@ -30,6 +30,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout;
     QPushButton *HistoryButton;
+    QPushButton *AboutButton;
     QVBoxLayout *verticalLayout_2;
     QPushButton *SettingsButton;
     QPushButton *ExitButton;
@@ -39,17 +40,18 @@ public:
     {
         if (MenuWindow->objectName().isEmpty())
             MenuWindow->setObjectName("MenuWindow");
-        MenuWindow->resize(800, 600);
+        MenuWindow->resize(896, 504);
         centralwidget = new QWidget(MenuWindow);
         centralwidget->setObjectName("centralwidget");
         verticalLayoutWidget_3 = new QWidget(centralwidget);
         verticalLayoutWidget_3->setObjectName("verticalLayoutWidget_3");
-        verticalLayoutWidget_3->setGeometry(QRect(430, 290, 241, 151));
+        verticalLayoutWidget_3->setGeometry(QRect(300, 160, 241, 151));
         verticalLayout_3 = new QVBoxLayout(verticalLayoutWidget_3);
         verticalLayout_3->setObjectName("verticalLayout_3");
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
         PlayButton = new QPushButton(verticalLayoutWidget_3);
         PlayButton->setObjectName("PlayButton");
+        PlayButton->setMaximumSize(QSize(239, 24));
 
         verticalLayout_3->addWidget(PlayButton);
 
@@ -61,6 +63,11 @@ public:
         HistoryButton->setObjectName("HistoryButton");
 
         verticalLayout->addWidget(HistoryButton);
+
+        AboutButton = new QPushButton(verticalLayoutWidget_3);
+        AboutButton->setObjectName("AboutButton");
+
+        verticalLayout->addWidget(AboutButton);
 
 
         horizontalLayout->addLayout(verticalLayout);
@@ -98,6 +105,7 @@ public:
         MenuWindow->setWindowTitle(QCoreApplication::translate("MenuWindow", "MainWindow", nullptr));
         PlayButton->setText(QCoreApplication::translate("MenuWindow", "StartGame", nullptr));
         HistoryButton->setText(QCoreApplication::translate("MenuWindow", "History", nullptr));
+        AboutButton->setText(QCoreApplication::translate("MenuWindow", "About game", nullptr));
         SettingsButton->setText(QCoreApplication::translate("MenuWindow", "Settings", nullptr));
         ExitButton->setText(QCoreApplication::translate("MenuWindow", "Exit", nullptr));
     } // retranslateUi

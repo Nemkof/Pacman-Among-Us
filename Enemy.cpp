@@ -6,7 +6,7 @@ Enemy::Enemy(const Object& object, const Object& targetPoint)
     sprite.setTextureRect(IntRect(0, 0, w, h));
     sprite.setColor(Color::White);
     sprite.setPosition(x, y);
-    speed = 0.4;
+    speed = 0.25;
     dx = speed;
     dy = 0;
     direction = Direction::right;
@@ -126,7 +126,7 @@ void Enemy::update(float time, float playerX, float playerY)
             ghostState = GhostState::Chase;
         }
         timeGhostState = 0;
-        speed = 0.4;
+        speed = 0.25;
     }
 
     float targetX = getTargetX(playerX);

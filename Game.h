@@ -7,7 +7,6 @@
 #include "GameManager.h"
 #include "SceneLoader.h"
 #include <SFML/Audio.hpp>
-#include "MenuWindow.h"
 using namespace sf;
 using namespace std;
 int volume = 5;
@@ -15,7 +14,7 @@ int volume = 5;
 int game(int& gameLevel)
 {
     //////////////////////////////СОЗДАЁМ ОКНО//////////////////////////////
-    RenderWindow window(VideoMode(2000, 1750), "Pacman Among Us");  // Создаём окно
+    RenderWindow window(VideoMode(1600, 1725), "Pacman Among Us");  // Создаём окно
     Music music; //создаем объект музыки
     music.openFromFile("sounds/zhelezo.ogg"); //загружаем файл
     music.setVolume(volume);

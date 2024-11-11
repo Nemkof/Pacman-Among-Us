@@ -8,13 +8,17 @@ float Player::gameTime = 0.0;
 Player::Player(const Object& object)
     :MovableEntity(object, "Player")
 {
-    speed = 0.3;
+    speed = 0.4;
     sprite.setTextureRect(IntRect(0, 0, w, h));
     direction = Direction::stay;
 
     name = GameSettings::Nickname;
     textName.setFillColor(Color::Red);
     textName.setString(name);
+
+    lives = 3;
+    score = 0;
+    gameTime = 0.0;
 }
 
 void Player::control(){
@@ -100,11 +104,11 @@ void Player::checkCollisionWithMap (float time, float Dx, float Dy)
 
     /// Проверяем столкновение с саботажем
     if(getRect().intersects(firstSabotage->getRect()) && Keyboard::isKeyPressed(Keyboard::E)){
-        if(firstSabotage->delay > 1000)
+        if(firstSabotage->delay > 5000)
             firstSabotage->run();
     }
     if(getRect().intersects(secondSabotage->getRect()) && Keyboard::isKeyPressed(Keyboard::E)){
-        if(secondSabotage->delay > 1000){
+        if(secondSabotage->delay > 5000){
             secondSabotage->run();
             x = startX; y = startY;
         }
