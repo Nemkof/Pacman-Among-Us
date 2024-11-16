@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
@@ -34,6 +35,7 @@ public:
     QVBoxLayout *verticalLayout_2;
     QPushButton *SettingsButton;
     QPushButton *ExitButton;
+    QLabel *label;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MenuWindow)
@@ -90,6 +92,9 @@ public:
 
         verticalLayout_3->addLayout(horizontalLayout);
 
+        label = new QLabel(centralwidget);
+        label->setObjectName("label");
+        label->setGeometry(QRect(340, 460, 181, 16));
         MenuWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MenuWindow);
         statusbar->setObjectName("statusbar");
@@ -108,6 +113,7 @@ public:
         AboutButton->setText(QCoreApplication::translate("MenuWindow", "About game", nullptr));
         SettingsButton->setText(QCoreApplication::translate("MenuWindow", "Settings", nullptr));
         ExitButton->setText(QCoreApplication::translate("MenuWindow", "Exit", nullptr));
+        label->setText(QCoreApplication::translate("MenuWindow", "Designed by Nemkoff", nullptr));
     } // retranslateUi
 
 };
