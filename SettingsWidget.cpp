@@ -1,6 +1,6 @@
-#include "SettingsWidget.h"
+#include "Headers/SettingsWidget.h"
 #include "ui_SettingsWidget.h"
-#include "GameSettings.h"
+#include "Headers/GameSettings.h"
 string GameSettings::Nickname = "player";
 Controller GameSettings::controller = Controller::Arrows;
 bool GameSettings::Sounds = true;

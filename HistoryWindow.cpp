@@ -1,5 +1,5 @@
-#include "HistoryWindow.h"
-#include "ui_HistoryWindow.h"
+#include "Headers/HistoryWindow.h"
+#include "Headers/ui_HistoryWindow.h"
 
 #include <QFile>
 #include <QTextStream>
@@ -19,7 +19,7 @@ HistoryWindow::HistoryWindow(QWidget *parent)
     csvModel->setHorizontalHeaderLabels(QStringList() << "Nickname" << "Date" << "Score" << "Game time " << "Levels");
     ui->tableView->setModel(csvModel);
 
-    QFile file("testing.csv");
+    QFile file("history.csv");
     if ( !file.open(QFile::ReadOnly | QFile::Text) ) {
         qDebug() << "File not exists";
     } else {

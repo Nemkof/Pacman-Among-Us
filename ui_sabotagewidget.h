@@ -1,5 +1,5 @@
 /********************************************************************************
-** Form generated from reading UI file 'sabotagewidget.ui'
+** Form generated from reading UI file 'SabotageWidget.ui'
 **
 ** Created by: Qt User Interface Compiler version 6.7.2
 **

@@ -31,26 +31,33 @@ INCLUDEPATH += C:\myQT\projects\SFML-2.6.1\include
 DEPENDPATH += C:\myQT\projects\SFML-2.6.1\include
 
 HEADERS += \
-    AboutGameWindow.h \
-    Enemy.h \
-    Entity.h \
-    Food.h \
-    Game.h \
-    GameManager.h \
-    GameSettings.h \
-    HistoryWindow.h \
-    Lives.h \
-    MenuWindow.h \
-    MovableEntity.h \
-    Player.h \
-    SabotageWidget.h \
-    Sabotages.h \
-    SceneLoader.h \
-    SettingsWidget.h \
+    Headers/AboutGameWindow.h \
+    Headers/Enemy.h \
+    Headers/Entity.h \
+    Headers/Food.h \
+    Headers/Game.h \
+    Headers/GameManager.h \
+    Headers/GameSettings.h \
+    Headers/HistoryWindow.h \
+    Headers/Lives.h \
+    Headers/MenuWindow.h \
+    Headers/MovableEntity.h \
+    Headers/Player.h \
+    Headers/SabotageWidget.h \
+    Headers/Sabotages.h \
+    Headers/SceneLoader.h \
+    Headers/SettingsWidget.h \
+    Headers/Ventilation.h \
+    Headers/level.h \
+    Headers/ui_AboutGameWindow.h \
+    Headers/ui_aboutgamewidget.h \
+    Headers/ui_historywindow.h \
+    Headers/ui_menuwindow.h \
+    Headers/ui_sabotagewidget.h \
+    Headers/ui_settings.h \
+    Headers/ui_settingsWidget.h \
     TinyXML/tinystr.h \
     TinyXML/tinyxml.h \
-    Ventilation.h \
-    level.h
 
 FORMS += \
     AboutGameWindow.ui \

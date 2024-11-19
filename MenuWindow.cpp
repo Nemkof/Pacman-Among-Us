@@ -1,9 +1,8 @@
-#include "MenuWindow.h"
-#include "Game.h"
+#include "Headers/MenuWindow.h"
+#include "Headers/Game.h"
 #include "ui_MenuWindow.h"
-#include "Game.h"
 #include <fstream>
-#include "GameSettings.h"
+#include "Headers/GameSettings.h"
 #include <QDate>
 //#include <QMovie>
 MenuWindow::MenuWindow(QWidget *parent)
@@ -40,7 +39,7 @@ void MenuWindow::gamerunning(int& gameLevel){
     else{
         this->show();
 
-        std::ofstream file("testing.csv", std::ios::app); // ios::app открывает файл для добавления данных в конец
+        std::ofstream file("history.csv", std::ios::app); // ios::app открывает файл для добавления данных в конец
 
         if (file.is_open()) {
             file << GameSettings::Nickname << ";" << (QDateTime::currentDateTime().toString("hh:mm dd.MM.yyyy")).toStdString()

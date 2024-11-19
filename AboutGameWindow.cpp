@@ -1,4 +1,4 @@
-#include "AboutGameWindow.h"
+#include "Headers/AboutGameWindow.h"
 #include "ui_AboutGameWindow.h"
 #include <QMovie>
 AboutGameWidget::AboutGameWidget(QWidget *parent)

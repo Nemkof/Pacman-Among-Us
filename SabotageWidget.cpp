@@ -1,6 +1,6 @@
-#include "SabotageWidget.h"
+#include <Headers/SabotageWidget.h>
 #include "ui_SabotageWidget.h"
-#include "Sabotages.h"
+#include "Headers/Sabotages.h"
 sabotageWidget::sabotageWidget(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::sabotageWidget)
