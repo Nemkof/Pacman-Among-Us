@@ -4,21 +4,21 @@ CONFIG -= app_bundle
 CONFIG += qt
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 SOURCES += \
-        AboutGameWindow.cpp \
-        Enemy.cpp \
-        GameManager.cpp \
-        HistoryWindow.cpp \
-        MenuWindow.cpp \
-        Player.cpp \
-        SabotageWidget.cpp \
-        Sabotages.cpp \
-        SceneLoader.cpp \
-        SettingsWidget.cpp \
         TinyXML/tinystr.cpp \
         TinyXML/tinyxml.cpp \
         TinyXML/tinyxmlerror.cpp \
         TinyXML/tinyxmlparser.cpp \
-        main.cpp
+        src/AboutGameWindow.cpp \
+        src/Enemy.cpp \
+        src/GameManager.cpp \
+        src/HistoryWindow.cpp \
+        src/MenuWindow.cpp \
+        src/Player.cpp \
+        src/SabotageWidget.cpp \
+        src/Sabotages.cpp \
+        src/SceneLoader.cpp \
+        src/SettingsWidget.cpp \
+        src/main.cpp
 
 
 LIBS += -LC:\myQT\projects\SFML-2.6.1\lib
@@ -60,11 +60,11 @@ HEADERS += \
     TinyXML/tinyxml.h \
 
 FORMS += \
-    AboutGameWindow.ui \
-    HistoryWindow.ui \
-    MenuWindow.ui \
-    SabotageWidget.ui \
-    SettingsWidget.ui
+    Forms/AboutGameWindow.ui \
+    Forms/HistoryWindow.ui \
+    Forms/MenuWindow.ui \
+    Forms/SabotageWidget.ui \
+    Forms/SettingsWidget.ui \
 
 DISTFILES += \
     images/Blinky.png \

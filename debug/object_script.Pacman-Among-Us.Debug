@@ -1,3 +1,7 @@
+debug/tinystr.o
+debug/tinyxml.o
+debug/tinyxmlerror.o
+debug/tinyxmlparser.o
 debug/AboutGameWindow.o
 debug/Enemy.o
 debug/GameManager.o
@@ -8,10 +12,6 @@ debug/SabotageWidget.o
 debug/Sabotages.o
 debug/SceneLoader.o
 debug/SettingsWidget.o
-debug/tinystr.o
-debug/tinyxml.o
-debug/tinyxmlerror.o
-debug/tinyxmlparser.o
 debug/main.o
 debug/moc_AboutGameWindow.o
 debug/moc_HistoryWindow.o
