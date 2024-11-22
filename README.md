@@ -29,7 +29,7 @@
 
 ### Вентиляция
 
-<img src="gif/ventilation.gif" width=30% height=30%>
+<img src="gif/ventilation.gif" width=50% height=50%>
 
 # *Menu*
 При запуске игры пользователя встречает меню:
